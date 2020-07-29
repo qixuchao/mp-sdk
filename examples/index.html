@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="adslot"></div>
+    <script>
+        window.M$P = window.M$P || []
+        window.M$P.push({
+            slotId: '1234',
+            container: '.adslot'
+        })
+    </script>
+    <script src="/dist/mp.js"></script>
+    <script>
+        console.log(M$P)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{
+  "globals": {
+    "window": true,
+    "document": true
+  },
+  "plugins": ["react"],
+  "rules": {
+    "semi": ["error", "always"],
+    "no-irregular-whitespace": 0, //不规则的空白不允许
+    "no-trailing-spaces": 1, //一行结束后面有空格就发出警告
+    "no-extra-bind": 2, // 禁止不必要的.bind()调用
+    "sort-imports": 0, // 导入顺序
+    "no-unused-vars": [
+      2,
+      { "vars": "all", "args": "after-used", "argsIgnorePattern": "^_" }
+    ], //不能有声明后未被使用的变量或参数
+    "no-alert": 2, //禁止使用alert confirm prompt
+    "quotes": [2, "single"], //单引号
+    "curly": [2, "all"],
+    "max-depth": [0, 4], //嵌套块深度
+    "eqeqeq": ["error", "always"],
+
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
+  }
+}
