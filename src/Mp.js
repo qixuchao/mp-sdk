@@ -1,6 +1,8 @@
 /* gloabl window */
 import { MODEL_NAME } from './config';
+import { each } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
+import Union from './union/index';
 import Slot from './Slot';
 
 class Mp {
@@ -14,12 +16,10 @@ class Mp {
   init(slots) {
     this._slots = slots;
 
-    this.handler(this._slots);
-
     // 覆盖原有对象
-    window[MODEL_NAME] = this._p = {
-      push: this.push
-    };
+    window[MODEL_NAME] = this;
+
+    this.handler(this._slots);
   }
   /**
    * @param {Object|Function}  params 支持对象和方法
@@ -31,23 +31,27 @@ class Mp {
    *
    * */
   push(params) {
-    if (isFunction(params)) {
-      params.call(this);
-    } else if (isPlainObject(params)) {
-      this.handler([params]);
-    }
+    this.handler([params]);
   }
   handler(slots) {
-    if (slots) {
-      slots.forEach(slot => {
+    each(slots, slot => {
+      if (isFunction(slot)) {
+        slot.call(this, {
+          union: {
+            register: Union.register,
+            use: Union.use
+          },
+          utils: {}
+        });
+      } else if (isPlainObject(slot) && slot.id) {
         if (isUndefined(this.slots[slot.id])) {
           // 这里应该去请求广告位，然后调用填充方法
           this.fillAd(slot.container, { id: slot.id });
         } else {
           console.error(`slotid ${slot.id} already exists`);
         }
-      });
-    }
+      }
+    });
   }
   /**
    * 填充广告
@@ -103,8 +107,8 @@ class Mp {
     }
   }
    */
-  fillAd(container, slotInfo) {
-    this.slots[slotInfo.id] = new Slot(container, slotInfo);
+  fillAd(container, slotConfig) {
+    this.slots[slotConfig.id] = new Slot(container, slotConfig);
   }
 }
 

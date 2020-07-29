@@ -1,6 +1,6 @@
-import { each, macro } from './utils';
+import { each, macro } from './utils/index';
 
-let list = [];
+const list = [];
 function send(url) {
   if (url !== '') {
     var img = document.createElement('img');

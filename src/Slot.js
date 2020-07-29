@@ -1,4 +1,6 @@
 import { each } from './utils/index';
+import Union from './union/index';
+import logger from './logger';
 
 // 广告位状态
 const SLOT_STATUS = {
@@ -49,5 +51,20 @@ export default class Slot {
 
     // 已经加载消耗方个数
     this.loadedConsumerNumber = 0;
+
+    this.distribute();
+  }
+
+  distribute() {
+    console.log(this.consumers);
+    each(this.consumers, con => {
+      Union.use(con.consumer.consumerType, con.consumer)
+        .on('init', () => {
+          console.log('init');
+        })
+        .on('mounted', () => {
+          console.log('mounted');
+        });
+    });
   }
 }

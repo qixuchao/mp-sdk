@@ -80,6 +80,218 @@
     }
   };
 
+  class Event {
+    constructor() {
+      this._events = {};
+    }
+
+    on(type, handler) {
+      (this._events[type] = this._events[type] || []).push(handler);
+      return this;
+    }
+
+    off(type, handler) {}
+
+    once(type, handler) {}
+
+    trigger(type, data) {
+      each(this._events[type], fn => {
+        if (isFunction(fn)) {
+          fn.call(this, data);
+        }
+      });
+    }
+
+  }
+
+  (window[MODEL_NAME] || []).push(({
+    union
+  }) => {
+    union.register('qq', {
+      src: '//qzs.qq.com/qzone/biz/res/i.js',
+
+      onInit(data, {
+        onMounted,
+        onRender
+      }) {
+        console.log(data);
+        window.TencentGDT = window.TencentGDT || []; // 广告初始化
+
+        window.TencentGDT.push({
+          placement_id: data.consumerSlotId,
+          // {String} - 广告位id - 必填
+          app_id: data.appid,
+          // {String} - appid - 必填
+          type: 'native',
+          // {String} - 原生广告类型 - 必填
+          count: 3,
+          // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
+          onComplete: function (res) {
+            if (res && res.constructor === Array) {
+              // 原生模板广告位调用 window.TencentGDT.NATIVE.renderAd(res[0], 'containerId') 进行模板广告的渲染
+              // res[0] 代表取广告数组第一个数据
+              // containerId：广告容器ID
+              window.TencentGDT.NATIVE.renderAd(res[0], 'containerId');
+              onMounted();
+            } else {
+              // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
+              // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率
+              setTimeout(function () {// window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
+              }, 3000);
+            }
+          }
+        });
+      }
+
+    });
+  });
+
+  /*
+  <div class="_1gho6uvlbfj"></div>
+  <script type="text/javascript">
+      (window.slotbydup = window.slotbydup || []).push({
+          id: "u6181548",
+          container: "_1gho6uvlbfj",
+          async: true
+      });
+  </script>
+  <!-- 多条广告如下脚本只需引入一次 -->
+  <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" >
+  </script>
+  */
+
+  (window[MODEL_NAME] || []).push(({
+    union
+  }) => {
+    union.register('baidu', {
+      src: '//cpro.baidustatic.com/cpro/ui/cm.js',
+
+      onInit(data) {
+        (window.slotbydup = window.slotbydup || []).push({
+          id: data.consumerSlotId,
+          container: '_1gho6uvlbfj',
+          async: true
+        });
+      }
+
+    });
+  });
+
+  const loadScript = (src, success, fail) => {
+    console.log(src); // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
+
+    const fisrtScript = document.getElementsByTagName('script')[0];
+    let script = document.createElement('script');
+
+    script.onload = function () {
+      script = script.onload = null;
+      success && success();
+    };
+
+    script.onerror = function () {
+      script = script.onerror = null;
+      fail && fail();
+    };
+
+    script.src = src;
+    fisrtScript.parentNode.insertBefore(script, fisrtScript);
+  };
+  /**
+   * Lifecycle Hooks
+   *  init
+   *  mounted
+   *
+   */
+
+  class Union extends Event {
+    /**
+     * @type String
+     * 为什么状态值，不放到实例而是作为静态变量？
+     * 因为实例的执行依赖前置的脚本加载，多个实例之间也同时这个状态。固本身这个状态跟实例无关
+     * 所以采用静态变量，实例间共享。
+     *
+     */
+
+    /**
+     *
+     * @param {String} unionKey
+     * @param {Object} options
+     *    options.src {String}
+     *    options.sandbox {Boolean} default: true
+     *    options.onInit {Function}
+     * @param {Boolean} force
+     */
+    static use(unionKey, data) {
+      if (!isUndefined(Union.VENDORS[unionKey]) && Union.VENDORS[unionKey] instanceof Union) {
+        return Union.VENDORS[unionKey].fork(data);
+      }
+    }
+
+    constructor(options) {
+      super();
+      this.options = options;
+    }
+
+    onMounted() {
+      console.log('mounted');
+      this.trigger('mounted');
+    }
+    /**
+     * 基于注册的联盟配置重新实例化
+     * 保障每一个广告位实例生命周期完整
+     * @param {Object}} data
+     */
+
+
+    fork(data) {
+      return new Union(this.options).run(data);
+    }
+    /**
+     *
+     * @param {Object} data
+     */
+
+
+    run(data) {
+      console.log('run');
+
+      const onInit = () => {
+        isFunction(this.options.onInit) && this.options.onInit.call(this, data, {
+          onMounted: this.onMounted
+        });
+      };
+
+      if (Union.status === '0') {
+        this.trigger('init');
+        onInit();
+        loadScript(this.options.src, () => {
+          Union.status = '1';
+          this.trigger('loaded');
+        }, () => {
+          Union.status = '2';
+          this.trigger('loadError');
+        });
+      } else {
+        onInit();
+      }
+
+      return this;
+    }
+
+  }
+
+  _defineProperty(Union, "VENDORS", {});
+
+  _defineProperty(Union, "status", '0');
+
+  _defineProperty(Union, "register", function (unionKey, options, force = false) {
+    if (isUndefined(Union.VENDORS[unionKey]) || force) {
+      Union.VENDORS[unionKey] = new Union(options);
+    } else {
+      console.log(`Vendor ${unionKey} already exists`);
+    }
+  });
+
   /**
    * 通过权重计算使用消耗方
    * @param {Array} consumers
@@ -120,6 +332,18 @@
 
 
       this.loadedConsumerNumber = 0;
+      this.distribute();
+    }
+
+    distribute() {
+      console.log(this.consumers);
+      each(this.consumers, con => {
+        Union.use(con.consumer.consumerType, con.consumer).on('init', () => {
+          console.log('init');
+        }).on('mounted', () => {
+          console.log('mounted');
+        });
+      });
     }
 
   }
@@ -131,12 +355,10 @@
     }
 
     init(slots) {
-      this._slots = slots;
-      this.handler(this._slots); // 覆盖原有对象
+      this._slots = slots; // 覆盖原有对象
 
-      window[MODEL_NAME] = this._p = {
-        push: this.push
-      };
+      window[MODEL_NAME] = this;
+      this.handler(this._slots);
     }
     /**
      * @param {Object|Function}  params 支持对象和方法
@@ -150,16 +372,20 @@
 
 
     push(params) {
-      if (isFunction(params)) {
-        params.call(this);
-      } else if (isPlainObject(params)) {
-        this.handler([params]);
-      }
+      this.handler([params]);
     }
 
     handler(slots) {
-      if (slots) {
-        slots.forEach(slot => {
+      each(slots, slot => {
+        if (isFunction(slot)) {
+          slot.call(this, {
+            union: {
+              register: Union.register,
+              use: Union.use
+            },
+            utils: {}
+          });
+        } else if (isPlainObject(slot) && slot.id) {
           if (isUndefined(this.slots[slot.id])) {
             // 这里应该去请求广告位，然后调用填充方法
             this.fillAd(slot.container, {
@@ -168,8 +394,8 @@
           } else {
             console.error(`slotid ${slot.id} already exists`);
           }
-        });
-      }
+        }
+      });
     }
     /**
      * 填充广告
@@ -226,8 +452,8 @@
      */
 
 
-    fillAd(container, slotInfo) {
-      this.slots[slotInfo.id] = new Slot(container, slotInfo);
+    fillAd(container, slotConfig) {
+      this.slots[slotConfig.id] = new Slot(container, slotConfig);
     }
 
   }
@@ -239,6 +465,40 @@
 
   if (Array.isArray(_mp) || isUndefined(_mp)) {
     new Mp(_mp);
-  }
+  } // 以下是临时代码
+
+
+  window[MODEL_NAME].fillAd('.adslot', {
+    slotId: '17002',
+    isConcurrent: false,
+    priorityPolicy: 0,
+    slotBidding: [{
+      adKey: 3017029,
+      geoCode: [],
+      hour: [],
+      weight: 30,
+      //消耗方的权重,所有的weight加起来占比表示所占权重。
+      consumer: {
+        timeOut: 50,
+        consumerType: 'baidu',
+        //消耗方类型
+        consumerSlotId: '8021223221041374',
+        consumerSlotId: 'u6181548',
+        appid: '1110655203'
+      },
+      trackingData: {
+        bidTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/b?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+        //开始请求
+        errorTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/e?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+        //请求返回失败，包括请求成功但是广告数组为0
+        impTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/i?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+        //广告展现
+        clickTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/c?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+        //广告点击
+        bidSucTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/s?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=' //广告返回成功
+
+      }
+    }]
+  });
 
 }());
