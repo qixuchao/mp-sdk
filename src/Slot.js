@@ -39,6 +39,10 @@ export default class Slot {
     this.container = container;
     this.$container = document.querySelector(container);
 
+    // 是否并非请求
+    this.isConcurrent = options.isConcurrent;
+    this.priorityPolicy = options.priorityPolicy;
+
     this.options = options;
 
     this.status = '0';
@@ -58,6 +62,7 @@ export default class Slot {
   distribute() {
     each(this.consumers, con => {
       const union = Union.use(con.consumer.consumerType);
+      console.log(this, union);
       if (union) {
         union
           .on('init', () => {
@@ -81,6 +86,7 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
+    console.log(union);
     if (this.status !== '5') {
       this.status = '5';
       union.render(this.container);

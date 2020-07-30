@@ -12,6 +12,6 @@ export const each = (list, callback) => {
   }
 };
 
-export const macro = str => {
+export const macroReplace = str => {
   return str;
 };

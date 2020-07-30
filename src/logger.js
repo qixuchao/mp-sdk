@@ -1,4 +1,4 @@
-import { each, macro } from './utils/index';
+import { each, macroReplace } from './utils/index';
 import { isString } from './utils/type';
 
 const list = [];
@@ -9,7 +9,7 @@ function send(url) {
       img = img.onload = null;
     };
     // 需要宏替换
-    img.src = macro(url);
+    img.src = macroReplace(url);
     list.push(img);
   }
 }

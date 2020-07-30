@@ -20,12 +20,12 @@
                     priorityPolicy: 0, // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
                     slotBidding: [
                         {
-                            adKey: 3017029,
+                            adKey: 3017028,
                             geoCode: [],
                             hour: [],
                             weight: 30, //消耗方的权重,所有的weight加起来占比表示所占权重。
                             consumer: {
-                                timeOut: 50,
+                                timeOut: 10,
                                 consumerType: 'baidu', //消耗方类型
                                 consumerSlotId: 'u6181545' //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
                             },
@@ -43,12 +43,12 @@
                             }
                         },
                         {
-                            adKey: 3017029,
+                            adKey: 3017028,
                             geoCode: [],
                             hour: [],
                             weight: 30, //消耗方的权重,所有的weight加起来占比表示所占权重。
                             consumer: {
-                                timeOut: 50,
+                                timeOut: 10,
                                 consumerType: 'qq', //消耗方类型
                                 consumerSlotId: '8021223221041374',
                                 appId: '1110655203'
@@ -79,10 +79,10 @@
                             hour: [],
                             weight: 30, //消耗方的权重,所有的weight加起来占比表示所占权重。
                             consumer: {
-                                timeOut: 50,
+                                timeOut: 10,
                                 consumerType: 'qq', //消耗方类型
-                                consumerSlotId: '8021223221041374',
-                                appId: '1110655203'
+                                consumerSlotId: '8021223221041375',
+                                appId: '1110655204'
                             },
                             trackingData: {
                                 bidTracking:

@@ -22,55 +22,13 @@ class Mp {
 
     // 转化媒体配置
     this.MEDIA_CONFIG = {};
-    if (window[MEDIA_CONFIG_NAME] && window[MEDIA_CONFIG_NAME].slotBiddings) {
-      each(window[MEDIA_CONFIG_NAME].slotBiddings, slotBidding => {
-        this.MEDIA_CONFIG[slotBidding.slotId] = slotBidding;
-      });
-    }
+
+    this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
     this.handler(this._originalList);
   }
   /**
-   * @param {Object|Function}  params 支持对象和方法
-   *    Object
-   *        params.slotId
-   *        params.container
-   *
-   *    Funciton 待sdk初始化之后执行，如果已经初始化，则立即执行
-   *
-   * */
-  push(params) {
-    this.handler([params]);
-  }
-  handler(slots) {
-    each(slots, slot => {
-      if (isFunction(slot)) {
-        slot.call(this, {
-          union: {
-            register: Union.register,
-            use: Union.use
-          },
-          utils: {}
-        });
-      } else if (isPlainObject(slot) && slot.id) {
-        if (isUndefined(this.slots[slot.id])) {
-          if (this.MEDIA_CONFIG[slot.id]) {
-            // 这里应该去请求广告位，然后调用填充方法
-            this.fillAd(slot.container, {
-              ...this.MEDIA_CONFIG[slot.id],
-              id: slot.id
-            });
-          } else {
-            console.error(`slot configuration does not exist,id：${slot.id}`);
-          }
-        } else {
-          console.error(`slotid ${slot.id} already exists`);
-        }
-      }
-    });
-  }
-  /**
-   * 填充广告
+   * 解析媒体配置文件
    * @param {Object} slotInfo
    *            {String} slotInfo.slotId
    *            {Boolean} slotInfo.isConcurrent //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
@@ -84,6 +42,7 @@ class Mp {
    *            {Array}  slotInfo.trackingData
    * 
    * @example
+   * 
    *  {
       "vendorId": 192,//请求ftx广告的sid
       "slotBiddings": [
@@ -123,6 +82,56 @@ class Mp {
     }
   }
    */
+  parseMediaConfig(config = {}) {
+    // 转化媒体配置
+    this.MEDIA_CONFIG = {};
+    if (config.slotBiddings) {
+      each(config.slotBiddings, slotBidding => {
+        this.MEDIA_CONFIG[slotBidding.slotId] = slotBidding;
+      });
+    }
+  }
+  /**
+   * @param {Object|Function}  params 支持对象和方法
+   *    Object
+   *        params.slotId  {String} 广告位id
+   *        params.container {String} 广告位选择器
+   *        params.fallback {Function} 广告无填充回调
+   *
+   *    Funciton 待sdk初始化之后执行，如果已经初始化，则立即执行
+   *
+   * */
+  push(params) {
+    this.handler([params]);
+  }
+
+  handler(slots) {
+    each(slots, slot => {
+      if (isFunction(slot)) {
+        slot.call(this, {
+          union: {
+            register: Union.register,
+            use: Union.use
+          },
+          utils: {}
+        });
+      } else if (isPlainObject(slot) && slot.id) {
+        if (isUndefined(this.slots[slot.id])) {
+          if (this.MEDIA_CONFIG[slot.id]) {
+            // 这里应该去请求广告位，然后调用填充方法
+            this.fillAd(slot.container, {
+              ...this.MEDIA_CONFIG[slot.id],
+              id: slot.id
+            });
+          } else {
+            console.error(`Slot configuration does not exist,id：${slot.id}`);
+          }
+        } else {
+          console.error(`Slotid "${slot.id}" already exists`);
+        }
+      }
+    });
+  }
   fillAd(container, slotConfig) {
     this.slots[slotConfig.id] = new Slot(container, slotConfig);
   }

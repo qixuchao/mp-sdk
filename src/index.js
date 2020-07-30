@@ -1,6 +1,6 @@
 /*global window */
 import Mp from './Mp';
-import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
+import { MODEL_NAME } from './config';
 import { isUndefined } from './utils/type';
 
 const _mp = window[MODEL_NAME];

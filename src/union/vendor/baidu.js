@@ -19,7 +19,7 @@ export default Union => {
   Union.register('baidu', {
     src: '//cpro.baidustatic.com/cpro/ui/cm.js',
     sandbox: false,
-    onInit(data, { onMounted, onTimeOut }) {
+    onInit(data, { onLoaded, onTimeOut }) {
       (window.slotbydup = window.slotbydup || []).push({
         id: data.consumerSlotId,
         container: this.id,
@@ -29,7 +29,7 @@ export default Union => {
       let timeOut;
       let timer = setInterval(() => {
         if (this.$container && this.$container.querySelector('iframe')) {
-          onMounted();
+          onLoaded();
           clearTimeout(timeOut);
           timeOut = null;
           clearInterval(timer);
@@ -37,12 +37,13 @@ export default Union => {
         }
       }, 100);
 
-      setTimeout(function () {
+      timeOut = setTimeout(function () {
         onTimeOut();
         clearInterval(timer);
         timer = null;
-      }, data.timeOut * 60 * 1000);
-    }
+      }, data.timeOut * 1000);
+    },
+    onMounted() {}
   });
 };
 // });
