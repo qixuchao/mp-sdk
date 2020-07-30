@@ -14,15 +14,35 @@ import { MODEL_NAME } from '../../config';
 </script>
 */
 
-(window[MODEL_NAME] || []).push(({ union }) => {
-  union.register('baidu', {
+// (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
+export default Union => {
+  Union.register('baidu', {
     src: '//cpro.baidustatic.com/cpro/ui/cm.js',
-    onInit(data) {
+    sandbox: false,
+    onInit(data, { onMounted, onTimeOut }) {
       (window.slotbydup = window.slotbydup || []).push({
         id: data.consumerSlotId,
-        container: '_1gho6uvlbfj',
+        container: this.id,
         async: true
       });
+      // 检测广告位
+      let timeOut;
+      let timer = setInterval(() => {
+        if (this.$container && this.$container.querySelector('iframe')) {
+          onMounted();
+          clearTimeout(timeOut);
+          timeOut = null;
+          clearInterval(timer);
+          timer = null;
+        }
+      }, 100);
+
+      setTimeout(function () {
+        onTimeOut();
+        clearInterval(timer);
+        timer = null;
+      }, data.timeOut * 60 * 1000);
     }
   });
-});
+};
+// });

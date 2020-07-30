@@ -10,7 +10,9 @@ export default class Event {
     return this;
   }
   off(type, handler) {}
-  once(type, handler) {}
+  once(type, handler) {
+    this.on(type, () => {});
+  }
   trigger(type, data) {
     each(this._events[type], fn => {
       if (isFunction(fn)) {

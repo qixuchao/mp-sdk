@@ -1,10 +1,10 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import './vendor/qq';
-import './vendor/baidu';
+import logger from '../logger';
+import registerQQ from './vendor/qq';
+import registerBaidu from './vendor/baidu';
 
 const loadScript = (src, success, fail) => {
-  console.log(src);
   // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
   const fisrtScript = document.getElementsByTagName('script')[0];
 
@@ -22,12 +22,33 @@ const loadScript = (src, success, fail) => {
   fisrtScript.parentNode.insertBefore(script, fisrtScript);
 };
 
+const createWrapper = (tagName = 'div', id) => {
+  const tag = document.createElement(tagName);
+  tag.id = id;
+  tag.style.display = 'none';
+  tag.className = id;
+  document.body.appendChild(tag);
+  return tag;
+};
+
 const STATUS = {
   '0': 'init',
   '1': 'loaded',
-  '2': 'loadError'
+  '2': 'loadError',
+  '3': 'mounted'
 };
 
+/**
+ * @type {String}
+ */
+const LOGGER_TYPE = {
+  bid: 'bidTracking',
+  error: 'errorTracking',
+  imp: 'impTracking',
+  bidSuc: 'bidSucTracking'
+};
+
+let UNION_INDEX = 0;
 /**
  * Lifecycle Hooks
  *  init
@@ -54,6 +75,7 @@ export default class Union extends Event {
    * @param {Boolean} force
    */
   static register = function (unionKey, options, force = false) {
+    console.log('register');
     if (isUndefined(Union.VENDORS[unionKey]) || force) {
       Union.VENDORS[unionKey] = new Union(options);
     } else {
@@ -61,42 +83,75 @@ export default class Union extends Event {
     }
   };
 
-  static use(unionKey, data) {
+  static use(unionKey) {
     if (
       !isUndefined(Union.VENDORS[unionKey]) &&
       Union.VENDORS[unionKey] instanceof Union
     ) {
-      return Union.VENDORS[unionKey].fork(data);
+      return Union.VENDORS[unionKey].fork();
     }
   }
 
   constructor(options) {
     super();
     this.options = options;
+    this.sandbox = this.options.sandbox !== false;
   }
 
-  onMounted() {
-    console.log('mounted');
-    this.trigger('mounted');
+  getContainer() {
+    // 默认使用沙盒
+    // 如果使用沙盒则不无法重复使用sdk同一份引用，则无视加载状态
+    if (this.sandbox === false) {
+      this.$container = this.createDiv(this.id);
+    } else {
+      this.$container = this.createIframe(this.id);
+    }
   }
+
+  createIframe(id) {
+    return createWrapper('iframe', id);
+  }
+
+  createDiv(id) {
+    return createWrapper('div', id);
+  }
+
+  onMounted = () => {
+    if (this.status !== '3') {
+      this.status = '3';
+      console.log('mounted');
+      this.trigger('mounted');
+    }
+  };
+  onTimeOut = () => {
+    console.log('timeout');
+  };
   /**
    * 基于注册的联盟配置重新实例化
    * 保障每一个广告位实例生命周期完整
    * @param {Object}} data
    */
-  fork(data) {
-    return new Union(this.options).run(data);
+  fork() {
+    const union = new Union(this.options);
+    union.index = UNION_INDEX++;
+    union.id = 'mp_wrapper_' + union.index;
+
+    union.getContainer();
+
+    return union;
   }
   /**
    *
    * @param {Object} data
    */
-  run(data) {
+  run(data = {}) {
+    this.data = data;
     console.log('run');
     const onInit = () => {
       isFunction(this.options.onInit) &&
-        this.options.onInit.call(this, data, {
-          onMounted: this.onMounted
+        this.options.onInit.call(this, data.consumer, {
+          onMounted: this.onMounted,
+          onTimeOut: this.onTimeOut
         });
     };
 
@@ -119,4 +174,28 @@ export default class Union extends Event {
     }
     return this;
   }
+
+  /**
+   * @param {String} type bid|error|imp|click|bidSuc
+   */
+  log(type) {
+    logger.send(this.data.trackingData[LOGGER_TYPE[type]]);
+  }
+
+  render(selector) {
+    const container = document.querySelector(selector);
+    if (container) {
+      this.log('imp');
+      container.appendChild(this.$container);
+      this.$container.style.display = 'block';
+    } else {
+      console.error(`Slot 【${selector}】 does not exist`);
+    }
+  }
+  destroy() {
+    this.$container.parentNode.removeChild(this.$container);
+  }
 }
+
+registerQQ(Union);
+registerBaidu(Union);

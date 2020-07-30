@@ -16,9 +16,13 @@
     return obj;
   }
 
-  const MODEL_NAME = 'M$P';
+  // 全局暴露的属性名
+  const MODEL_NAME = 'M$P'; // 全局暴露的配置信息
+
+  const MEDIA_CONFIG_NAME = 'M$P_M_C';
 
   const isUndefined = value => value === undefined;
+  const isString = value => typeof value === 'string';
   /*
    * isFunction(class Any{})
    * // => true
@@ -79,6 +83,9 @@
       }
     }
   };
+  const macro = str => {
+    return str;
+  };
 
   class Event {
     constructor() {
@@ -92,7 +99,9 @@
 
     off(type, handler) {}
 
-    once(type, handler) {}
+    once(type, handler) {
+      this.on(type, () => {});
+    }
 
     trigger(type, data) {
       each(this._events[type], fn => {
@@ -104,17 +113,39 @@
 
   }
 
-  (window[MODEL_NAME] || []).push(({
-    union
-  }) => {
-    union.register('qq', {
+  function send(url) {
+    if (url !== '') {
+      var img = document.createElement('img');
+
+      img.onload = function () {
+        img = img.onload = null;
+      }; // 需要宏替换
+
+
+      img.src = macro(url);
+    }
+  }
+
+  const logger = {
+    send(urls) {
+      if (isString(urls)) {
+        urls = [urls];
+      }
+
+      each(urls, send);
+    }
+
+  };
+
+  var registerQQ = (Union => {
+    Union.register('qq', {
       src: '//qzs.qq.com/qzone/biz/res/i.js',
+      sandbox: false,
 
       onInit(data, {
         onMounted,
-        onRender
+        onTimeOut
       }) {
-        console.log(data);
         window.TencentGDT = window.TencentGDT || []; // 广告初始化
 
         window.TencentGDT.push({
@@ -124,14 +155,13 @@
           // {String} - appid - 必填
           type: 'native',
           // {String} - 原生广告类型 - 必填
-          count: 3,
+          count: 1,
           // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
-          onComplete: function (res) {
+          onComplete: res => {
             if (res && res.constructor === Array) {
-              // 原生模板广告位调用 window.TencentGDT.NATIVE.renderAd(res[0], 'containerId') 进行模板广告的渲染
               // res[0] 代表取广告数组第一个数据
               // containerId：广告容器ID
-              window.TencentGDT.NATIVE.renderAd(res[0], 'containerId');
+              window.TencentGDT.NATIVE.renderAd(res[0], this.id);
               onMounted();
             } else {
               // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
@@ -144,7 +174,7 @@
       }
 
     });
-  });
+  }); //});
 
   /*
   <div class="_1gho6uvlbfj"></div>
@@ -159,27 +189,45 @@
   <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" >
   </script>
   */
+  // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 
-  (window[MODEL_NAME] || []).push(({
-    union
-  }) => {
-    union.register('baidu', {
+  var registerBaidu = (Union => {
+    Union.register('baidu', {
       src: '//cpro.baidustatic.com/cpro/ui/cm.js',
+      sandbox: false,
 
-      onInit(data) {
+      onInit(data, {
+        onMounted,
+        onTimeOut
+      }) {
         (window.slotbydup = window.slotbydup || []).push({
           id: data.consumerSlotId,
-          container: '_1gho6uvlbfj',
+          container: this.id,
           async: true
-        });
+        }); // 检测广告位
+
+        let timeOut;
+        let timer = setInterval(() => {
+          if (this.$container && this.$container.querySelector('iframe')) {
+            onMounted();
+            clearTimeout(timeOut);
+            timeOut = null;
+            clearInterval(timer);
+            timer = null;
+          }
+        }, 100);
+        setTimeout(function () {
+          onTimeOut();
+          clearInterval(timer);
+          timer = null;
+        }, data.timeOut * 60 * 1000);
       }
 
     });
-  });
+  }); // });
 
   const loadScript = (src, success, fail) => {
-    console.log(src); // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
-
+    // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
     const fisrtScript = document.getElementsByTagName('script')[0];
     let script = document.createElement('script');
 
@@ -196,6 +244,26 @@
     script.src = src;
     fisrtScript.parentNode.insertBefore(script, fisrtScript);
   };
+
+  const createWrapper = (tagName = 'div', id) => {
+    const tag = document.createElement(tagName);
+    tag.id = id;
+    tag.style.display = 'none';
+    tag.className = id;
+    document.body.appendChild(tag);
+    return tag;
+  };
+  /**
+   * @type {String}
+   */
+
+  const LOGGER_TYPE = {
+    bid: 'bidTracking',
+    error: 'errorTracking',
+    imp: 'impTracking',
+    bidSuc: 'bidSucTracking'
+  };
+  let UNION_INDEX = 0;
   /**
    * Lifecycle Hooks
    *  init
@@ -221,30 +289,60 @@
      *    options.onInit {Function}
      * @param {Boolean} force
      */
-    static use(unionKey, data) {
+    static use(unionKey) {
       if (!isUndefined(Union.VENDORS[unionKey]) && Union.VENDORS[unionKey] instanceof Union) {
-        return Union.VENDORS[unionKey].fork(data);
+        return Union.VENDORS[unionKey].fork();
       }
     }
 
     constructor(options) {
       super();
+
+      _defineProperty(this, "onMounted", () => {
+        if (this.status !== '3') {
+          this.status = '3';
+          console.log('mounted');
+          this.trigger('mounted');
+        }
+      });
+
+      _defineProperty(this, "onTimeOut", () => {
+        console.log('timeout');
+      });
+
       this.options = options;
+      this.sandbox = this.options.sandbox !== false;
     }
 
-    onMounted() {
-      console.log('mounted');
-      this.trigger('mounted');
+    getContainer() {
+      // 默认使用沙盒
+      // 如果使用沙盒则不无法重复使用sdk同一份引用，则无视加载状态
+      if (this.sandbox === false) {
+        this.$container = this.createDiv(this.id);
+      } else {
+        this.$container = this.createIframe(this.id);
+      }
     }
+
+    createIframe(id) {
+      return createWrapper('iframe', id);
+    }
+
+    createDiv(id) {
+      return createWrapper('div', id);
+    }
+
     /**
      * 基于注册的联盟配置重新实例化
      * 保障每一个广告位实例生命周期完整
      * @param {Object}} data
      */
-
-
-    fork(data) {
-      return new Union(this.options).run(data);
+    fork() {
+      const union = new Union(this.options);
+      union.index = UNION_INDEX++;
+      union.id = 'mp_wrapper_' + union.index;
+      union.getContainer();
+      return union;
     }
     /**
      *
@@ -252,12 +350,14 @@
      */
 
 
-    run(data) {
+    run(data = {}) {
+      this.data = data;
       console.log('run');
 
       const onInit = () => {
-        isFunction(this.options.onInit) && this.options.onInit.call(this, data, {
-          onMounted: this.onMounted
+        isFunction(this.options.onInit) && this.options.onInit.call(this, data.consumer, {
+          onMounted: this.onMounted,
+          onTimeOut: this.onTimeOut
         });
       };
 
@@ -277,6 +377,30 @@
 
       return this;
     }
+    /**
+     * @param {String} type bid|error|imp|click|bidSuc
+     */
+
+
+    log(type) {
+      logger.send(this.data.trackingData[LOGGER_TYPE[type]]);
+    }
+
+    render(selector) {
+      const container = document.querySelector(selector);
+
+      if (container) {
+        this.log('imp');
+        container.appendChild(this.$container);
+        this.$container.style.display = 'block';
+      } else {
+        console.error(`Slot 【${selector}】 does not exist`);
+      }
+    }
+
+    destroy() {
+      this.$container.parentNode.removeChild(this.$container);
+    }
 
   }
 
@@ -285,12 +409,17 @@
   _defineProperty(Union, "status", '0');
 
   _defineProperty(Union, "register", function (unionKey, options, force = false) {
+    console.log('register');
+
     if (isUndefined(Union.VENDORS[unionKey]) || force) {
       Union.VENDORS[unionKey] = new Union(options);
     } else {
       console.log(`Vendor ${unionKey} already exists`);
     }
   });
+
+  registerQQ(Union);
+  registerBaidu(Union);
 
   /**
    * 通过权重计算使用消耗方
@@ -336,29 +465,60 @@
     }
 
     distribute() {
-      console.log(this.consumers);
       each(this.consumers, con => {
-        Union.use(con.consumer.consumerType, con.consumer).on('init', () => {
-          console.log('init');
-        }).on('mounted', () => {
-          console.log('mounted');
-        });
+        const union = Union.use(con.consumer.consumerType);
+
+        if (union) {
+          union.on('init', () => {
+            console.log('init');
+          }).on('mounted', () => {
+            this.race(union);
+          });
+          union.run(con);
+        } else {
+          console.error(`Union 【${con.consumer.consumerType}】is not register`);
+        }
       });
+    }
+    /**
+     * 真实填充 根据配置填充策略进行选择
+     *
+     * 有竞速模式和随机模式
+     * @param {Union} union
+     */
+
+
+    race(union) {
+      if (this.status !== '5') {
+        this.status = '5';
+        union.render(this.container);
+      }
     }
 
   }
 
   class Mp {
     constructor(slots) {
+      // 广告位实例对象
       this.slots = {};
       this.init(slots);
     }
 
     init(slots) {
-      this._slots = slots; // 覆盖原有对象
+      // 广告位配置信息
+      this._originalList = slots; // 覆盖原有对象
 
-      window[MODEL_NAME] = this;
-      this.handler(this._slots);
+      window[MODEL_NAME] = this; // 转化媒体配置
+
+      this.MEDIA_CONFIG = {};
+
+      if (window[MEDIA_CONFIG_NAME] && window[MEDIA_CONFIG_NAME].slotBiddings) {
+        each(window[MEDIA_CONFIG_NAME].slotBiddings, slotBidding => {
+          this.MEDIA_CONFIG[slotBidding.slotId] = slotBidding;
+        });
+      }
+
+      this.handler(this._originalList);
     }
     /**
      * @param {Object|Function}  params 支持对象和方法
@@ -387,10 +547,14 @@
           });
         } else if (isPlainObject(slot) && slot.id) {
           if (isUndefined(this.slots[slot.id])) {
-            // 这里应该去请求广告位，然后调用填充方法
-            this.fillAd(slot.container, {
-              id: slot.id
-            });
+            if (this.MEDIA_CONFIG[slot.id]) {
+              // 这里应该去请求广告位，然后调用填充方法
+              this.fillAd(slot.container, { ...this.MEDIA_CONFIG[slot.id],
+                id: slot.id
+              });
+            } else {
+              console.error(`slot configuration does not exist,id：${slot.id}`);
+            }
           } else {
             console.error(`slotid ${slot.id} already exists`);
           }
@@ -465,40 +629,6 @@
 
   if (Array.isArray(_mp) || isUndefined(_mp)) {
     new Mp(_mp);
-  } // 以下是临时代码
-
-
-  window[MODEL_NAME].fillAd('.adslot', {
-    slotId: '17002',
-    isConcurrent: false,
-    priorityPolicy: 0,
-    slotBidding: [{
-      adKey: 3017029,
-      geoCode: [],
-      hour: [],
-      weight: 30,
-      //消耗方的权重,所有的weight加起来占比表示所占权重。
-      consumer: {
-        timeOut: 50,
-        consumerType: 'baidu',
-        //消耗方类型
-        consumerSlotId: '8021223221041374',
-        consumerSlotId: 'u6181548',
-        appid: '1110655203'
-      },
-      trackingData: {
-        bidTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/b?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
-        //开始请求
-        errorTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/e?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
-        //请求返回失败，包括请求成功但是广告数组为0
-        impTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/i?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
-        //广告展现
-        clickTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/c?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
-        //广告点击
-        bidSucTracking: 'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/s?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=' //广告返回成功
-
-      }
-    }]
-  });
+  }
 
 }());

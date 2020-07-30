@@ -1,4 +1,5 @@
 import { each, macro } from './utils/index';
+import { isString } from './utils/type';
 
 const list = [];
 function send(url) {
@@ -8,12 +9,15 @@ function send(url) {
       img = img.onload = null;
     };
     // 需要宏替换
-    img.src = url;
+    img.src = macro(url);
     list.push(img);
   }
 }
 const logger = {
   send(urls) {
+    if (isString(urls)) {
+      urls = [urls];
+    }
     each(urls, send);
   }
 };

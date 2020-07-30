@@ -1,5 +1,6 @@
 export const isUndefined = value => value === undefined;
 
+export const isString = value => typeof value === 'string';
 /*
  * isFunction(class Any{})
  * // => true

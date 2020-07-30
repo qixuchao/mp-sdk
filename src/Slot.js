@@ -56,15 +56,36 @@ export default class Slot {
   }
 
   distribute() {
-    console.log(this.consumers);
     each(this.consumers, con => {
-      Union.use(con.consumer.consumerType, con.consumer)
-        .on('init', () => {
-          console.log('init');
-        })
-        .on('mounted', () => {
-          console.log('mounted');
-        });
+      const union = Union.use(con.consumer.consumerType);
+      if (union) {
+        union
+          .on('init', () => {
+            console.log('init');
+          })
+          .on('mounted', () => {
+            this.race(union);
+          });
+
+        union.run(con);
+      } else {
+        console.error(`Union 【${con.consumer.consumerType}】is not register`);
+      }
     });
+  }
+
+  /**
+   * 真实填充 根据配置填充策略进行选择
+   *
+   * 有竞速模式和随机模式
+   * @param {Union} union
+   */
+  race(union) {
+    if (this.status !== '5') {
+      this.status = '5';
+      union.render(this.container);
+    } else {
+      //   union.destroy();
+    }
   }
 }

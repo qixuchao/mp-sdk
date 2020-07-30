@@ -2,7 +2,6 @@
 const babel = require('rollup-plugin-babel');
 const serve = require('rollup-plugin-serve');
 const { uglify } = require('rollup-plugin-uglify');
-const { uglify } = require('rollup-plugin-uglify');
 
 const env = process.env.NODE_ENV;
 

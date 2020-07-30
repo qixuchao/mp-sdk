@@ -11,3 +11,7 @@ export const each = (list, callback) => {
     }
   }
 };
+
+export const macro = str => {
+  return str;
+};

@@ -1,5 +1,5 @@
 /* gloabl window */
-import { MODEL_NAME } from './config';
+import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
 import { each } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
@@ -9,17 +9,26 @@ class Mp {
   static Ver = '__VERSION__';
 
   constructor(slots) {
+    // 广告位实例对象
     this.slots = {};
     this.init(slots);
   }
 
   init(slots) {
-    this._slots = slots;
-
+    // 广告位配置信息
+    this._originalList = slots;
     // 覆盖原有对象
     window[MODEL_NAME] = this;
 
-    this.handler(this._slots);
+    // 转化媒体配置
+    this.MEDIA_CONFIG = {};
+    if (window[MEDIA_CONFIG_NAME] && window[MEDIA_CONFIG_NAME].slotBiddings) {
+      each(window[MEDIA_CONFIG_NAME].slotBiddings, slotBidding => {
+        this.MEDIA_CONFIG[slotBidding.slotId] = slotBidding;
+      });
+    }
+
+    this.handler(this._originalList);
   }
   /**
    * @param {Object|Function}  params 支持对象和方法
@@ -45,8 +54,15 @@ class Mp {
         });
       } else if (isPlainObject(slot) && slot.id) {
         if (isUndefined(this.slots[slot.id])) {
-          // 这里应该去请求广告位，然后调用填充方法
-          this.fillAd(slot.container, { id: slot.id });
+          if (this.MEDIA_CONFIG[slot.id]) {
+            // 这里应该去请求广告位，然后调用填充方法
+            this.fillAd(slot.container, {
+              ...this.MEDIA_CONFIG[slot.id],
+              id: slot.id
+            });
+          } else {
+            console.error(`slot configuration does not exist,id：${slot.id}`);
+          }
         } else {
           console.error(`slotid ${slot.id} already exists`);
         }
