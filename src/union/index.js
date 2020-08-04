@@ -58,7 +58,6 @@ export default class Union extends Event {
    * @param {Boolean} force
    */
   static register = function (unionKey, options, force = false) {
-    console.log('register');
     if (isUndefined(Union.VENDORS[unionKey]) || force) {
       Union.VENDORS[unionKey] = new Union(unionKey, options);
     } else {
@@ -94,6 +93,8 @@ export default class Union extends Event {
 
   onLoaded = () => {
     this.log('bidSuc');
+
+    this.onMounted();
   };
 
   onMounted = () => {
@@ -135,29 +136,29 @@ export default class Union extends Event {
     const onInit = () => {
       this.log('bid');
 
-      proxyCall.call(this, this.options.onInit, {
+      proxyCall.call(this, this.options.onInit, data.consumer || {}, {
         onTimeOut: this.onTimeOut,
         onLoaded: this.onLoaded
       });
     };
 
-    if (Union.loaded) {
-      this.trigger('init');
-      onInit();
+    this.trigger('init');
+    onInit();
+
+    if (!this.loaded) {
       loadScript(
         this.options.src,
         () => {
-          Union.loaded = true;
+          this.loaded = true;
           this.trigger('loaded');
         },
         () => {
-          Union.loaded = true;
+          this.loaded = true;
           this.trigger('loadError');
         }
       );
-    } else {
-      onInit();
     }
+
     return this;
   }
 

@@ -4,11 +4,11 @@ import { isString } from './utils/type';
 const list = [];
 function send(url) {
   if (url !== '') {
-    var img = document.createElement('img');
+    let img = document.createElement('img');
     img.onload = function () {
       img = img.onload = null;
     };
-    // 需要宏替换
+    // 宏替换
     img.src = macroReplace(url);
     list.push(img);
   }

@@ -62,7 +62,6 @@ export default class Slot {
   distribute() {
     each(this.consumers, con => {
       const union = Union.use(con.consumer.consumerType);
-      console.log(this, union);
       if (union) {
         union
           .on('init', () => {
@@ -89,6 +88,7 @@ export default class Slot {
     console.log(union);
     if (this.status !== '5') {
       this.status = '5';
+      console.log('winer ' + union);
       union.render(this.container);
     } else {
       //   union.destroy();

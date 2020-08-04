@@ -188,12 +188,16 @@
   }
 
   // 全局暴露的属性名
-  const MODEL_NAME = 'M$P'; // 全局暴露的配置信息
+  var MODEL_NAME = 'M$P'; // 全局暴露的配置信息
 
-  const MEDIA_CONFIG_NAME = 'M$P_M_C';
+  var MEDIA_CONFIG_NAME = 'M$P_M_C';
 
-  const isUndefined = value => value === undefined;
-  const isString = value => typeof value === 'string';
+  var isUndefined = function isUndefined(value) {
+    return value === undefined;
+  };
+  var isString = function isString(value) {
+    return typeof value === 'string';
+  };
   /*
    * isFunction(class Any{})
    * // => true
@@ -214,8 +218,10 @@
    * // => false
    */
 
-  const isFunction = value => typeof value === 'function';
-  const toString = Object.prototype.toString;
+  var isFunction = function isFunction(value) {
+    return typeof value === 'function';
+  };
+  var toString = Object.prototype.toString;
 
   function getTag(value) {
     if (value == null) {
@@ -225,7 +231,7 @@
     return toString.call(value);
   }
 
-  const isPlainObject = value => {
+  var isPlainObject = function isPlainObject(value) {
     if (getTag(value) !== '[object Object]') {
       return false;
     }
@@ -234,7 +240,7 @@
       return true;
     }
 
-    let proto = value;
+    var proto = value;
 
     while (Object.getPrototypeOf(proto) !== null) {
       proto = Object.getPrototypeOf(proto);
@@ -258,31 +264,42 @@
     return str;
   };
 
-  class Event {
-    constructor() {
+  var Event = /*#__PURE__*/function () {
+    function Event() {
+      _classCallCheck(this, Event);
+
       this._events = {};
     }
 
-    on(type, handler) {
-      (this._events[type] = this._events[type] || []).push(handler);
-      return this;
-    }
+    _createClass(Event, [{
+      key: "on",
+      value: function on(type, handler) {
+        (this._events[type] = this._events[type] || []).push(handler);
+        return this;
+      }
+    }, {
+      key: "off",
+      value: function off(type, handler) {}
+    }, {
+      key: "once",
+      value: function once(type, handler) {
+        this.on(type, function () {});
+      }
+    }, {
+      key: "trigger",
+      value: function trigger(type, data) {
+        var _this = this;
 
-    off(type, handler) {}
+        each(this._events[type], function (fn) {
+          if (isFunction(fn)) {
+            fn.call(_this, data);
+          }
+        });
+      }
+    }]);
 
-    once(type, handler) {
-      this.on(type, () => {});
-    }
-
-    trigger(type, data) {
-      each(this._events[type], fn => {
-        if (isFunction(fn)) {
-          fn.call(this, data);
-        }
-      });
-    }
-
-  }
+    return Event;
+  }();
 
   function _send(url) {
     if (url !== '') {
@@ -290,7 +307,7 @@
 
       img.onload = function () {
         img = img.onload = null;
-      }; // 需要宏替换
+      }; // 宏替换
 
 
       img.src = macroReplace(url);
@@ -316,6 +333,7 @@
 
         var onLoaded = _ref.onLoaded,
             onTimeOut = _ref.onTimeOut;
+        console.log('====', data);
         window.TencentGDT = window.TencentGDT || [];
         var timeout = setTimeout(function () {
           onTimeOut();
@@ -335,6 +353,7 @@
           count: 1,
           // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
           onComplete: function onComplete(res) {
+            console.log('无广告');
             clearInterval(timeout);
             onLoaded();
 
@@ -504,6 +523,8 @@
 
       _defineProperty(_assertThisInitialized(_this), "onLoaded", function () {
         _this.log('bidSuc');
+
+        _this.onMounted();
       });
 
       _defineProperty(_assertThisInitialized(_this), "onMounted", function () {
@@ -577,26 +598,25 @@
         var onInit = function onInit() {
           _this2.log('bid');
 
-          proxyCall.call(_this2, _this2.options.onInit, {
+          proxyCall.call(_this2, _this2.options.onInit, data.consumer || {}, {
             onTimeOut: _this2.onTimeOut,
             onLoaded: _this2.onLoaded
           });
         };
 
-        if (Union.loaded) {
-          this.trigger('init');
-          onInit();
+        this.trigger('init');
+        onInit();
+
+        if (!this.loaded) {
           loadScript(this.options.src, function () {
-            Union.loaded = true;
+            _this2.loaded = true;
 
             _this2.trigger('loaded');
           }, function () {
-            Union.loaded = true;
+            _this2.loaded = true;
 
             _this2.trigger('loadError');
           });
-        } else {
-          onInit();
         }
 
         return this;
@@ -638,7 +658,6 @@
 
   _defineProperty(Union, "register", function (unionKey, options) {
     var force = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    console.log('register');
 
     if (isUndefined(Union.VENDORS[unionKey]) || force) {
       Union.VENDORS[unionKey] = new Union(unionKey, options);
@@ -707,7 +726,6 @@
 
         each(this.consumers, function (con) {
           var union = Union.use(con.consumer.consumerType);
-          console.log(_this, union);
 
           if (union) {
             union.on('init', function () {
@@ -735,6 +753,7 @@
 
         if (this.status !== '5') {
           this.status = '5';
+          console.log('winer ' + union);
           union.render(this.container);
         }
       }

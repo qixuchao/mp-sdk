@@ -6,6 +6,7 @@ export default Union => {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
+      console.log('====', data);
       window.TencentGDT = window.TencentGDT || [];
       var timeout = setTimeout(() => {
         onTimeOut();
@@ -22,6 +23,7 @@ export default Union => {
         // display_type:'',
         count: 1, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
         onComplete: res => {
+          console.log('无广告');
           clearInterval(timeout);
           onLoaded();
           if (res && res.constructor === Array) {
