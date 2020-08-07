@@ -65,9 +65,10 @@ export default class Slot {
       if (union) {
         union
           .on('init', () => {
-            console.log('init');
+            // console.log('init');
           })
-          .on('mounted', () => {
+          .on('loaded', () => {
+            console.log('loaded');
             this.race(union);
           });
 

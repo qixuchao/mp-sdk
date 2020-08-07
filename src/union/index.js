@@ -57,6 +57,7 @@ export default class Union extends Event {
    *    options.src {String}
    *    options.sandbox {Boolean} default: true
    *    options.onInit {Function}
+   *    options.onBeforeMount
    *    options.onMounted {Function}
    *    options.getWeight {Function} 返回权重值
    * @param {Boolean} force
@@ -64,6 +65,7 @@ export default class Union extends Event {
   static register = function (unionKey, options, force = false) {
     if (isUndefined(Union.VENDORS[unionKey]) || force) {
       Union.VENDORS[unionKey] = new Union(unionKey, options);
+      Union.vendorLoaded[unionKey] = 'init';
     } else {
       console.log(`Vendor ${unionKey} already exists`);
     }
@@ -95,22 +97,19 @@ export default class Union extends Event {
     }
   }
 
-  onLoaded = () => {
-    this.log('bidSuc');
+  /**
+   * 数据加载完成
+   */
+  onLoaded = adInfo => {
+    console.log('onLoaded');
+    this.log('bidSuc', adInfo);
+    this.adInfo = adInfo;
 
-    this.onMounted();
-  };
-
-  onMounted = () => {
-    if (this.status !== '3') {
-      this.status = '3';
-      console.log('mounted');
-      this.trigger('mounted');
-    }
+    this.trigger('loaded');
   };
 
   onTimeOut = () => {
-    console.log('timeout', this);
+    console.log('timeout');
     this.log('error');
     this.destroy();
   };
@@ -150,15 +149,16 @@ export default class Union extends Event {
     onInit();
 
     // 同类联盟代码是否已经加载
-    if (!Union.vendorLoaded[this.name]) {
+    console.log(Union.vendorLoaded[this.name]);
+    if (Union.vendorLoaded[this.name] === 'init') {
+      Union.vendorLoaded[this.name] = 'loading';
       loadScript(
         this.options.src,
         () => {
-          Union.vendorLoaded[this.name] = true;
-          this.trigger('loaded');
+          Union.vendorLoaded[this.name] = 'loaded';
         },
         () => {
-          this.loaded = true;
+          Union.vendorLoaded[this.name] = 'init';
           this.trigger('loadError');
         }
       );
@@ -181,10 +181,13 @@ export default class Union extends Event {
       this.log('imp');
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常
-      proxyCall.call(this, this.options.onMounted);
+      proxyCall.call(this, this.options.onBeforeMount);
 
       container.appendChild(this.$container);
       this.$container.style.display = 'block';
+
+      // 处理不同联盟渲染在填充前预处理，保证显示正常
+      proxyCall.call(this, this.options.onMounted);
 
       // 绑定点击事件
       if (this.sandbox) {
