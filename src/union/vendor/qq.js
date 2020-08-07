@@ -41,7 +41,8 @@ export default Union => {
         }
       });
     },
-    onMounted() {}
+    onMounted() {},
+    getWeight() {}
   });
 };
 //});

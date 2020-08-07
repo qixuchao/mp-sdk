@@ -11,6 +11,7 @@ const config = {
   input: 'src/index.js',
   output: {
     format: 'iife',
+    banner: `/* mp.js v${pkg.version} */`,
     file: 'dist/mp.js' // equivalent to --output
     //name: "_M_P_"
   },
@@ -22,7 +23,9 @@ const config = {
       __VERSION__: pkg.version
     }),
     uglify({
-      compress: {}
+      compress: {
+        drop_console: true
+      }
     })
   ]
 };

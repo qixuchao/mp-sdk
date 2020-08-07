@@ -115,19 +115,28 @@ class Mp {
           },
           utils: {}
         });
-      } else if (isPlainObject(slot) && slot.id) {
-        if (isUndefined(this.slots[slot.id])) {
-          if (this.MEDIA_CONFIG[slot.id]) {
-            // 这里应该去请求广告位，然后调用填充方法
-            this.fillAd(slot.container, {
-              ...this.MEDIA_CONFIG[slot.id],
-              id: slot.id
-            });
+      } else if (isPlainObject(slot)) {
+        if (!isUndefined(slot.id)) {
+          if (isUndefined(this.slots[slot.id])) {
+            if (this.MEDIA_CONFIG[slot.id]) {
+              // 这里应该去请求广告位，然后调用填充方法
+              this.fillAd(slot.container, {
+                ...this.MEDIA_CONFIG[slot.id],
+                id: slot.id
+              });
+            } else {
+              console.error(`Slot configuration does not exist,id：${slot.id}`);
+            }
           } else {
-            console.error(`Slot configuration does not exist,id：${slot.id}`);
+            console.error(`Slotid "${slot.id}" already exists`);
           }
-        } else {
-          console.error(`Slotid "${slot.id}" already exists`);
+        } else if (!isUndefined(slot.mediaid) && !isUndefined(slot.secret)) {
+          if (isUndefined(this.mediaid)) {
+            this.mediaid = slot.mediaid;
+            this.secret = slot.secret;
+          } else {
+            console.error(`mediaid "${slot.id}" already exists`);
+          }
         }
       }
     });

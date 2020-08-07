@@ -15,7 +15,7 @@
             vendorId: 192, //请求ftx广告的sid
             slotBiddings: [
                 {
-                    slotId: '17002', //后台广告位ID，里面会有多个消耗方
+                    slotId: '5634199', //后台广告位ID，里面会有多个消耗方
                     isConcurrent: false, //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
                     priorityPolicy: 0, // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
                     slotBidding: [
@@ -50,7 +50,7 @@
                             consumer: {
                                 timeOut: 10,
                                 consumerType: 'qq', //消耗方类型
-                                consumerSlotId: '8021223221041374',
+                                consumerSlotId: '5051026374604064',
                                 appId: '1110655203'
                             },
                             trackingData: {
@@ -69,7 +69,7 @@
                     ]
                 },
                 {
-                    slotId: '17003', //后台广告位ID，里面会有多个消耗方
+                    slotId: '5634198', //后台广告位ID，里面会有多个消耗方
                     isConcurrent: false, //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
                     priorityPolicy: 0, // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
                     slotBidding: [
@@ -81,7 +81,7 @@
                             consumer: {
                                 timeOut: 10,
                                 consumerType: 'qq', //消耗方类型
-                                consumerSlotId: '8021223221041375',
+                                consumerSlotId: '5021721324103210',
                                 appId: '1110655204'
                             },
                             trackingData: {
@@ -96,7 +96,30 @@
                                 bidSucTracking:
                                     'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/s?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=' //广告返回成功
                             }
-                        }
+                        },
+                        {
+                            adKey: 3017028,
+                            geoCode: [],
+                            hour: [],
+                            weight: 30, //消耗方的权重,所有的weight加起来占比表示所占权重。
+                            consumer: {
+                                timeOut: 10,
+                                consumerType: 'baidu', //消耗方类型
+                                consumerSlotId: 'u6181548' //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
+                            },
+                            trackingData: {
+                                bidTracking:
+                                    'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/b?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=', //开始请求
+                                errorTracking:
+                                    'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/e?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=', //请求返回失败，包括请求成功但是广告数组为0
+                                impTracking:
+                                    'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/i?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=', //广告展现
+                                clickTracking:
+                                    'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/c?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=', //广告点击
+                                bidSucTracking:
+                                    'http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/s?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=' //广告返回成功
+                            }
+                        },
                     ]
                 }
             ],
@@ -112,12 +135,19 @@
     <script>
         window.M$P = window.M$P || []
         window.M$P.push({
-            id: '17002',
+            media: '188',
+            secret: '12A4E15BF1257A15019B51464480511231'
+        })
+
+        // 上图下文
+        window.M$P.push({
+            id: '5634199',
             container: '.adslot'
         })
 
+        // 三图
         window.M$P.push({
-            id: '17003',
+            id: '5634198',
             container: '.adslot2'
         })
     </script>

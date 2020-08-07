@@ -3,7 +3,7 @@ import { isUndefined, isFunction } from '../utils/type';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
-import { loadScript, createWrapper } from './helper';
+import { loadScript, createWrapper, addEventListener } from './helper';
 
 // 联盟实例的状态
 const STATUS = {
@@ -21,7 +21,9 @@ const LOGGER_TYPE = {
   bid: 'bidTracking',
   error: 'errorTracking',
   imp: 'impTracking',
-  bidSuc: 'bidSucTracking'
+  bidSuc: 'bidSucTracking',
+  click: 'clickTracking',
+  winner: 'bidSelectedTracking'
 };
 
 let UNION_INDEX = 0;
@@ -40,14 +42,14 @@ function proxyCall(fn, ...args) {
 export default class Union extends Event {
   static VENDORS = {};
   /**
-   * @type Boolean
+   * @type Object
    * 为什么状态值，不放到实例而是作为静态变量？
    * 因为实例的执行依赖前置的脚本加载，多个实例之间也同时这个状态。固本身这个状态跟实例无关
    * 所以采用静态变量，实例间共享。
    *
    * 如果开启沙箱模式，则忽略此字段，每次重新注入
    */
-  static loaded = false;
+  static vendorLoaded = {};
   /**
    *
    * @param {String} unionKey
@@ -55,6 +57,8 @@ export default class Union extends Event {
    *    options.src {String}
    *    options.sandbox {Boolean} default: true
    *    options.onInit {Function}
+   *    options.onMounted {Function}
+   *    options.getWeight {Function} 返回权重值
    * @param {Boolean} force
    */
   static register = function (unionKey, options, force = false) {
@@ -145,11 +149,12 @@ export default class Union extends Event {
     this.trigger('init');
     onInit();
 
-    if (!this.loaded) {
+    // 同类联盟代码是否已经加载
+    if (!Union.vendorLoaded[this.name]) {
       loadScript(
         this.options.src,
         () => {
-          this.loaded = true;
+          Union.vendorLoaded[this.name] = true;
           this.trigger('loaded');
         },
         () => {
@@ -170,6 +175,7 @@ export default class Union extends Event {
   }
 
   render(selector) {
+    this.log('winner');
     const container = document.querySelector(selector);
     if (container) {
       this.log('imp');
@@ -183,6 +189,9 @@ export default class Union extends Event {
       // 绑定点击事件
       if (this.sandbox) {
       } else {
+        addEventListener(this.$container, () => {
+          this.log('click');
+        });
       }
     } else {
       console.error(`Slot 【${selector}】 does not exist`);

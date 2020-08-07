@@ -85,10 +85,9 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
-    console.log(union);
     if (this.status !== '5') {
       this.status = '5';
-      console.log('winer ' + union);
+      console.log('winer ' + union.name);
       union.render(this.container);
     } else {
       //   union.destroy();

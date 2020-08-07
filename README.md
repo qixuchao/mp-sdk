@@ -29,11 +29,11 @@ meida-prime
 //// H5 SDK接入全局只需运行一次
  (function() {
     var doc = document, 
-    h = doc.getElementsByTagName('head')[0], 
+    fs = doc.getElementsByTagName('script')[0], 
     s = doc.createElement('script');
     s.async = true; 
     s.src = '//static.xxx.com/m/mp.js';
-    h && h.insertBefore(s, h.firstChild);
+    fs && fs.parentNode.insertBefore(s, fs);
 })();
 ```
 
