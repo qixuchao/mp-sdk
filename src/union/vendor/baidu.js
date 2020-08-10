@@ -35,7 +35,7 @@ export default Union => {
           clearInterval(timer);
           timer = null;
         }
-      }, 100);
+      }, 350);
 
       timeOut = setTimeout(function () {
         onTimeOut();

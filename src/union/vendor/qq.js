@@ -9,10 +9,6 @@ export default Union => {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
-      // var s = document.createElement('script');
-      // s.src = '//qzs.qq.com/qzone/biz/res/i.js';
-      // document.body.appendChild(s);
-
       window.TencentGDT = window.TencentGDT || [];
       var timeout = setTimeout(() => {
         onTimeOut();
@@ -32,7 +28,8 @@ export default Union => {
         onComplete: res => {
           clearInterval(timeout);
           if (Array.isArray(res)) {
-            onLoaded(res[0]);
+            onLoaded();
+            window.TencentGDT.NATIVE.renderAd(res[0], this.id);
           } else {
             console.log('无广告');
             onTimeOut();
@@ -50,14 +47,6 @@ export default Union => {
       // 原生模板广告位调用 window.TencentGDT.NATIVE.renderAd(res[0], 'containerId') 进行模板广告的渲染
       // res[0] 代表取广告数组第一个数据
       // containerId：广告容器ID
-      console.log(
-        JSON.stringify(this.adInfo),
-        document.querySelector('#' + this.id)
-      );
-
-      if (this.adInfo) {
-        window.TencentGDT.NATIVE.renderAd(this.adInfo, this.id);
-      }
     },
     getWeight() {}
   });
