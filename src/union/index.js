@@ -1,5 +1,6 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
+import { macroReplace } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
@@ -171,7 +172,11 @@ export default class Union extends Event {
    * @param {String} type bid|error|imp|click|bidSuc
    */
   log(type) {
-    logger.send(this.data.trackingData[LOGGER_TYPE[type]]);
+    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
+      REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
+      DATA: JSON.stringify(this.requestData)
+    });
+    logger.send(url);
   }
 
   render(selector) {

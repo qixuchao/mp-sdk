@@ -23,6 +23,8 @@ class Mp {
     // 转化媒体配置
     this.MEDIA_CONFIG = {};
 
+    this.config = window[MEDIA_CONFIG_NAME].config || {};
+
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
     this.handler(this._originalList);

@@ -35,7 +35,7 @@ function getConsumerByweight(consumers) {
 }
 
 export default class Slot {
-  constructor(container, options = {}) {
+  constructor(container, options = {}, config) {
     this.container = container;
     this.$container = document.querySelector(container);
 
@@ -44,6 +44,9 @@ export default class Slot {
     this.priorityPolicy = options.priorityPolicy;
 
     this.options = options;
+    this.config = config;
+
+    this.slotId = options.slotId;
 
     this.status = '0';
 
@@ -63,6 +66,20 @@ export default class Slot {
     each(this.consumers, con => {
       const union = Union.use(con.consumer.consumerType);
       if (union) {
+        // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
+        union.requestId = `${this.slotId}-${con.consumer.consumerSlotId}`;
+
+        // 存放不同消耗方的不同配置信息
+        union.requestData = {
+          category: this.isConcurrent,
+          sdkVersion: '__VERSION__',
+          policyVersion: this.config.policyVersion,
+          slotId: this.slotId,
+          err: 0,
+          consumerType: con.consumer.consumerType,
+          consumerSlotId: con.consumer.consumerSlotId
+        };
+
         union
           .on('init', () => {
             // console.log('init');
