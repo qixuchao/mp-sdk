@@ -89,9 +89,17 @@ export default class Slot {
     if (this.status !== '5') {
       this.status = '5';
       console.log('winer ' + union.name);
+      this.winner = union;
       union.render(this.container);
     } else {
       //   union.destroy();
     }
+  }
+  reload() {
+    if (!(this.winner && this.winner.hasReload())) {
+      this.status = '4';
+      this.distribute();
+    }
+    return this;
   }
 }

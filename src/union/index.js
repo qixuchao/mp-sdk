@@ -200,6 +200,14 @@ export default class Union extends Event {
       console.error(`Slot 【${selector}】 does not exist`);
     }
   }
+  hasReload() {
+    if (this.options.reload) {
+      this.options.reload(this.data.consumer);
+      return true;
+    } else {
+      return false;
+    }
+  }
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&

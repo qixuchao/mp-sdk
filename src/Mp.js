@@ -6,7 +6,7 @@ import Union from './union/index';
 import Slot from './Slot';
 
 class Mp {
-  static Ver = '__VERSION__';
+  Ver = '__VERSION__';
 
   constructor(slots) {
     // 广告位实例对象
@@ -117,13 +117,17 @@ class Mp {
         });
       } else if (isPlainObject(slot)) {
         if (!isUndefined(slot.id)) {
-          if (isUndefined(this.slots[slot.id])) {
+          if (isUndefined(this.slots[slot.id]) || slot.force) {
             if (this.MEDIA_CONFIG[slot.id]) {
               // 这里应该去请求广告位，然后调用填充方法
-              this.fillAd(slot.container, {
-                ...this.MEDIA_CONFIG[slot.id],
-                id: slot.id
-              });
+              this.fillAd(
+                slot.container,
+                {
+                  ...this.MEDIA_CONFIG[slot.id],
+                  id: slot.id
+                },
+                slot.force
+              );
             } else {
               console.error(`Slot configuration does not exist,id：${slot.id}`);
             }
@@ -141,8 +145,19 @@ class Mp {
       }
     });
   }
-  fillAd(container, slotConfig) {
-    this.slots[slotConfig.id] = new Slot(container, slotConfig);
+  /**
+   * 广告填充
+   * @param {String} container
+   * @param {Object} slotConfig
+   * @param {Boolean} force 强制渲染
+   */
+  fillAd(container, slotConfig, force) {
+    // 强制渲染先移除前一个广告
+    if (this.slots[slotConfig.id] && force) {
+      this.slots[slotConfig.id] = this.slots[slotConfig.id].reload();
+    } else {
+      this.slots[slotConfig.id] = new Slot(container, slotConfig, this.config);
+    }
   }
 }
 

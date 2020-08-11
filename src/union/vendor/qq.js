@@ -48,7 +48,10 @@ export default Union => {
       // res[0] 代表取广告数组第一个数据
       // containerId：广告容器ID
     },
-    getWeight() {}
+    getWeight() {},
+    reload(data) {
+      window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
+    }
   });
 };
 //});
