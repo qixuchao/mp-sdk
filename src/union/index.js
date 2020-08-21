@@ -102,16 +102,18 @@ export default class Union extends Event {
    * 数据加载完成
    */
   onLoaded = adInfo => {
-    console.log('onLoaded');
     this.log('bidSuc', adInfo);
     this.adInfo = adInfo;
 
     this.trigger('loaded');
+
+    this.trigger('complete');
   };
 
   onTimeOut = () => {
     console.log('timeout');
     this.log('error');
+    this.trigger('complete');
     this.destroy();
   };
 
@@ -212,6 +214,13 @@ export default class Union extends Event {
     } else {
       return false;
     }
+  }
+  onClick() {
+    console.log('click');
+    this.log('click');
+  }
+  onClose() {
+    this.trigger('close');
   }
   destroy = () => {
     this.status = '10';

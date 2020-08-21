@@ -128,7 +128,8 @@ class Mp {
                   ...this.MEDIA_CONFIG[slot.id],
                   id: slot.id
                 },
-                slot.force
+                slot.force,
+                slot.fallback
               );
             } else {
               console.error(`Slot configuration does not exist,id：${slot.id}`);
@@ -152,13 +153,19 @@ class Mp {
    * @param {String} container
    * @param {Object} slotConfig
    * @param {Boolean} force 强制渲染
+   * @param {Object} options slot传入配置
    */
-  fillAd(container, slotConfig, force) {
+  fillAd(container, slotConfig, force, options) {
     // 强制渲染先移除前一个广告
     if (this.slots[slotConfig.id] && force) {
       this.slots[slotConfig.id] = this.slots[slotConfig.id].reload();
     } else {
-      this.slots[slotConfig.id] = new Slot(container, slotConfig, this.config);
+      this.slots[slotConfig.id] = new Slot(
+        container,
+        slotConfig,
+        this.config,
+        options
+      );
     }
   }
 }
