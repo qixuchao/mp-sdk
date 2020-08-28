@@ -1,6 +1,6 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { macroReplace } from '../utils/index';
+import { macroReplace, each } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
@@ -41,6 +41,7 @@ function proxyCall(fn, ...args) {
  *
  */
 export default class Union extends Event {
+
   static VENDORS = {};
   /**
    * @type Object
@@ -181,11 +182,28 @@ export default class Union extends Event {
     logger.send(url);
   }
 
+  // 目前只是针对优量汇的大图素材
+  getMaterial(container) {
+    const _container = container.querySelector(`.${this.id} iframe`)
+    if (_container) {
+      const iframeDocument = _container.contentWindow.document
+      const imgList = iframeDocument.querySelectorAll('img')
+      const imgurls = []
+      each(imgList, img => 'getAttribute' in new Object(img) && imgurls.push(img.getAttribute('src')))
+      this.requestData['imgSrc'] = imgurls
+    }
+  }
+
   render(selector) {
+    let _this = this
     this.log('winner');
     const container = document.querySelector(selector);
     if (container) {
-      this.log('imp');
+      setTimeout( () => {
+        _this.getMaterial(container)
+        _this.log('imp');
+      }, 300)
+      // this.log('imp');
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       proxyCall.call(this, this.options.onBeforeMount);
@@ -199,8 +217,8 @@ export default class Union extends Event {
       // 绑定点击事件
       if (this.sandbox) {
       } else {
-        addEventListener(this.$container, () => {
-          this.log('click');
+        addEventListener(_this.$container, 'click', () => {
+          _this.log('click');
         });
       }
     } else {

@@ -47,20 +47,33 @@ export default Union => {
       // 原生模板广告位调用 window.TencentGDT.NATIVE.renderAd(res[0], 'containerId') 进行模板广告的渲染
       // res[0] 代表取广告数组第一个数据
       // containerId：广告容器ID
-      var that = this;
+      const that = this;
       var doClick = TencentGDT.TN.doClick;
       var adClose = TencentGDT.TN.adClose;
 
-      TencentGDT.TN.doClick = function (params) {
-        console.log('click');
-        var container = document.querySelector(
-          'div[id*="' + params.traceid + '"]'
-        );
-        if (container && container.parentNode.id === that.id) {
-          that.onClick();
+      window['unionInstance'] = Object.assign(window['unionInstance'] || {}, {[that.id]: that})
+
+      TencentGDT.TN.doClick = function (e) {
+        let frameName = e.path[e.path.length - 1].name
+        const slotContainer = document.querySelector(`[name='${frameName}']`).parentNode.parentNode
+        const slotContainerId = slotContainer.getAttribute('id')
+        const _this = (window.unionInstance || {})[slotContainerId]
+        if (slotContainer) {
+          _this.onClick();
         }
-        doClick && doClick.apply(this, arguments);
-      };
+        doClick && doClick.apply(_this, arguments);
+      }
+
+      // TencentGDT.TN.doClick = function (params) {
+      //   var container = document.querySelector(
+      //     'div[id*="' + params.traceid + '"]'
+      //   );
+      //
+      //   if (container && container.parentNode.id === that.id) {
+      //     that.onClick();
+      //   }
+      //   doClick && doClick.apply(that, arguments);
+      // };
       TencentGDT.TN.adClose = function (params) {
         var container = document.querySelector(
           'div[id*="' + params.traceid + '"]'
@@ -76,7 +89,8 @@ export default Union => {
     reload(data) {
       window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
     },
-    onClick() {},
+    onClick() {
+    },
     onClose() {}
   });
 };
