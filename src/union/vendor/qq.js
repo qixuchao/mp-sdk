@@ -36,7 +36,7 @@ export default Union => {
                         window.TencentGDT.NATIVE.renderAd(res[0], this.id);
                         this.onShow();
                     } else {
-                        // logger.info('无广告');
+                        logger.info('无广告');
                         onTimeOut();
                         // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
                         // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率
