@@ -41,9 +41,14 @@ export default Union => {
         onTimeOut();
         clearInterval(timer);
         timer = null;
-      }, data.timeOut * 1000);
+      }, (data.timeOut || 10) * 1000);
     },
-    onMounted() {}
+    onMounted() {
+      this.onShow()
+    },
+    onShow(){
+      this.log('imp')
+    },
   });
 };
 // });

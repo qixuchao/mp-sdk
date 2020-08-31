@@ -1,12 +1,24 @@
-import { isPlainObject } from './type';
+/* gloabl window */
+import { isPlainObject,isLikeArray } from './type';
+
+export const isDebug =
+    /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
+        window.location.hostname
+    ) || /_mp_debug_/.test(window.location.search);
 
 export const each = (list, callback) => {
   if (list) {
-    if (Array.isArray(list)) {
-      list.forEach(callback);
+    if (Array.isArray(list) || isLikeArray(list)) {
+      for(let i=0;i<list.length;i++){
+        if(callback && callback(list[i],i) === false){
+            break;
+        }
+      }
     } else if (isPlainObject) {
       for (let key in list) {
-        callback && callback(list[key], key);
+        if(callback && callback(list[key], key) === false){
+            break;
+        }
       }
     }
   }
@@ -18,11 +30,11 @@ export const each = (list, callback) => {
  * @param {Object} data 替换自定义数据
  */
 export const macroReplace = (
-  str = '',
-  data = {
-    REQUESTID: ''
-  },
-  needEncode = true
+    str = '',
+    data = {
+      REQUESTID: ''
+    },
+    needEncode = true
 ) => {
   // 内置数据
   const builtData = {
