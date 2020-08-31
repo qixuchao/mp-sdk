@@ -8,7 +8,7 @@ import logger from '../../logger';
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 export default Union => {
     let doClick, onClose;
-    Union.register('qq', {
+    Union.register('gdt', {
         src: '//qzs.qq.com/qzone/biz/res/i.js',
         sandbox: false,
         onInit(data, {onLoaded, onTimeOut}) {
@@ -17,7 +17,7 @@ export default Union => {
                 onTimeOut();
                 clearInterval(timeout);
                 timeout = null;
-            }, (data.timeOut || 10) * 1000);
+            }, 10 * 1000);
 
             // 广告初始化
             window.TencentGDT.push({

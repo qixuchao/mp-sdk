@@ -16,7 +16,7 @@ import { MODEL_NAME } from '../../config';
 
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 export default Union => {
-  Union.register('baidu', {
+  Union.register('bd', {
     src: '//cpro.baidustatic.com/cpro/ui/cm.js',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
@@ -41,7 +41,7 @@ export default Union => {
         onTimeOut();
         clearInterval(timer);
         timer = null;
-      }, (data.timeOut || 10) * 1000);
+      },  10 * 1000);
     },
     onMounted() {
       this.onShow()
