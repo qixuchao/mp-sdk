@@ -232,6 +232,9 @@
     return toString.call(value);
   }
 
+  var isLikeArray = function isLikeArray(value) {
+    return !!(value && value.length !== undefined);
+  };
   var isPlainObject = function isPlainObject(value) {
     if (getTag(value) !== '[object Object]') {
       return false;
@@ -250,13 +253,21 @@
     return Object.getPrototypeOf(value) === proto;
   };
 
+  /* gloabl window */
+  var isDebug = /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(window.location.hostname) || /_mp_debug_/.test(window.location.search);
   var each = function each(list, callback) {
     if (list) {
-      if (Array.isArray(list)) {
-        list.forEach(callback);
+      if (Array.isArray(list) || isLikeArray(list)) {
+        for (var i = 0; i < list.length; i++) {
+          if (callback && callback(list[i], i) === false) {
+            break;
+          }
+        }
       } else if (isPlainObject) {
         for (var key in list) {
-          callback && callback(list[key], key);
+          if (callback && callback(list[key], key) === false) {
+            break;
+          }
         }
       }
     }
@@ -350,6 +361,15 @@
       }
 
       each(urls, _send);
+    },
+    info: function info() {
+      if (isDebug) {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        console['log'].apply(window, args);
+      }
     }
   };
 
@@ -360,11 +380,12 @@
   // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 
   var registerQQ = (function (Union) {
+    var doClick, onClose;
     Union.register('qq', {
       src: '//qzs.qq.com/qzone/biz/res/i.js',
       sandbox: false,
       onInit: function onInit(data, _ref) {
-        var _this2 = this;
+        var _this = this;
 
         var onLoaded = _ref.onLoaded,
             onTimeOut = _ref.onTimeOut;
@@ -373,7 +394,7 @@
           onTimeOut();
           clearInterval(timeout);
           timeout = null;
-        }, data.timeOut * 1000); // 广告初始化
+        }, (data.timeOut || 10) * 1000); // 广告初始化
 
         window.TencentGDT.push({
           placement_id: data.consumerSlotId,
@@ -392,68 +413,85 @@
 
             if (Array.isArray(res)) {
               onLoaded();
-              window.TencentGDT.NATIVE.renderAd(res[0], _this2.id);
+              window.TencentGDT.NATIVE.renderAd(res[0], _this.id);
+
+              _this.onShow();
             } else {
-              console.log('无广告');
+              // logger.info('无广告');
               onTimeOut(); // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
               // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率
-
-              setTimeout(function () {//window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
-              }, 3000);
+              // setTimeout(function () {
+              //   window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
+              // }, 3000);
             }
           }
         });
       },
       onBeforeMount: function onBeforeMount() {},
       onMounted: function onMounted() {
-        // 原生模板广告位调用 window.TencentGDT.NATIVE.renderAd(res[0], 'containerId') 进行模板广告的渲染
-        // res[0] 代表取广告数组第一个数据
-        // containerId：广告容器ID
-        var that = this;
-        var doClick = TencentGDT.TN.doClick;
-        var adClose = TencentGDT.TN.adClose;
-        window['unionInstance'] = Object.assign(window['unionInstance'] || {}, _defineProperty({}, that.id, that));
+        if (doClick) {
+          return;
+        }
 
-        TencentGDT.TN.doClick = function (e) {
-          var frameName = e.path[e.path.length - 1].name;
-          var slotContainer = document.querySelector("[name='".concat(frameName, "']")).parentNode.parentNode;
-          var slotContainerId = slotContainer.getAttribute('id');
-          var _this = (window.unionInstance || {})[slotContainerId];
+        doClick = TencentGDT.TN.doClick;
+        onClose = TencentGDT.TN.adClose;
 
-          if (slotContainer) {
-            _this.onClick();
-          }
-
-          doClick && doClick.apply(_this, arguments);
-        }; // TencentGDT.TN.doClick = function (params) {
-        //   var container = document.querySelector(
-        //     'div[id*="' + params.traceid + '"]'
-        //   );
-        //
-        //   if (container && container.parentNode.id === that.id) {
-        //     that.onClick();
-        //   }
-        //   doClick && doClick.apply(that, arguments);
-        // };
-
-
-        TencentGDT.TN.adClose = function (params) {
-          var container = document.querySelector('div[id*="' + params.traceid + '"]');
-          console.log(container.parentNode.id, that.id);
-
-          if (container && container.parentNode.id === that.id) {
-            that.onClose();
-          }
-
-          adClose && adClose.apply(this, arguments);
+        var getUnionInstance = function getUnionInstance(traceid) {
+          var container = document.querySelector('div[id*="' + traceid + '"]');
+          return Union.unionInstances[container.parentNode.id];
         };
+
+        TencentGDT.TN.doClick = function (event, traceid) {
+          var union = getUnionInstance(traceid);
+
+          if (union) {
+            union.onClick();
+            doClick.apply(this, arguments);
+          }
+        };
+
+        TencentGDT.TN.adClose = function (event, traceid) {
+          var union = getUnionInstance(traceid);
+
+          if (union) {
+            union.onClose();
+            onClose.apply(this, arguments);
+          }
+        };
+      },
+      onShow: function onShow() {
+        var _this2 = this;
+
+        var context = document.querySelector("#".concat(this.id));
+        var timer = setInterval(function () {
+          var iframe = context.querySelector("iframe");
+
+          if (iframe) {
+            clearInterval(timer);
+            var iframeDocument = iframe.contentWindow.document;
+            var imgList = iframeDocument.querySelectorAll('img');
+            var materials = [];
+            each(imgList, function (img) {
+              if (img && img.getAttribute) {
+                materials.push(img.getAttribute('src'));
+              }
+            });
+            var materialData = {
+              title: '',
+              desc: '',
+              imgList: materials
+            };
+
+            _this2.log('imp', {
+              EXT: JSON.stringify(materialData)
+            });
+          }
+        }, 500);
       },
       getWeight: function getWeight() {},
       reload: function reload(data) {
         window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
-      },
-      onClick: function onClick() {},
-      onClose: function onClose() {}
+      }
     });
   }); //});
 
@@ -501,9 +539,14 @@
           onTimeOut();
           clearInterval(timer);
           timer = null;
-        }, data.timeOut * 1000);
+        }, (data.timeOut || 10) * 1000);
       },
-      onMounted: function onMounted() {}
+      onMounted: function onMounted() {
+        this.onShow();
+      },
+      onShow: function onShow() {
+        this.log('imp');
+      }
     });
   }); // });
 
@@ -535,15 +578,6 @@
     document.body.appendChild(tag);
     return tag;
   };
-  function addEventListener(el, eventName, callback, isUseCapture) {
-    if (el.addEventListener) {
-      el.addEventListener(eventName, function () {
-        console.log('22222');
-      }, !!isUseCapture);
-    } else {
-      el.attachEvent('on' + eventName, callback);
-    }
-  }
 
   /**
    * @type {String}
@@ -583,6 +617,12 @@
       key: "use",
 
       /**
+       *
+       * @type Object
+       * 用于存储广告位实例
+       */
+
+      /**
        * @type Object
        * 为什么状态值，不放到实例而是作为静态变量？
        * 因为实例的执行依赖前置的脚本加载，多个实例之间也同时这个状态。固本身这个状态跟实例无关
@@ -605,47 +645,49 @@
        */
       value: function use(unionKey) {
         if (!isUndefined(Union.VENDORS[unionKey]) && Union.VENDORS[unionKey] instanceof Union) {
-          return Union.VENDORS[unionKey].fork();
+          var union = Union.VENDORS[unionKey].fork();
+          Union.unionInstances[union.id] = union;
+          return union;
         }
       }
     }]);
 
     function Union(name, options) {
-      var _this2;
+      var _this;
 
       _classCallCheck(this, Union);
 
-      _this2 = _super.call(this);
+      _this = _super.call(this);
 
-      _defineProperty(_assertThisInitialized(_this2), "onLoaded", function (adInfo) {
-        _this2.log('bidSuc', adInfo);
+      _defineProperty(_assertThisInitialized(_this), "onLoaded", function (adInfo) {
+        _this.log('bidSuc', adInfo);
 
-        _this2.adInfo = adInfo;
+        _this.adInfo = adInfo;
 
-        _this2.trigger('loaded');
+        _this.trigger('loaded');
 
-        _this2.trigger('complete');
+        _this.trigger('complete');
       });
 
-      _defineProperty(_assertThisInitialized(_this2), "onTimeOut", function () {
+      _defineProperty(_assertThisInitialized(_this), "onTimeOut", function () {
         console.log('timeout');
 
-        _this2.log('error');
+        _this.log('error');
 
-        _this2.trigger('complete');
+        _this.trigger('complete');
 
-        _this2.destroy();
+        _this.destroy();
       });
 
-      _defineProperty(_assertThisInitialized(_this2), "destroy", function () {
-        _this2.status = '10';
-        _this2.$container.parentNode && _this2.$container.parentNode.removeChild(_this2.$container);
+      _defineProperty(_assertThisInitialized(_this), "destroy", function () {
+        _this.status = '10';
+        _this.$container.parentNode && _this.$container.parentNode.removeChild(_this.$container);
       });
 
-      _this2.name = name;
-      _this2.options = options;
-      _this2.sandbox = _this2.options.sandbox !== false;
-      return _this2;
+      _this.name = name;
+      _this.options = options;
+      _this.sandbox = _this.options.sandbox !== false;
+      return _this;
     }
 
     _createClass(Union, [{
@@ -686,18 +728,18 @@
     }, {
       key: "run",
       value: function run() {
-        var _this3 = this;
+        var _this2 = this;
 
         var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         this.data = data;
         console.log('run');
 
         var onInit = function onInit() {
-          _this3.log('bid');
+          _this2.log('bid');
 
-          proxyCall.call(_this3, _this3.options.onInit, data.consumer || {}, {
-            onTimeOut: _this3.onTimeOut,
-            onLoaded: _this3.onLoaded
+          proxyCall.call(_this2, _this2.options.onInit, data.consumer || {}, {
+            onTimeOut: _this2.onTimeOut,
+            onLoaded: _this2.onLoaded
           });
         };
 
@@ -709,11 +751,11 @@
         if (Union.vendorLoaded[this.name] === 'init') {
           Union.vendorLoaded[this.name] = 'loading';
           loadScript(this.options.src, function () {
-            Union.vendorLoaded[_this3.name] = 'loaded';
+            Union.vendorLoaded[_this2.name] = 'loaded';
           }, function () {
-            Union.vendorLoaded[_this3.name] = 'init';
+            Union.vendorLoaded[_this2.name] = 'init';
 
-            _this3.trigger('loadError');
+            _this2.trigger('loadError');
           });
         }
 
@@ -721,61 +763,33 @@
       }
       /**
        * @param {String} type bid|error|imp|click|bidSuc
+       * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
        */
 
     }, {
       key: "log",
       value: function log(type) {
-        var url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
+        var extralData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], _objectSpread2({
           REQUESTID: this.requestId,
           // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
           DATA: JSON.stringify(this.requestData)
-        });
+        }, extralData));
         logger.send(url);
-      } // 目前只是针对优量汇的大图素材
-
-    }, {
-      key: "getMaterial",
-      value: function getMaterial(container) {
-        var _container = container.querySelector(".".concat(this.id, " iframe"));
-
-        if (_container) {
-          var iframeDocument = _container.contentWindow.document;
-          var imgList = iframeDocument.querySelectorAll('img');
-          var imgurls = [];
-          each(imgList, function (img) {
-            return 'getAttribute' in new Object(img) && imgurls.push(img.getAttribute('src'));
-          });
-          this.requestData['imgSrc'] = imgurls;
-        }
       }
     }, {
       key: "render",
       value: function render(selector) {
-        var _this = this;
-
         this.log('winner');
         var container = document.querySelector(selector);
 
         if (container) {
-          setTimeout(function () {
-            _this.getMaterial(container);
-
-            _this.log('imp');
-          }, 300); // this.log('imp');
           // 处理不同联盟渲染在填充前预处理，保证显示正常
-
           proxyCall.call(this, this.options.onBeforeMount);
           container.appendChild(this.$container);
           this.$container.style.display = 'block'; // 处理不同联盟渲染在填充前预处理，保证显示正常
 
-          proxyCall.call(this, this.options.onMounted); // 绑定点击事件
-
-          if (this.sandbox) ; else {
-            addEventListener(_this.$container, 'click', function () {
-              _this.log('click');
-            });
-          }
+          proxyCall.call(this, this.options.onMounted);
         } else {
           console.error("Slot \u3010".concat(selector, "\u3011 does not exist"));
         }
@@ -789,6 +803,11 @@
         } else {
           return false;
         }
+      }
+    }, {
+      key: "onShow",
+      value: function onShow() {
+        proxyCall.call(this, this.options.onShow);
       }
     }, {
       key: "onClick",
@@ -807,6 +826,8 @@
   }(Event);
 
   _defineProperty(Union, "VENDORS", {});
+
+  _defineProperty(Union, "unionInstances", {});
 
   _defineProperty(Union, "vendorLoaded", {});
 

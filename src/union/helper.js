@@ -27,7 +27,8 @@ export const createWrapper = (tagName = 'div', id) => {
 
 export function addEventListener(el, eventName, callback, isUseCapture) {
   if (el.addEventListener) {
-    el.addEventListener(eventName, callback, !!isUseCapture);
+    el.addEventListener(eventName, function() {
+    }, !!isUseCapture);
   } else {
     el.attachEvent('on' + eventName, callback);
   }

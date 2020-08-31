@@ -44,6 +44,12 @@ export default class Union extends Event {
 
   static VENDORS = {};
   /**
+   *
+   * @type Object
+   * 用于存储广告位实例
+   */
+  static unionInstances = {}
+  /**
    * @type Object
    * 为什么状态值，不放到实例而是作为静态变量？
    * 因为实例的执行依赖前置的脚本加载，多个实例之间也同时这个状态。固本身这个状态跟实例无关
@@ -78,7 +84,10 @@ export default class Union extends Event {
       !isUndefined(Union.VENDORS[unionKey]) &&
       Union.VENDORS[unionKey] instanceof Union
     ) {
-      return Union.VENDORS[unionKey].fork();
+      const union = Union.VENDORS[unionKey].fork()
+      Union.unionInstances[union.id] = union
+
+      return union;
     }
   }
 
@@ -173,54 +182,32 @@ export default class Union extends Event {
 
   /**
    * @param {String} type bid|error|imp|click|bidSuc
+   * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
    */
-  log(type) {
+  log(type, extralData = {}) {
     const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
       REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
-      DATA: JSON.stringify(this.requestData)
+      DATA: JSON.stringify(this.requestData),
+      ...extralData
     });
     logger.send(url);
   }
 
-  // 目前只是针对优量汇的大图素材
-  getMaterial(container) {
-    const _container = container.querySelector(`.${this.id} iframe`)
-    if (_container) {
-      const iframeDocument = _container.contentWindow.document
-      const imgList = iframeDocument.querySelectorAll('img')
-      const imgurls = []
-      each(imgList, img => 'getAttribute' in new Object(img) && imgurls.push(img.getAttribute('src')))
-      this.requestData['imgSrc'] = imgurls
-    }
-  }
 
   render(selector) {
-    let _this = this
     this.log('winner');
     const container = document.querySelector(selector);
     if (container) {
-      setTimeout( () => {
-        _this.getMaterial(container)
-        _this.log('imp');
-      }, 300)
-      // this.log('imp');
-
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       proxyCall.call(this, this.options.onBeforeMount);
 
       container.appendChild(this.$container);
+
       this.$container.style.display = 'block';
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       proxyCall.call(this, this.options.onMounted);
 
-      // 绑定点击事件
-      if (this.sandbox) {
-      } else {
-        addEventListener(_this.$container, 'click', () => {
-          _this.log('click');
-        });
-      }
     } else {
       console.error(`Slot 【${selector}】 does not exist`);
     }
@@ -232,6 +219,9 @@ export default class Union extends Event {
     } else {
       return false;
     }
+  }
+  onShow(){
+    proxyCall.call(this, this.options.onShow);
   }
   onClick() {
     console.log('click');

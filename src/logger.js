@@ -1,4 +1,4 @@
-import { each } from './utils/index';
+import { each, isDebug } from './utils/index';
 import { isString } from './utils/type';
 
 const list = [];
@@ -19,6 +19,11 @@ const logger = {
       urls = [urls];
     }
     each(urls, send);
+  },
+  info(...args) {
+    if (isDebug) {
+      console['log'].apply(window, args);
+    }
   }
 };
 
