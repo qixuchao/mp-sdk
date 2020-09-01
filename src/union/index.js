@@ -4,15 +4,23 @@ import { macroReplace, each } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
-import { loadScript, createWrapper, addEventListener } from './helper';
+import { loadScript, createWrapper, mergeTrackData } from './helper';
 
 // 联盟实例的状态
 const STATUS = {
-  '0': 'init',
-  '1': 'loaded',
-  '2': 'loadError',
-  '3': 'mounted',
-  '10': 'destroyed'
+  0: 'init',
+  1: 'loaded',
+  2: 'loadError',
+  3: 'mounted',
+  10: 'destroyed'
+};
+
+// 渲染广告过程中的错误状态
+export const ERROR_TYPE = {
+  1: 'js加载失败',
+  2: '获取广告超时',
+  3: '广告异常',
+  10000: '广告数组为空'
 };
 
 /**
@@ -29,11 +37,6 @@ const LOGGER_TYPE = {
 
 let UNION_INDEX = 0;
 
-// 代理调用
-function proxyCall(fn, ...args) {
-  return isFunction(fn) && fn.apply(this, args);
-}
-
 /**
  * Lifecycle Hooks
  *  init
@@ -41,14 +44,13 @@ function proxyCall(fn, ...args) {
  *
  */
 export default class Union extends Event {
-
   static VENDORS = {};
   /**
    *
    * @type Object
    * 用于存储广告位实例
    */
-  static unionInstances = {}
+  static unionInstances = {};
   /**
    * @type Object
    * 为什么状态值，不放到实例而是作为静态变量？
@@ -84,8 +86,8 @@ export default class Union extends Event {
       !isUndefined(Union.VENDORS[unionKey]) &&
       Union.VENDORS[unionKey] instanceof Union
     ) {
-      const union = Union.VENDORS[unionKey].fork()
-      Union.unionInstances[union.id] = union
+      const union = Union.VENDORS[unionKey].fork();
+      Union.unionInstances[union.id] = union;
 
       return union;
     }
@@ -122,7 +124,7 @@ export default class Union extends Event {
 
   onTimeOut = () => {
     console.log('timeout');
-    this.log('error');
+    this.log('error', { DATA: { err: 2, errorMessage: ERROR_TYPE[2] } });
     this.trigger('complete');
     this.destroy();
   };
@@ -152,7 +154,7 @@ export default class Union extends Event {
     const onInit = () => {
       this.log('bid');
 
-      proxyCall.call(this, this.options.onInit, data.consumer || {}, {
+      this.callHook('onInit', data.consumer || {}, {
         onTimeOut: this.onTimeOut,
         onLoaded: this.onLoaded
       });
@@ -161,7 +163,7 @@ export default class Union extends Event {
     this.trigger('init');
     onInit();
 
-    // 同类联盟代码是否已经加载
+    // 同类联盟代码是否已经加载f
     console.log(Union.vendorLoaded[this.name]);
     if (Union.vendorLoaded[this.name] === 'init') {
       Union.vendorLoaded[this.name] = 'loading';
@@ -172,6 +174,7 @@ export default class Union extends Event {
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';
+          this.log('error', { DATA: { err: 1, errorMessage: ERROR_TYPE[1] } });
           this.trigger('loadError');
         }
       );
@@ -185,51 +188,60 @@ export default class Union extends Event {
    * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
    */
   log(type, extralData = {}) {
-    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
-      REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
-      DATA: JSON.stringify(this.requestData),
-      ...extralData
-    });
+    const data = mergeTrackData(
+      {
+        REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
+        DATA: this.requestData
+      },
+      extralData
+    );
+    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], data);
     logger.send(url);
   }
-
 
   render(selector) {
     this.log('winner');
     const container = document.querySelector(selector);
     if (container) {
       // 处理不同联盟渲染在填充前预处理，保证显示正常
-      proxyCall.call(this, this.options.onBeforeMount);
+      this.callHook('onBeforeMount');
 
       container.appendChild(this.$container);
 
       this.$container.style.display = 'block';
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常
-      proxyCall.call(this, this.options.onMounted);
 
+      this.callHook('onMounted');
     } else {
       console.error(`Slot 【${selector}】 does not exist`);
     }
   }
   hasReload() {
-    if (this.options.reload) {
-      this.options.reload(this.data.consumer);
+    if (this.reload) {
+      this.reload(this.data.consumer);
       return true;
     } else {
       return false;
     }
   }
-  onShow(){
-    proxyCall.call(this, this.options.onShow);
+  callHook(fnName, ...args) {
+    const fn = this.options[fnName];
+    return isFunction(fn) && fn.apply(this, args);
   }
   onClick() {
     console.log('click');
     this.log('click');
   }
+
   onClose() {
     this.trigger('close');
   }
+
+  onShow() {
+    this.callHook('onShow');
+  }
+
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&

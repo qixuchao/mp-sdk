@@ -1,3 +1,5 @@
+import { isPlainObject } from '../utils/type';
+import { each } from '../utils/index';
 export const loadScript = (src, success, fail) => {
   // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
   const fisrtScript = document.getElementsByTagName('script')[0];
@@ -32,3 +34,22 @@ export function addEventListener(el, eventName, callback, isUseCapture) {
     el.attachEvent('on' + eventName, callback);
   }
 }
+
+export const mergeTrackData = (target, data) => {
+  let _target = Object.assign({}, target);
+  each(data, (da, key) => {
+    if (isPlainObject(da)) {
+      _target[key] = Object.assign(_target[key], da);
+    } else {
+      _target[key] = da;
+    }
+  });
+
+  each(_target, (da, key) => {
+    if (isPlainObject(da)) {
+      _target[key] = JSON.stringify(da);
+    }
+  });
+
+  return _target;
+};
