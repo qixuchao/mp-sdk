@@ -1,6 +1,5 @@
 import { each } from '../../utils/index';
 import logger from '../../logger';
-import { ERROR_TYPE } from '../index';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -35,11 +34,10 @@ export default Union => {
             onLoaded();
             window.TencentGDT.NATIVE.renderAd(res[0], this.id);
             this.onShow();
+            this.logError(3);
           } else {
             logger.info('无广告');
-            this.log('error', {
-              DATA: { err: 10000, errorMessage: ERROR_TYPE[10000] }
-            });
+            this.logError(10000);
             onTimeOut();
             // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
             // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率

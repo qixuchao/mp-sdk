@@ -45,6 +45,9 @@ export const macroReplace = (
   };
 
   const encode = value => {
+    if (isPlainObject(value)) {
+      value = JSON.stringify(value);
+    }
     return needEncode ? encodeURIComponent(value) : value;
   };
 

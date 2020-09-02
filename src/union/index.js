@@ -1,10 +1,10 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { macroReplace, each } from '../utils/index';
+import { macroReplace } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
-import { loadScript, createWrapper, mergeTrackData } from './helper';
+import { loadScript, createWrapper } from './helper';
 
 // 联盟实例的状态
 const STATUS = {
@@ -124,7 +124,7 @@ export default class Union extends Event {
 
   onTimeOut = () => {
     console.log('timeout');
-    this.log('error', { DATA: { err: 2, errorMessage: ERROR_TYPE[2] } });
+    this.logError(2);
     this.trigger('complete');
     this.destroy();
   };
@@ -174,7 +174,7 @@ export default class Union extends Event {
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';
-          this.log('error', { DATA: { err: 1, errorMessage: ERROR_TYPE[1] } });
+          this.logError(1);
           this.trigger('loadError');
         }
       );
@@ -183,19 +183,26 @@ export default class Union extends Event {
     return this;
   }
 
+  logError(code) {
+    const data = {
+      DATA: {
+        err: code,
+        errorMessage: ERROR_TYPE[code]
+      }
+    };
+    this.log('error', data);
+  }
+
   /**
    * @param {String} type bid|error|imp|click|bidSuc
    * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
    */
   log(type, extralData = {}) {
-    const data = mergeTrackData(
-      {
-        REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
-        DATA: this.requestData
-      },
-      extralData
-    );
-    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], data);
+    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
+      REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
+      DATA: { ...this.requestData, ...extralData.DATA },
+      EXT: extralData.EXT
+    });
     logger.send(url);
   }
 
