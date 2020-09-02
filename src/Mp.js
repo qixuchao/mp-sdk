@@ -29,23 +29,24 @@ class Mp {
 
     this.handler(this._originalList);
   }
+
   /**
-   * 解析媒体配置文件
-   * @param {Object} slotInfo
-   *            {String} slotInfo.slotId
-   *            {Boolean} slotInfo.isConcurrent //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
-   *            {Number} slotInfo.priorityPolicy // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
-   *            {Array}  slotInfo.slotBidding
-   *                        {Number} slotInfo.slotBidding.weight  权重，在整个slotBidding中权重之和占比是它真实权重。
-   *                        {Object} slotInfo.slotBidding.consumer
-   *                        {Object} slotInfo.slotBidding.consumer.timeOut  超时时间
-   *                        {Object} slotInfo.slotBidding.consumer.consumerType  消耗方类型
-   *                        {Object} slotInfo.slotBidding.consumer.consumerSlotId  //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
-   *            {Array}  slotInfo.trackingData
-   * 
-   * @example
-   * 
-   *  {
+     * 解析媒体配置文件
+     * @param {Object} slotInfo
+     *            {String} slotInfo.slotId
+     *            {Boolean} slotInfo.isConcurrent //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
+     *            {Number} slotInfo.priorityPolicy // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
+     *            {Array}  slotInfo.slotBidding
+     *                        {Number} slotInfo.slotBidding.weight  权重，在整个slotBidding中权重之和占比是它真实权重。
+     *                        {Object} slotInfo.slotBidding.consumer
+     *                        {Object} slotInfo.slotBidding.consumer.timeOut  超时时间
+     *                        {Object} slotInfo.slotBidding.consumer.consumerType  消耗方类型
+     *                        {Object} slotInfo.slotBidding.consumer.consumerSlotId  //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
+     *            {Array}  slotInfo.trackingData
+     *
+     * @example
+     *
+     *  {
       "vendorId": 192,//请求ftx广告的sid
       "slotBiddings": [
 
@@ -83,7 +84,7 @@ class Mp {
       "policyVersion": 3365//配置文件版本号
     }
   }
-   */
+     */
   parseMediaConfig(config = {}) {
     // 转化媒体配置
     this.MEDIA_CONFIG = {};
@@ -93,6 +94,7 @@ class Mp {
       });
     }
   }
+
   /**
    * @param {Object|Function}  params 支持对象和方法
    *    Object
@@ -148,6 +150,7 @@ class Mp {
       }
     });
   }
+
   /**
    * 广告填充
    * @param {String} container
