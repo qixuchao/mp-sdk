@@ -17,10 +17,10 @@ const STATUS = {
 
 // 渲染广告过程中的错误状态
 export const ERROR_TYPE = {
-  1: 'js加载失败',
-  2: '获取广告超时',
-  3: '广告异常',
-  10000: '广告数组为空'
+  10000: '广告数组为空',
+  10001: 'js加载失败',
+  10002: '获取广告超时',
+  10003: '广告异常'
 };
 
 /**
@@ -124,7 +124,7 @@ export default class Union extends Event {
 
   onTimeOut = () => {
     console.log('timeout');
-    this.logError(2);
+    this.logError(10002);
     this.trigger('complete');
     this.destroy();
   };
@@ -174,7 +174,7 @@ export default class Union extends Event {
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';
-          this.logError(1);
+          this.logError(10001);
           this.trigger('loadError');
         }
       );

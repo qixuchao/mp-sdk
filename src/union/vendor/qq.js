@@ -34,7 +34,6 @@ export default Union => {
             onLoaded();
             window.TencentGDT.NATIVE.renderAd(res[0], this.id);
             this.onShow();
-            this.logError(3);
           } else {
             logger.info('无广告');
             this.logError(10000);
@@ -100,7 +99,7 @@ export default Union => {
             imgList: materials
           };
 
-          this.log('imp', { EXT: JSON.stringify(materialData) });
+          this.log('imp', { EXT: materialData });
         }
       }, 500);
     },
