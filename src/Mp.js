@@ -100,6 +100,7 @@ class Mp {
    *    Object
    *        params.slotId  {String} 广告位id
    *        params.container {String} 广告位选择器
+   *        params.complete {Function} 广告渲染完成回调，{Boolean} status =true 填充成功
    *        params.fallback {Function} 广告无填充回调
    *
    *    Funciton 待sdk初始化之后执行，如果已经初始化，则立即执行
@@ -131,7 +132,22 @@ class Mp {
                   id: slot.id
                 },
                 slot.force,
-                slot.fallback
+                {
+                  /**
+                   *
+                   * @param args
+                   *    status {boolean} 状态
+                   *    detail {Object}
+                   *      detail.union {string} 胜出的联盟
+                   *      detail.time {number} 渲染时间戳
+                   */
+                  complete(...args) {
+                    slot.complete && slot.complete.apply(this, args);
+                    if (args[0] === false) {
+                      slot.fallback && slot.fallback();
+                    }
+                  }
+                }
               );
             } else {
               console.error(`Slot configuration does not exist,id：${slot.id}`);

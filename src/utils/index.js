@@ -24,6 +24,10 @@ export const each = (list, callback) => {
   }
 };
 
+export const getRandom = (min, max) => {
+  return Math.floor(min + Math.random() * max);
+};
+
 /**
  *
  * @param {String} str 需要宏替换的字符串

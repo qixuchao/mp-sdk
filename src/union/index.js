@@ -1,6 +1,6 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { macroReplace } from '../utils/index';
+import { each } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
@@ -198,12 +198,16 @@ export default class Union extends Event {
    * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
    */
   log(type, extralData = {}) {
-    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
+    let data = {
       REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
       DATA: { ...this.requestData, ...extralData.DATA },
       EXT: extralData.EXT
-    });
-    logger.send(url);
+    };
+
+    const trackingData = this.data.trackingV2Data || this.data.trackingData;
+    const trackingUrl = trackingData[LOGGER_TYPE[type]];
+
+    logger.send(trackingUrl, data);
   }
 
   render(selector) {

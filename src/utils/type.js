@@ -31,7 +31,7 @@ function getTag(value) {
   return toString.call(value);
 }
 
-export const isLikeArray = value => !!(value && value.length !== undefined)
+export const isLikeArray = value => !!(value && value.length !== undefined);
 
 export const isPlainObject = value => {
   if (getTag(value) !== '[object Object]') {

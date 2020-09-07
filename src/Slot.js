@@ -1,11 +1,11 @@
-import { each } from './utils/index';
+import { each, getRandom } from './utils/index';
 import Union from './union/index';
 import logger from './logger';
 
 const callFunction = function () {
   return (
     arguments[0] &&
-    arguments[0].apply(this, aArray.prototype.slice.call(arguments, 1))
+    arguments[0].apply(this, Array.prototype.slice.call(arguments, 1))
   );
 };
 
@@ -87,7 +87,9 @@ export default class Slot {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
           // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
-          union.requestId = `${this.slotId}-${con.consumer.consumerSlotId}`;
+          union.requestId = `${this.slotId}-${
+            con.consumer.consumerSlotId
+          }-${new Date().getTime()}-${getRandom(0, 100)}`;
 
           // 存放不同消耗方的不同配置信息
           union.requestData = {
@@ -121,14 +123,12 @@ export default class Slot {
         }
       });
     } else {
-      callFunction(this.slotOptions.fallback);
+      callFunction(this.slotOptions.complete, false);
     }
   }
   handleComplete() {
-    if (this.completeNumber++ === this.consumerLength) {
-      if (this.status !== '5') {
-        callFunction(this.slotOptions.fallback);
-      }
+    if (++this.completeNumber === this.consumerLength && this.status !== '5') {
+      callFunction(this.slotOptions.complete, false);
     }
   }
   /**
@@ -139,6 +139,7 @@ export default class Slot {
    */
   race(union) {
     if (this.status !== '5') {
+      callFunction(this.slotOptions.complete, true);
       this.status = '5';
       console.log('winer ' + union.name);
       this.winner = union;
