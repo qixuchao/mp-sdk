@@ -207,13 +207,7 @@ export default class Union extends Event {
     const trackingData = this.data.trackingV2Data || this.data.trackingData;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];
 
-    if (Array.isArray(trackingUrl)) {
-      each(trackingUrl, url => {
-        logger.send(url, data);
-      });
-    } else {
-      logger.send(trackingUrl, data);
-    }
+    logger.send(trackingUrl, data);
   }
 
   render(selector) {
