@@ -66,6 +66,9 @@ export default class Slot {
     this.slotId = slotConfig.slotId;
     this.status = '0';
 
+    //
+    this.templateConfig = slotConfig.templateConfig || {};
+
     if (slotConfig.isConcurrent) {
       this.consumers = slotConfig.slotBidding;
     } else {

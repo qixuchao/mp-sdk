@@ -34,6 +34,7 @@ export default Union => {
             onLoaded();
             window.TencentGDT.NATIVE.renderAd(res[0], this.id);
             this.onShow();
+            onTimeOut;
           } else {
             logger.info('无广告');
             this.logError(10000);

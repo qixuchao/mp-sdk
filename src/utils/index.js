@@ -61,3 +61,19 @@ export const macroReplace = (
     return value === undefined ? fragment : encode(value);
   });
 };
+
+export const jsonp = url => {
+  let script = document.createElement('script');
+  const callbackName = '';
+  return new Promise((resolve, reject) => {
+    window[callbackName] = res => {
+      resolve(res);
+      window[callbackName] = script = null;
+    };
+    script.src = `${url}`;
+
+    script.onload = () => {};
+
+    script.onerror = () => {};
+  });
+};
