@@ -1,24 +1,24 @@
-import { each, isDebug } from './utils/index';
+import { each, isDebug, macroReplace } from './utils/index';
 import { isString } from './utils/type';
 
 const list = [];
-function send(url) {
+function send(url, data) {
   if (url !== '') {
     let img = document.createElement('img');
     img.onload = function () {
       img = img.onload = null;
     };
     // 宏替换
-    img.src = url;
+    img.src = macroReplace(url, data);
     list.push(img);
   }
 }
 const logger = {
-  send(urls) {
+  send(urls, data) {
     if (isString(urls)) {
       urls = [urls];
     }
-    each(urls, send);
+    each(urls, url => send(url, data));
   },
   info(...args) {
     if (isDebug) {

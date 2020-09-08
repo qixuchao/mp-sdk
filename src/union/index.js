@@ -1,9 +1,10 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { macroReplace } from '../utils/index';
+import { each } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
+import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';
 
 // 联盟实例的状态
@@ -124,9 +125,11 @@ export default class Union extends Event {
 
   onTimeOut = () => {
     console.log('timeout');
-    this.logError(10002);
-    this.trigger('complete');
-    this.destroy();
+    if (this.status === '1') {
+      this.logError(10002);
+      this.trigger('complete');
+      this.destroy();
+    }
   };
 
   /**
@@ -163,21 +166,24 @@ export default class Union extends Event {
     this.trigger('init');
     onInit();
 
-    // 同类联盟代码是否已经加载f
-    console.log(Union.vendorLoaded[this.name]);
+    // 同类联盟代码是否已经加载
     if (Union.vendorLoaded[this.name] === 'init') {
       Union.vendorLoaded[this.name] = 'loading';
       loadScript(
         this.options.src,
         () => {
+          this.status = '1';
           Union.vendorLoaded[this.name] = 'loaded';
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';
           this.logError(10001);
           this.trigger('loadError');
+          this.trigger('complete');
         }
       );
+    } else {
+      this.status = '1';
     }
 
     return this;
@@ -198,12 +204,16 @@ export default class Union extends Event {
    * @param extralData  额外的上报数据，上报imp时增加广告位素材的上报
    */
   log(type, extralData = {}) {
-    const url = macroReplace(this.data.trackingData[LOGGER_TYPE[type]], {
+    let data = {
       REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
       DATA: { ...this.requestData, ...extralData.DATA },
       EXT: extralData.EXT
-    });
-    logger.send(url);
+    };
+
+    const trackingData = this.data.trackingV2Data || this.data.trackingData;
+    const trackingUrl = trackingData[LOGGER_TYPE[type]];
+
+    logger.send(trackingUrl, data);
   }
 
   render(selector) {
@@ -258,3 +268,4 @@ export default class Union extends Event {
 
 registerQQ(Union);
 registerBaidu(Union);
+registerFancy(Union);

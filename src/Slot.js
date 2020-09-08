@@ -1,11 +1,10 @@
 import { each, getRandom } from './utils/index';
 import Union from './union/index';
-import logger from './logger';
 
 const callFunction = function () {
   return (
     arguments[0] &&
-    arguments[0].apply(this, aArray.prototype.slice.call(arguments, 1))
+    arguments[0].apply(this, Array.prototype.slice.call(arguments, 1))
   );
 };
 
@@ -113,7 +112,7 @@ export default class Slot {
               console.log('loaded');
               this.race(union);
             })
-            .on('complete', this.handleComplete)
+            .on('complete', this.handleComplete.bind(this))
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             });
@@ -126,14 +125,12 @@ export default class Slot {
         }
       });
     } else {
-      callFunction(this.slotOptions.fallback);
+      callFunction(this.slotOptions.complete, false);
     }
   }
   handleComplete() {
-    if (this.completeNumber++ === this.consumerLength) {
-      if (this.status !== '5') {
-        callFunction(this.slotOptions.fallback);
-      }
+    if (++this.completeNumber === this.consumerLength && this.status !== '5') {
+      callFunction(this.slotOptions.complete, false);
     }
   }
   /**
@@ -144,6 +141,7 @@ export default class Slot {
    */
   race(union) {
     if (this.status !== '5') {
+      callFunction(this.slotOptions.complete, true);
       this.status = '5';
       console.log('winer ' + union.name);
       this.winner = union;
