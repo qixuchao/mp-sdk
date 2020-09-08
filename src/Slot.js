@@ -111,7 +111,7 @@ export default class Slot {
               this.race(union);
             })
             .on('complete', () => {
-              this.handleComplete;
+              this.handleComplete();
             })
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
