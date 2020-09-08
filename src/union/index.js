@@ -124,9 +124,11 @@ export default class Union extends Event {
 
   onTimeOut = () => {
     console.log('timeout');
-    this.logError(10002);
-    this.trigger('complete');
-    this.destroy();
+    if (this.status === '1') {
+      this.logError(10002);
+      this.trigger('complete');
+      this.destroy();
+    }
   };
 
   /**
@@ -163,21 +165,24 @@ export default class Union extends Event {
     this.trigger('init');
     onInit();
 
-    // 同类联盟代码是否已经加载f
-    console.log(Union.vendorLoaded[this.name]);
+    // 同类联盟代码是否已经加载
     if (Union.vendorLoaded[this.name] === 'init') {
       Union.vendorLoaded[this.name] = 'loading';
       loadScript(
         this.options.src,
         () => {
+          this.status = '1';
           Union.vendorLoaded[this.name] = 'loaded';
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';
           this.logError(10001);
           this.trigger('loadError');
+          this.trigger('complete');
         }
       );
+    } else {
+      this.status = '1';
     }
 
     return this;

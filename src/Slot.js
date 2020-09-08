@@ -110,7 +110,7 @@ export default class Slot {
               console.log('loaded');
               this.race(union);
             })
-            .on('complete', this.handleComplete)
+            .on('complete', this.handleComplete.bind(this))
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             });
