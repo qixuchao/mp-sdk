@@ -209,6 +209,8 @@ export default class Union extends Event {
       EXT: extralData.EXT
     };
 
+    new Image().src = `//l.fancyapi.com/action?action=${type}&aid=000000`;
+
     const trackingData = this.data.trackingV2Data || this.data.trackingData;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];
 
