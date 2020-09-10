@@ -24,6 +24,10 @@ export const each = (list, callback) => {
   }
 };
 
+const hasOwnProperty = (own, property) => {
+  return Object.prototype.hasOwnProperty.call(own, property);
+};
+
 export const getRandom = (min, max) => {
   return Math.floor(min + Math.random() * max);
 };
@@ -83,7 +87,7 @@ const param = obj => {
   return str.join('&');
 };
 
-const extend = () => {
+const extend = function () {
   let obj,
     args = arguments,
     i = 1,
@@ -159,7 +163,7 @@ export const addParam = (url, params) => {
   }
 
   //合并当前search参数
-  search = extend(search, params);
+  search = extend.call(search, search, params);
 
   searchStr = '?' + param(search);
 

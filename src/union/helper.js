@@ -66,7 +66,7 @@ export const jsonp = (url, opts) => {
   //无缓存
   data.v = Math.random().toString(36).slice(-6);
 
-  data.cb = callbackFnName;
+  data.jsonp = callbackFnName;
 
   loadScript(addParam(url, data));
 };

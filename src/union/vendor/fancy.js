@@ -1,13 +1,13 @@
 import { jsonp } from '../helper';
-import { addParam } from '../../utils';
-const pkg = require('../package.json');
+import { addParam } from '../../utils/index';
+// const pkg = require('../package.json');
 
 /**
  *
  * @param ip client
  * @param mid
  * @param uid cookie(用户标识)
- * @param sid 广告位id
+ * @param si 广告位id
  * @param rr  ref
  * @param url  广告所在页面url
  * @param reqid  requestId
@@ -15,10 +15,11 @@ const pkg = require('../package.json');
  * @param mimes  c
  * @param jsonp  callback
  * @param v  sdk version
+ * @param device  sdk version
  */
 
 export default Union => {
-  Union.register('fancy', {
+  Union.register('ptgapi', {
     src: '',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
@@ -29,28 +30,35 @@ export default Union => {
       }, 10 * 1000);
 
       const queryAdMaterial = () => {
+        console.log('data', data);
         const params = {
           ip: 'client',
-          mid: data.vendorId,
-          uid: '0bf2bfb7-0a35-4fe7-a944-5156d656ab6c',
-          sid: data.slotId,
-          ff: location.href,
+          mid: data.vendorId || '209',
+          si: data.slotId || '17012',
+          rr: location.href,
+          secure: 1,
           reqid: data.requestId,
           device_type: 1,
-          mimes: 'c',
-          v: pkg.version
+          mimes: 'img,c',
+          device: JSON.stringify({
+            height: screen.height,
+            width: screen.width,
+            density: 2
+          }),
+          v: '1.3'
         };
 
         const url = 'https://g132.test.amnetapi.com/s2s';
-        const testUrl =
-          'http://g132.test.amnetapi.com/s2s?rr=http%3A%2F%2Fref.example.com&size=533*800&bf=100&max=30&ip=175.160.152.73&mid=209&device_type=1&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+13_2_3+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Version%2F13.0.3+Mobile%2F15E148+Safari%2F604.1&url=http%3A%2F%2Fcurrent.example.com&min=15&si=17012&v=1.2.2&uid=0bf2bfb7-0a35-4fe7-a944-5156d656ab6c&mimes=img,c&device=%7b%22density%22%3a%222%22%2c%22height%22%3a640%2c%22width%22%3a100%7d';
-        jsonp(testUrl, data => {
-          console.log(data);
+        jsonp(addParam(url, params), data => {
           clearTimeout(timeout);
-          this.$container.appendChild('');
-          onLoaded();
+          if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
+            this.$container.innerHTML = data.ad[0].src;
+            onLoaded();
+          }
         });
       };
+
+      queryAdMaterial();
     },
     onMounted() {}
   });
