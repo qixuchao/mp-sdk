@@ -44,7 +44,7 @@ export const macroReplace = (
   const builtData = {
     OS: 3, // H5
     APP: window.location.hostname,
-    IP: '127.0.0.1',
+    IP: '',
     TS: +new Date()
   };
 
@@ -58,6 +58,6 @@ export const macroReplace = (
   return str.replace(/__(.*?)__/g, function (fragment) {
     let variable = fragment.match(/__(.*)__/);
     const value = builtData[variable[1]] || data[variable[1]];
-    return value === undefined ? fragment : encode(value);
+    return value === undefined ? '' : encode(value);
   });
 };
