@@ -44,17 +44,20 @@ export default Union => {
         trackingClickUrls.push(url);
       });
 
-      jsonp(addParam(url, params), data => {
-        clearTimeout(timeout);
-        if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
-          const htmlStr = macroReplace(data.ad[0].src, {
-            M_PRECLICK: JSON.stringify(trackingClickUrls)
-          });
-          this.$container.innerHTML = htmlStr;
-          onLoaded();
-        } else {
-          onTimeOut();
-          this.logError(10000);
+      jsonp(url, {
+        data: params,
+        callback: data => {
+          clearTimeout(timeout);
+          if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
+            const htmlStr = macroReplace(data.ad[0].src, {
+              M_PRECLICK: trackingClickUrls
+            });
+            this.$container.innerHTML = htmlStr;
+            onLoaded();
+          } else {
+            onTimeOut();
+            this.logError(10000);
+          }
         }
       });
     },
