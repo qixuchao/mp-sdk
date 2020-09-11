@@ -34,15 +34,20 @@ export default Union => {
         v: '__VERSION__'
       };
 
-      const trackingClickUrls = [];
-      each(this.data.trackingV2Data.clickTracking, trackingUrl => {
-        const url = macroReplace(trackingUrl, {
+      const trackingClickUrls = [
+        macroReplace(this.data.trackingV2Data.clickTracking[0], {
           DATA: this.requestData,
           REQUESTID: this.requestId
-        });
-
-        trackingClickUrls.push(url);
-      });
+        })
+      ];
+      // each(this.data.trackingV2Data.clickTracking, trackingUrl => {
+      //   const url = macroReplace(trackingUrl, {
+      //     DATA: this.requestData,
+      //     REQUESTID: this.requestId
+      //   });
+      //
+      //   trackingClickUrls.push(url);
+      // });
 
       jsonp(url, {
         data: params,
