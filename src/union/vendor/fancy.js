@@ -1,22 +1,10 @@
+/* global window */
 import { jsonp } from '../helper';
 import { addParam } from '../../utils/index';
-// const pkg = require('../package.json');
+import { UNION_TIMEOUT } from '../index';
 
-/**
- *
- * @param ip client
- * @param mid
- * @param uid cookie(用户标识)
- * @param si 广告位id
- * @param rr  ref
- * @param url  广告所在页面url
- * @param reqid  requestId
- * @param device_type  1(手机)
- * @param mimes  c
- * @param jsonp  callback
- * @param v  sdk version
- * @param device  sdk version
- */
+const url = 'https://g.fancyapi.com/s2s';
+// const testUrl = 'https://g132.test.amnetapi.com/s2s';
 
 export default Union => {
   Union.register('ptgapi', {
@@ -27,39 +15,45 @@ export default Union => {
         onTimeOut();
         clearTimeout(timeout);
         timeout = null;
-      }, 10 * 1000);
+      }, UNION_TIMEOUT);
+
+      console.log('this', this);
 
       const queryAdMaterial = () => {
-        console.log('data', data);
         const params = {
           ip: 'client',
-          mid: data.vendorId || '209',
-          si: data.slotId || '17012',
-          rr: location.href,
-          secure: 1,
-          reqid: data.requestId,
+          mid: data.appId,
+          si: data.consumerSlotId,
+          rr: window.location.href,
+          secure: 1, // https
+          reqid: this.requestId,
           device_type: 1,
           mimes: 'img,c',
+          rsize: `${this.slotSize.width}*${this.slotSize.height}`, // 广告位容器的尺寸
           device: JSON.stringify({
             height: screen.height,
             width: screen.width,
             density: 2
           }),
-          v: '1.3'
+          v: '__VERSION__'
         };
 
-        const url = 'https://g132.test.amnetapi.com/s2s';
         jsonp(addParam(url, params), data => {
           clearTimeout(timeout);
           if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
             this.$container.innerHTML = data.ad[0].src;
             onLoaded();
+          } else {
+            onTimeOut();
+            this.logError(10000);
           }
         });
       };
-
       queryAdMaterial();
     },
-    onMounted() {}
+    onMounted() {},
+    onShow() {
+      this.log('imp');
+    }
   });
 };

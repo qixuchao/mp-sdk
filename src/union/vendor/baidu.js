@@ -1,4 +1,5 @@
 import { MODEL_NAME } from '../../config';
+import { UNION_TIMEOUT } from '../index';
 
 /*
 <div class="_1gho6uvlbfj"></div>
@@ -27,6 +28,12 @@ export default Union => {
       });
       // 检测广告位
       let timeOut;
+      timeOut = setTimeout(function () {
+        onTimeOut();
+        clearInterval(timer);
+        timer = null;
+      }, UNION_TIMEOUT);
+
       let timer = setInterval(() => {
         if (this.$container && this.$container.querySelector('iframe')) {
           onLoaded();
@@ -36,16 +43,8 @@ export default Union => {
           timer = null;
         }
       }, 350);
-
-      timeOut = setTimeout(function () {
-        onTimeOut();
-        clearInterval(timer);
-        timer = null;
-      }, 10 * 1000);
     },
-    onMounted() {
-      this.onShow();
-    },
+    onMounted() {},
     onShow() {
       this.log('imp');
     }

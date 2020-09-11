@@ -253,7 +253,7 @@
     return Object.getPrototypeOf(value) === proto;
   };
 
-  /* gloabl window */
+  /* global window */
   var isDebug = /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(window.location.hostname) || /_mp_debug_/.test(window.location.search);
   var each = function each(list, callback) {
     if (list) {
@@ -506,6 +506,7 @@
     }
   };
 
+  /* global window */
   /**
    * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
    * 不渲染的也需要提前定义，再通过loadAd加载，然后通过之前定义onComplete重新渲染
@@ -527,7 +528,7 @@
           onTimeOut();
           clearInterval(timeout);
           timeout = null;
-        }, 10 * 1000); // 广告初始化
+        }, UNION_TIMEOUT); // 广告初始化
 
         window.TencentGDT.push({
           placement_id: data.consumerSlotId,
@@ -547,8 +548,7 @@
             if (Array.isArray(res)) {
               onLoaded();
               window.TencentGDT.NATIVE.renderAd(res[0], _this.id);
-
-              _this.onShow();
+              console.log(_this, Union.vendorLoaded[_this.name]);
             } else {
               logger.info('无广告');
 
@@ -662,6 +662,11 @@
         }); // 检测广告位
 
         var timeOut;
+        timeOut = setTimeout(function () {
+          onTimeOut();
+          clearInterval(timer);
+          timer = null;
+        }, UNION_TIMEOUT);
         var timer = setInterval(function () {
           if (_this.$container && _this.$container.querySelector('iframe')) {
             onLoaded();
@@ -671,15 +676,8 @@
             timer = null;
           }
         }, 350);
-        timeOut = setTimeout(function () {
-          onTimeOut();
-          clearInterval(timer);
-          timer = null;
-        }, 10 * 1000);
       },
-      onMounted: function onMounted() {
-        this.onShow();
-      },
+      onMounted: function onMounted() {},
       onShow: function onShow() {
         this.log('imp');
       }
@@ -705,13 +703,14 @@
     fisrtScript.parentNode.insertBefore(script, fisrtScript);
   };
   var createWrapper = function createWrapper() {
-    var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
-    var id = arguments.length > 1 ? arguments[1] : undefined;
+    var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
+    var tagName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'div';
+    var id = arguments.length > 2 ? arguments[2] : undefined;
     var tag = document.createElement(tagName);
     tag.id = id;
     tag.style.display = 'none';
     tag.className = id;
-    document.body.appendChild(tag);
+    context.appendChild(tag);
     return tag;
   };
   /**
@@ -747,21 +746,8 @@
     loadScript(addParam(url, data));
   };
 
-  /**
-   *
-   * @param ip client
-   * @param mid
-   * @param uid cookie(用户标识)
-   * @param si 广告位id
-   * @param rr  ref
-   * @param url  广告所在页面url
-   * @param reqid  requestId
-   * @param device_type  1(手机)
-   * @param mimes  c
-   * @param jsonp  callback
-   * @param v  sdk version
-   * @param device  sdk version
-   */
+  /* global window */
+  var url = 'https://g.fancyapi.com/s2s'; // const testUrl = 'https://g132.test.amnetapi.com/s2s';
 
   var registerFancy = (function (Union) {
     Union.register('ptgapi', {
@@ -776,42 +762,53 @@
           onTimeOut();
           clearTimeout(timeout);
           timeout = null;
-        }, 10 * 1000);
+        }, UNION_TIMEOUT);
+        console.log('this', this);
 
         var queryAdMaterial = function queryAdMaterial() {
-          console.log('data', data);
           var params = {
             ip: 'client',
-            mid: data.vendorId || '209',
-            si: data.slotId || '17012',
-            rr: location.href,
+            mid: data.appId,
+            si: data.consumerSlotId,
+            rr: window.location.href,
             secure: 1,
-            reqid: data.requestId,
+            // https
+            reqid: _this.requestId,
             device_type: 1,
             mimes: 'img,c',
+            rsize: "".concat(_this.slotSize.width, "*").concat(_this.slotSize.height),
+            // 广告位容器的尺寸
             device: JSON.stringify({
               height: screen.height,
               width: screen.width,
               density: 2
             }),
-            v: '1.3'
+            v: '__VERSION__'
           };
-          var url = 'https://g132.test.amnetapi.com/s2s';
           jsonp(addParam(url, params), function (data) {
             clearTimeout(timeout);
 
             if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
               _this.$container.innerHTML = data.ad[0].src;
               onLoaded();
+            } else {
+              onTimeOut();
+
+              _this.logError(10000);
             }
           });
         };
 
         queryAdMaterial();
       },
-      onMounted: function onMounted() {}
+      onMounted: function onMounted() {},
+      onShow: function onShow() {
+        this.log('imp');
+      }
     });
   });
+
+  var UNION_TIMEOUT = 1000 * 1.5; // 联盟实例的状态
 
   var ERROR_TYPE = {
     10000: '广告数组为空',
@@ -925,13 +922,13 @@
 
     _createClass(Union, [{
       key: "getContainer",
-      value: function getContainer() {
+      value: function getContainer(slotContainer) {
         // 默认使用沙盒
         // 如果使用沙盒则不无法重复使用sdk同一份引用，则无视加载状态
         if (this.sandbox === false) {
-          this.$container = createWrapper('div', this.id);
+          this.$container = createWrapper(slotContainer, 'div', this.id);
         } else {
-          this.$container = createWrapper('iframe', this.id);
+          this.$container = createWrapper(slotContainer, 'iframe', this.id);
         }
       }
       /**
@@ -950,7 +947,6 @@
         var union = new Union(this.name, this.options);
         union.index = UNION_INDEX++;
         union.id = "mp_wrapper_".concat(this.name, "_").concat(union.index);
-        union.getContainer();
         return union;
       }
       /**
@@ -964,6 +960,8 @@
         var _this2 = this;
 
         var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var slotContainer = arguments.length > 1 ? arguments[1] : undefined;
+        this.getContainer(slotContainer);
         this.data = data;
         console.log('run');
 
@@ -1037,11 +1035,12 @@
 
         if (container) {
           // 处理不同联盟渲染在填充前预处理，保证显示正常
-          this.callHook('onBeforeMount');
-          container.appendChild(this.$container);
+          this.callHook('onBeforeMount'); //container.appendChild(this.$container);
+
           this.$container.style.display = 'block'; // 处理不同联盟渲染在填充前预处理，保证显示正常
 
           this.callHook('onMounted');
+          this.callHook('onShow');
         } else {
           console.error("Slot \u3010".concat(selector, "\u3011 does not exist"));
         }
@@ -1078,11 +1077,6 @@
       value: function onClose() {
         this.trigger('close');
       }
-    }, {
-      key: "onShow",
-      value: function onShow() {
-        this.callHook('onShow');
-      }
     }]);
 
     return Union;
@@ -1111,31 +1105,21 @@
   var callFunction = function callFunction() {
     return arguments[0] && arguments[0].apply(this, Array.prototype.slice.call(arguments, 1));
   }; // 广告位状态
-  /**
-   * 通过权重计算使用消耗方
-   * @param {Array} consumers
-   *
-   * @returns [Array]
-   */
 
-  function getConsumerByweight(consumers) {
-    var maxWeightConsumers = [];
+  var getMaxConsumerWeight = function getMaxConsumerWeight(consumers) {
     var maxWeight = 0;
-    each(consumers, function (_ref, index) {
-      var _ref$weight = _ref.weight,
-          weight = _ref$weight === void 0 ? 0 : _ref$weight,
-          consumer = _objectWithoutProperties(_ref, ["weight"]);
+    each(consumers, function (_ref2, index) {
+      var _ref2$weight = _ref2.weight,
+          weight = _ref2$weight === void 0 ? 0 : _ref2$weight,
+          consumer = _objectWithoutProperties(_ref2, ["weight"]);
 
       // 需要根据环境进行加权和减权
       if (weight > maxWeight) {
         maxWeight = weight;
-        maxWeightConsumers = [consumer];
-      } else if (weight === maxWeight) {
-        maxWeightConsumers.push(consumer);
       }
     });
-    return maxWeightConsumers;
-  }
+    return maxWeight;
+  };
 
   var Slot = /*#__PURE__*/function () {
     /**
@@ -1148,11 +1132,59 @@
      *                    slotOptions.onClose // 当广告位被关闭回调
      */
     function Slot(container) {
+      var _this = this;
+
       var slotConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var config = arguments.length > 2 ? arguments[2] : undefined;
       var slotOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
       _classCallCheck(this, Slot);
+
+      _defineProperty(this, "getConsumerByWeight", function () {
+        var union = {};
+        var max = 0;
+        each(_this.loadedConsumers, function (con, index) {
+          if (con.data.weight > max) {
+            union = con;
+            max = con.data.weight;
+          }
+        });
+        return union;
+      });
+
+      _defineProperty(this, "getConsumerByWeightForRandom", function () {
+        var weight = [];
+        var weightAmount = 0;
+        var union = {};
+        each(_this.loadedConsumers, function (con, index) {
+          weightAmount += con.data.weight;
+          var last = weight[index - 1] && weight[index - 1].rang[1] || 0;
+          weight.push({
+            name: con.name,
+            weight: con.data.weight,
+            union: con,
+            rang: [last, last + con.data.weight]
+          });
+        });
+        var random = getRandom(0, weightAmount);
+        each(weight, function (wei) {
+          if (random >= wei.rang[0] && random < wei.rang[1]) {
+            union = wei.union;
+            return false;
+          }
+        });
+        return union;
+      });
+
+      _defineProperty(this, "pickConsumer", function (union) {
+        var priorityPolicy = _this.slotConfig.priorityPolicy;
+
+        if (priorityPolicy === 0 || priorityPolicy === 2 && union.data.weight === _this.consumerMaxWeight) {
+          _this.race(union);
+        } else if (priorityPolicy === 1 && _this.loadedConsumers.length === _this.consumerLength) {
+          _this.race(_this.getConsumerByWeightForRandom());
+        }
+      });
 
       this.container = container;
       this.$container = document.querySelector(container); // 是否并非请求
@@ -1166,12 +1198,17 @@
       this.status = '0'; //
 
       this.templateConfig = slotConfig.templateConfig || {};
-
-      if (slotConfig.isConcurrent) {
-        this.consumers = slotConfig.slotBidding;
-      } else {
-        this.consumers = getConsumerByweight(slotConfig.slotBidding);
-      }
+      this.consumers = slotConfig.slotBidding;
+      this.consumerMaxWeight = getMaxConsumerWeight(this.consumers);
+      this.loadedConsumers = []; // /**
+      //  * slotConfig.isConcurrent  是否开启并发
+      //  * slotConfig.priorityPolicy  开启并发时，渲染的方式
+      //  */
+      // if (slotConfig.isConcurrent && slotConfig.priorityPolicy) {
+      //   this.consumers = getConsumerByweight(slotConfig.slotBidding);
+      // } else {
+      //   this.consumers = slotConfig.slotBidding;
+      // }
 
       this.consumerLength = this.consumers && this.consumers.length;
       this.completeNumber = 0; // 已经加载消耗方个数
@@ -1183,21 +1220,26 @@
     _createClass(Slot, [{
       key: "distribute",
       value: function distribute() {
-        var _this = this;
+        var _this2 = this;
 
         if (this.consumerLength > 0) {
           each(this.consumers, function (con) {
             var union = Union.use(con.consumer.consumerType);
 
             if (union) {
-              // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
-              union.requestId = "".concat(_this.slotId, "-").concat(con.consumer.consumerSlotId, "-").concat(new Date().getTime(), "-").concat(getRandom(0, 100)); // 存放不同消耗方的不同配置信息
+              var $container = document.querySelector(_this2.container);
+              union.slotSize = {
+                width: $container.clientWidth,
+                height: $container.clientHeight
+              }; // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
+
+              union.requestId = "".concat(_this2.slotId, "-").concat(con.consumer.consumerSlotId, "-").concat(new Date().getTime(), "-").concat(getRandom(0, 100)); // 存放不同消耗方的不同配置信息
 
               union.requestData = {
-                category: _this.isConcurrent,
+                category: _this2.isConcurrent,
                 sdkVersion: '__VERSION__',
-                policyVersion: _this.config.policyVersion,
-                slotId: _this.slotId,
+                policyVersion: _this2.config.policyVersion,
+                slotId: _this2.slotId,
                 err: 0,
                 consumerType: con.consumer.consumerType,
                 consumerSlotId: con.consumer.consumerSlotId
@@ -1206,11 +1248,25 @@
               }).on('loaded', function () {
                 console.log('loaded');
 
-                _this.race(union);
-              }).on('complete', _this.handleComplete.bind(_this)).on('close', function () {
-                callFunction(_this.slotConfig.onClose);
+                _this2.loadedConsumers.push(union);
+
+                if (_this2.status !== '5') {
+                  _this2.status = '4';
+
+                  _this2.pickConsumer(union); // this.race(union);
+
+                }
+              }).on('complete', _this2.handleComplete.bind(_this2)).on('close', function () {
+                callFunction(_this2.slotConfig.onClose);
               });
-              union.run(con);
+              union.run(con, _this2.$container);
+              _this2.timeouter = setTimeout(function () {
+                if (_this2.slotConfig.priorityPolicy === 1) {
+                  _this2.race(_this2.getConsumerByWeightForRandom());
+                } else if (_this2.slotConfig.priorityPolicy === 2) {
+                  _this2.race(_this2.getConsumerByWeight());
+                }
+              }, 3000);
             } else {
               console.error("Union \u3010".concat(con.consumer.consumerType, "\u3011is not register"));
             }
@@ -1222,21 +1278,24 @@
     }, {
       key: "handleComplete",
       value: function handleComplete() {
-        if (++this.completeNumber === this.consumerLength && this.status !== '5') {
+        if (++this.completeNumber === this.consumerLength && this.status !== '5' && this.status !== '4') {
           callFunction(this.slotOptions.complete, false);
         }
       }
+    }, {
+      key: "race",
+
       /**
        * 真实填充 根据配置填充策略进行选择
        *
        * 有竞速模式和随机模式
        * @param {Union} union
        */
-
-    }, {
-      key: "race",
       value: function race(union) {
+        clearTimeout(this.timeouter);
+
         if (this.status !== '5') {
+          console.log('union', union);
           callFunction(this.slotOptions.complete, true);
           this.status = '5';
           console.log('winer ' + union.name);
@@ -1248,7 +1307,7 @@
       key: "reload",
       value: function reload() {
         if (!(this.winner && this.winner.hasReload())) {
-          this.status = '4';
+          this.status = '7';
           this.distribute();
         }
 

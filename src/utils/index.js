@@ -1,4 +1,4 @@
-/* gloabl window */
+/* global window */
 import { isPlainObject, isLikeArray, isUndefined } from './type';
 
 export const isDebug =
