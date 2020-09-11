@@ -1,6 +1,6 @@
 /* global window */
 import { jsonp } from '../helper';
-import { addParam } from '../../utils/index';
+import { addParam, macroReplace } from '../../utils/index';
 import { UNION_TIMEOUT } from '../index';
 
 const url = 'https://g.fancyapi.com/s2s';
@@ -17,8 +17,6 @@ export default Union => {
         timeout = null;
       }, UNION_TIMEOUT);
 
-      console.log('this', this);
-
       const queryAdMaterial = () => {
         const params = {
           ip: 'client',
@@ -27,7 +25,7 @@ export default Union => {
           rr: window.location.href,
           secure: 1, // https
           reqid: this.requestId,
-          device_type: 1,
+          device_type: 1, //移动端
           mimes: 'img,c',
           rsize: `${this.slotSize.width}*${this.slotSize.height}`, // 广告位容器的尺寸
           device: JSON.stringify({
@@ -38,10 +36,27 @@ export default Union => {
           v: '__VERSION__'
         };
 
+        const trackingClickUrl = encodeURIComponent(
+          macroReplace(this.data.trackingV2Data.clickTracking[0], {
+            DATA: this.requestData
+          })
+        );
+
+        const replaceMacro = (target, macro, replacestr) => {
+          const reg = new RegExp(macro, 'g');
+          return target.replace(reg, replacestr);
+        };
+
         jsonp(addParam(url, params), data => {
           clearTimeout(timeout);
           if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
-            this.$container.innerHTML = data.ad[0].src;
+            const htmlStr = replaceMacro(
+              data.ad[0].src,
+              '__M_PRECLICK__ ',
+              trackingClickUrl
+            );
+            console.log(htmlStr);
+            this.$container.innerHTML = htmlStr;
             onLoaded();
           } else {
             onTimeOut();
