@@ -1,6 +1,5 @@
 import { each, getRandom } from './utils/index';
 import Union from './union/index';
-import logger from './logger';
 
 const callFunction = function () {
   return (
@@ -15,9 +14,10 @@ const SLOT_STATUS = {
   1: '广告请求中',
   2: '已渲染',
   3: '渲染失败',
-  4: '重新请求',
+  4: '渲染等待',
   5: '已渲染',
-  6: '渲染失败'
+  6: '渲染失败',
+  7: '重新请求'
 };
 
 /**
@@ -40,6 +40,17 @@ function getConsumerByweight(consumers) {
   });
   return maxWeightConsumers;
 }
+
+const getMaxConsumerWeight = consumers => {
+  let maxWeight = 0;
+  each(consumers, ({ weight = 0, ...consumer }, index) => {
+    // 需要根据环境进行加权和减权
+    if (weight > maxWeight) {
+      maxWeight = weight;
+    }
+  });
+  return maxWeight;
+};
 
 export default class Slot {
   /**
@@ -66,11 +77,24 @@ export default class Slot {
     this.slotId = slotConfig.slotId;
     this.status = '0';
 
-    if (slotConfig.isConcurrent) {
-      this.consumers = slotConfig.slotBidding;
-    } else {
-      this.consumers = getConsumerByweight(slotConfig.slotBidding);
-    }
+    //
+    this.templateConfig = slotConfig.templateConfig || {};
+
+    this.consumers = slotConfig.slotBidding;
+
+    this.consumerMaxWeight = getMaxConsumerWeight(this.consumers);
+
+    this.loadedConsumers = [];
+
+    // /**
+    //  * slotConfig.isConcurrent  是否开启并发
+    //  * slotConfig.priorityPolicy  开启并发时，渲染的方式
+    //  */
+    // if (slotConfig.isConcurrent && slotConfig.priorityPolicy) {
+    //   this.consumers = getConsumerByweight(slotConfig.slotBidding);
+    // } else {
+    //   this.consumers = slotConfig.slotBidding;
+    // }
 
     this.consumerLength = this.consumers && this.consumers.length;
     this.completeNumber = 0;
@@ -86,6 +110,11 @@ export default class Slot {
       each(this.consumers, con => {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
+          const $container = document.querySelector(this.container);
+          union.slotSize = {
+            width: $container.clientWidth,
+            height: $container.clientHeight
+          };
           // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
           union.requestId = `${this.slotId}-${
             con.consumer.consumerSlotId
@@ -108,14 +137,27 @@ export default class Slot {
             })
             .on('loaded', () => {
               console.log('loaded');
-              this.race(union);
+              this.loadedConsumers.push(union);
+              if (this.status !== '5') {
+                this.status = '4';
+                this.pickConsumer(union);
+                // this.race(union);
+              }
             })
             .on('complete', this.handleComplete.bind(this))
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             });
 
-          union.run(con);
+          union.run(con, this.$container);
+
+          this.timeouter = setTimeout(() => {
+            if (this.slotConfig.priorityPolicy === 1) {
+              this.race(this.getConsumerByWeightForRandom());
+            } else if (this.slotConfig.priorityPolicy === 2) {
+              this.race(this.getConsumerByWeight());
+            }
+          }, 3000);
         } else {
           console.error(
             `Union 【${con.consumer.consumerType}】is not register`
@@ -127,10 +169,72 @@ export default class Slot {
     }
   }
   handleComplete() {
-    if (++this.completeNumber === this.consumerLength && this.status !== '5') {
+    if (
+      ++this.completeNumber === this.consumerLength &&
+      this.status !== '5' &&
+      this.status !== '4'
+    ) {
       callFunction(this.slotOptions.complete, false);
     }
   }
+
+  getConsumerByWeight = () => {
+    let union = {};
+    let max = 0;
+
+    each(this.loadedConsumers, (con, index) => {
+      if (con.data.weight > max) {
+        union = con;
+        max = con.data.weight;
+      }
+    });
+
+    return union;
+  };
+
+  getConsumerByWeightForRandom = () => {
+    let weight = [];
+    let weightAmount = 0;
+    let union = {};
+
+    each(this.loadedConsumers, (con, index) => {
+      weightAmount += con.data.weight;
+      let last = (weight[index - 1] && weight[index - 1].rang[1]) || 0;
+      weight.push({
+        name: con.name,
+        weight: con.data.weight,
+        union: con,
+        rang: [last, last + con.data.weight]
+      });
+    });
+
+    const random = getRandom(0, weightAmount);
+
+    each(weight, wei => {
+      if (random >= wei.rang[0] && random < wei.rang[1]) {
+        union = wei.union;
+        return false;
+      }
+    });
+
+    return union;
+  };
+
+  pickConsumer = union => {
+    const priorityPolicy = this.slotConfig.priorityPolicy;
+    if (
+      priorityPolicy === 0 ||
+      (priorityPolicy === 2 && union.data.weight === this.consumerMaxWeight)
+    ) {
+      this.race(union);
+    } else if (
+      priorityPolicy === 1 &&
+      this.loadedConsumers.length === this.consumerLength
+    ) {
+      this.race(this.getConsumerByWeightForRandom());
+    }
+  };
+
   /**
    * 真实填充 根据配置填充策略进行选择
    *
@@ -138,7 +242,9 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
+    clearTimeout(this.timeouter);
     if (this.status !== '5') {
+      console.log('union', union);
       callFunction(this.slotOptions.complete, true);
       this.status = '5';
       console.log('winer ' + union.name);
@@ -150,7 +256,7 @@ export default class Slot {
   }
   reload() {
     if (!(this.winner && this.winner.hasReload())) {
-      this.status = '4';
+      this.status = '7';
       this.distribute();
     }
     return this;
