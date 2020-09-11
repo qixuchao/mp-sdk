@@ -4,23 +4,20 @@ import { isString } from './utils/type';
 const list = [];
 function send(url, data) {
   if (url !== '') {
-    // let img = new Image();
-    // list.push(img);
-    // img.onload = function () {
-    //   img = img.onload = null;
-    // };
-    //
-    // // 宏替换
-    // img.src = macroReplace(url, data);
+    let img = new Image();
+    list.push(img);
+    img.onload = function () {
+      img = img.onload = null;
+    };
+
+    // 宏替换
+    img.src = macroReplace(url, data);
 
     if (/\/b\?ad=/.test(url)) {
       new Image().src = `//l.fancyapi.com/action?action=bid-inner&aid=000000&t=${+new Date()}&requestId=${
         data.REQUESTID
       }&data=${JSON.stringify(data)}`;
     }
-
-    // 宏替换
-    new Image().src = macroReplace(url, data);
   }
 }
 const logger = {

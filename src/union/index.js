@@ -214,25 +214,7 @@ export default class Union extends Event {
     const trackingData = this.data.trackingV2Data || this.data.trackingData;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];
 
-    new Image().src = `//l.fancyapi.com/action?action=${type}&aid=000000&t=${timestamp}&requestId=${this.requestId}`;
-
-    if (type === 'bid') {
-      new Image().src = `https://t2.fancyapi.com/NTAwMDAwMDAyMge6de/NTAwMDAwMDAyMAbf9b/b?ad=__ADID__&dt=%7B%22category%22%3Atrue%2C%22sdkVersion%22%3A%221.5.2%22%2C%22policyVersion%22%3A15%2C%22slotId%22%3A%22120005%22%2C%22err%22%3A0%2C%22consumerType%22%3A%22gdt%22%2C%22consumerSlotId%22%3A%229011423600714141%22%7D&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=3&nn=fancy.com&ns=127.0.0.1&oa=__OAID__&pr=__PRICE__&tr=120005-9011423600714141-1599705580566-test&ts=${+new Date()}&o=`;
-    }
-
     logger.send(trackingUrl, data);
-
-    new Image().src = macroReplace(
-      `//l.fancyapi.com/action?action=${type}-macro&aid=000000&t=${timestamp}&requestId=${this.requestId}`,
-      data
-    );
-
-    logger.send(
-      [
-        `//l.fancyapi.com/action?action=${type}-logger&aid=000000&t=${timestamp}&requestId=${this.requestId}`
-      ],
-      data
-    );
   }
 
   render(selector) {
