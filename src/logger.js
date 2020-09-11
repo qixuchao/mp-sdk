@@ -4,13 +4,14 @@ import { isString } from './utils/type';
 const list = [];
 function send(url, data) {
   if (url !== '') {
-    let img = document.createElement('img');
+    let img = new Image();
+    list.push(img);
     img.onload = function () {
       img = img.onload = null;
     };
+
     // 宏替换
     img.src = macroReplace(url, data);
-    list.push(img);
   }
 }
 const logger = {

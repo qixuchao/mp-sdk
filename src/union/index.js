@@ -1,10 +1,13 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { each } from '../utils/index';
+import { each, macroReplace } from '../utils/index';
 import logger from '../logger';
 import registerQQ from './vendor/qq';
 import registerBaidu from './vendor/baidu';
+import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';
+
+export const UNION_TIMEOUT = 1000 * 1.5;
 
 // 联盟实例的状态
 const STATUS = {
@@ -100,13 +103,13 @@ export default class Union extends Event {
     this.sandbox = this.options.sandbox !== false;
   }
 
-  getContainer() {
+  getContainer(slotContainer) {
     // 默认使用沙盒
     // 如果使用沙盒则不无法重复使用sdk同一份引用，则无视加载状态
     if (this.sandbox === false) {
-      this.$container = createWrapper('div', this.id);
+      this.$container = createWrapper(slotContainer, 'div', this.id);
     } else {
-      this.$container = createWrapper('iframe', this.id);
+      this.$container = createWrapper(slotContainer, 'iframe', this.id);
     }
   }
 
@@ -142,15 +145,15 @@ export default class Union extends Event {
     union.index = UNION_INDEX++;
     union.id = `mp_wrapper_${this.name}_${union.index}`;
 
-    union.getContainer();
-
     return union;
   }
   /**
    *
    * @param {Object} data
    */
-  run(data = {}) {
+  run(data = {}, slotContainer) {
+    this.getContainer(slotContainer);
+
     this.data = data;
     console.log('run');
     const onInit = () => {
@@ -209,6 +212,8 @@ export default class Union extends Event {
       EXT: extralData.EXT
     };
 
+    let timestamp = +new Date();
+
     const trackingData = this.data.trackingV2Data || this.data.trackingData;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];
 
@@ -222,13 +227,14 @@ export default class Union extends Event {
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       this.callHook('onBeforeMount');
 
-      container.appendChild(this.$container);
+      //container.appendChild(this.$container);
 
       this.$container.style.display = 'block';
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常
 
       this.callHook('onMounted');
+      this.callHook('onShow');
     } else {
       console.error(`Slot 【${selector}】 does not exist`);
     }
@@ -254,10 +260,6 @@ export default class Union extends Event {
     this.trigger('close');
   }
 
-  onShow() {
-    this.callHook('onShow');
-  }
-
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&
@@ -267,3 +269,4 @@ export default class Union extends Event {
 
 registerQQ(Union);
 registerBaidu(Union);
+registerFancy(Union);

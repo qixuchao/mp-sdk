@@ -1,5 +1,8 @@
+/* global window */
+
 import { each } from '../../utils/index';
 import logger from '../../logger';
+import { UNION_TIMEOUT } from '../index';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -17,7 +20,7 @@ export default Union => {
         onTimeOut();
         clearInterval(timeout);
         timeout = null;
-      }, 10 * 1000);
+      }, UNION_TIMEOUT);
 
       // 广告初始化
       window.TencentGDT.push({
@@ -33,7 +36,6 @@ export default Union => {
           if (Array.isArray(res)) {
             onLoaded();
             window.TencentGDT.NATIVE.renderAd(res[0], this.id);
-            this.onShow();
           } else {
             logger.info('无广告');
             this.logError(10000);
@@ -79,6 +81,7 @@ export default Union => {
     },
     onShow() {
       const context = document.querySelector(`#${this.id}`);
+
       const timer = setInterval(() => {
         const iframe = context.querySelector(`iframe`);
 

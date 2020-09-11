@@ -16,12 +16,12 @@ export const loadScript = (src, success, fail) => {
   fisrtScript.parentNode.insertBefore(script, fisrtScript);
 };
 
-export const createWrapper = (tagName = 'div', id) => {
+export const createWrapper = (context = document.body, tagName = 'div', id) => {
   const tag = document.createElement(tagName);
   tag.id = id;
   tag.style.display = 'none';
   tag.className = id;
-  document.body.appendChild(tag);
+  context.appendChild(tag);
   return tag;
 };
 
