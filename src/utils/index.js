@@ -1,5 +1,6 @@
 /* global window */
-import { isPlainObject, isLikeArray, isUndefined } from './type';
+import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
+import { loadScript } from '../union/helper';
 
 export const isDebug =
   /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
@@ -179,4 +180,39 @@ export const addParam = (url, params) => {
     }
   }
   return url;
+};
+
+/**
+ *
+ * @param  {string} url  [description]
+ * @param  {object||function} opts
+ */
+export const jsonp = (url, opts) => {
+  if (isFunction(opts)) {
+    opts = {
+      callback: opts
+    };
+  }
+
+  const callbackFnName = opts.callbackFnName || generateName('', 'jsonp');
+
+  opts = opts || {};
+
+  window[callbackFnName] = function (data) {
+    opts.callback && opts.callback(data || {});
+    try {
+      delete window[callbackFnName];
+    } catch (e) {}
+
+    window[callbackFnName] = undefined;
+  };
+
+  var data = opts.data || {};
+
+  //无缓存
+  data.v = Math.random().toString(36).slice(-6);
+
+  data.jsonp = callbackFnName;
+
+  loadScript(addParam(url, data));
 };

@@ -26,30 +26,58 @@ const SLOT_STATUS = {
  *
  * @returns [Array]
  */
-function getConsumerByweight(consumers) {
-  let maxWeightConsumers = [];
-  let maxWeight = 0;
-  each(consumers, ({ weight = 0, ...consumer }, index) => {
-    // 需要根据环境进行加权和减权
-    if (weight > maxWeight) {
-      maxWeight = weight;
-      maxWeightConsumers = [consumer];
-    } else if (weight === maxWeight) {
-      maxWeightConsumers.push(consumer);
-    }
-  });
-  return maxWeightConsumers;
-}
 
 const getMaxConsumerWeight = consumers => {
   let maxWeight = 0;
-  each(consumers, ({ weight = 0, ...consumer }, index) => {
-    // 需要根据环境进行加权和减权
+  each(consumers, ({ weight = 0 }, index) => {
     if (weight > maxWeight) {
       maxWeight = weight;
     }
   });
   return maxWeight;
+};
+
+const getConsumerByWeight = loadedConsumers => {
+  let union = {};
+  let max = 0;
+
+  each(loadedConsumers, (con, index) => {
+    if (con.data.weight > max) {
+      union = con;
+      max = con.data.weight;
+    }
+  });
+
+  return union;
+};
+
+const getConsumerByWeightForRandom = loadedConsumers => {
+  let weight = [];
+  let weightAmount = 0;
+  let union = {};
+
+  each(loadedConsumers, (con, index) => {
+    con.data.weight = con.data.weight && Math.max(con.data.weight, 1);
+    weightAmount += con.data.weight;
+    let last = (weight[index - 1] && weight[index - 1].rang[1]) || 0;
+    weight.push({
+      name: con.name,
+      weight: con.data.weight,
+      union: con,
+      rang: [last, last + con.data.weight]
+    });
+  });
+
+  const random = getRandom(0, weightAmount);
+
+  each(weight, wei => {
+    if (random >= wei.rang[0] && random < wei.rang[1]) {
+      union = wei.union;
+      return false;
+    }
+  });
+
+  return union;
 };
 
 export default class Slot {
@@ -77,6 +105,17 @@ export default class Slot {
     this.slotId = slotConfig.slotId;
     this.status = '0';
 
+    this.slotContainerSize = {
+      width:
+        this.$container.clientWidth ||
+        this.$container.scrollWidth ||
+        this.$container.offsetWidth,
+      height:
+        this.$container.clientHeight ||
+        this.$container.scrollHeight ||
+        this.$container.offsetHeight
+    };
+
     //
     this.templateConfig = slotConfig.templateConfig || {};
 
@@ -85,16 +124,6 @@ export default class Slot {
     this.consumerMaxWeight = getMaxConsumerWeight(this.consumers);
 
     this.loadedConsumers = [];
-
-    // /**
-    //  * slotConfig.isConcurrent  是否开启并发
-    //  * slotConfig.priorityPolicy  开启并发时，渲染的方式
-    //  */
-    // if (slotConfig.isConcurrent && slotConfig.priorityPolicy) {
-    //   this.consumers = getConsumerByweight(slotConfig.slotBidding);
-    // } else {
-    //   this.consumers = slotConfig.slotBidding;
-    // }
 
     this.consumerLength = this.consumers && this.consumers.length;
     this.completeNumber = 0;
@@ -110,11 +139,7 @@ export default class Slot {
       each(this.consumers, con => {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
-          const $container = document.querySelector(this.container);
-          union.slotSize = {
-            width: $container.clientWidth,
-            height: $container.clientHeight
-          };
+          union.slotSize = this.slotContainerSize;
           // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
           union.requestId = `${this.slotId}-${
             con.consumer.consumerSlotId
@@ -153,9 +178,9 @@ export default class Slot {
 
           this.timeouter = setTimeout(() => {
             if (this.slotConfig.priorityPolicy === 1) {
-              this.race(this.getConsumerByWeightForRandom());
+              this.race(getConsumerByWeightForRandom(this.loadedConsumers));
             } else if (this.slotConfig.priorityPolicy === 2) {
-              this.race(this.getConsumerByWeight());
+              this.race(getConsumerByWeight(this.loadedConsumers));
             }
           }, 3000);
         } else {
@@ -178,48 +203,6 @@ export default class Slot {
     }
   }
 
-  getConsumerByWeight = () => {
-    let union = {};
-    let max = 0;
-
-    each(this.loadedConsumers, (con, index) => {
-      if (con.data.weight > max) {
-        union = con;
-        max = con.data.weight;
-      }
-    });
-
-    return union;
-  };
-
-  getConsumerByWeightForRandom = () => {
-    let weight = [];
-    let weightAmount = 0;
-    let union = {};
-
-    each(this.loadedConsumers, (con, index) => {
-      weightAmount += con.data.weight;
-      let last = (weight[index - 1] && weight[index - 1].rang[1]) || 0;
-      weight.push({
-        name: con.name,
-        weight: con.data.weight,
-        union: con,
-        rang: [last, last + con.data.weight]
-      });
-    });
-
-    const random = getRandom(0, weightAmount);
-
-    each(weight, wei => {
-      if (random >= wei.rang[0] && random < wei.rang[1]) {
-        union = wei.union;
-        return false;
-      }
-    });
-
-    return union;
-  };
-
   pickConsumer = union => {
     const priorityPolicy = this.slotConfig.priorityPolicy;
     if (
@@ -231,7 +214,7 @@ export default class Slot {
       priorityPolicy === 1 &&
       this.loadedConsumers.length === this.consumerLength
     ) {
-      this.race(this.getConsumerByWeightForRandom());
+      this.race(getConsumerByWeightForRandom(this.loadedConsumers));
     }
   };
 

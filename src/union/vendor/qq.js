@@ -36,7 +36,6 @@ export default Union => {
           if (Array.isArray(res)) {
             onLoaded();
             window.TencentGDT.NATIVE.renderAd(res[0], this.id);
-            console.log(this, Union.vendorLoaded[this.name]);
           } else {
             logger.info('无广告');
             this.logError(10000);
