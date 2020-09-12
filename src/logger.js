@@ -12,12 +12,6 @@ function send(url, data) {
 
     // 宏替换
     img.src = macroReplace(url, data);
-
-    if (/\/b\?ad=/.test(url)) {
-      new Image().src = `//l.fancyapi.com/action?action=bid-inner&aid=000000&t=${+new Date()}&requestId=${
-        data.REQUESTID
-      }&data=${JSON.stringify(data)}`;
-    }
   }
 }
 const logger = {

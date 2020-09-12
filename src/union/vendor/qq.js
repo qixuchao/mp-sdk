@@ -1,3 +1,4 @@
+/*global window*/
 import { each } from '../../utils/index';
 import logger from '../../logger';
 
@@ -6,6 +7,7 @@ import logger from '../../logger';
  * 不渲染的也需要提前定义，再通过loadAd加载，然后通过之前定义onComplete重新渲染
  */
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
+
 export default Union => {
   let doClick, onClose;
   Union.register('gdt', {
@@ -13,8 +15,15 @@ export default Union => {
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
       window.TencentGDT = window.TencentGDT || [];
+
+      const inited = window.jsInited;
+
       var timeout = setTimeout(() => {
-        onTimeOut();
+        let errorCode = '10002';
+        if (inited) {
+          errorCode = '20000';
+        }
+        onTimeOut(errorCode);
         clearInterval(timeout);
         timeout = null;
       }, 10 * 1000);
@@ -37,7 +46,7 @@ export default Union => {
           } else {
             logger.info('无广告');
             this.logError(10000);
-            onTimeOut();
+            onTimeOut('10002');
             // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
             // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率
             // setTimeout(function () {
@@ -70,7 +79,7 @@ export default Union => {
       };
 
       TencentGDT.TN.adClose = function (event, traceid) {
-        const union = getUnionInstance(traceid);
+        const union = getUnionInstance(event.traceid);
         if (union) {
           union.onClose();
           onClose.apply(this, arguments);
