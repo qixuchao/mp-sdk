@@ -22,7 +22,8 @@ export const ERROR_TYPE = {
   10000: '广告数组为空',
   10001: 'js加载失败',
   10002: '获取广告超时',
-  10003: '广告异常'
+  10003: '广告异常',
+  20000: '广点通重复加载广告失败'
 };
 
 /**
@@ -124,10 +125,11 @@ export default class Union extends Event {
     this.trigger('complete');
   };
 
-  onTimeOut = () => {
+  onTimeOut = (errorCode = '10002') => {
     console.log('timeout');
+
     if (this.status === '1') {
-      this.logError(10002);
+      this.logError(errorCode);
       this.trigger('complete');
       this.destroy();
     }
@@ -210,8 +212,6 @@ export default class Union extends Event {
       DATA: { ...this.requestData, ...extralData.DATA },
       EXT: extralData.EXT
     };
-
-    let timestamp = +new Date();
 
     const trackingData = this.data.trackingV2Data || this.data.trackingData;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];

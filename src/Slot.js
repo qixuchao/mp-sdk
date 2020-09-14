@@ -177,9 +177,9 @@ export default class Slot {
           union.run(con, this.$container);
 
           this.timeouter = setTimeout(() => {
-            if (this.slotConfig.priorityPolicy === 1) {
+            if (this.slotConfig.priorityPolicy === 2) {
               this.race(getConsumerByWeightForRandom(this.loadedConsumers));
-            } else if (this.slotConfig.priorityPolicy === 2) {
+            } else if (this.slotConfig.priorityPolicy === 1) {
               this.race(getConsumerByWeight(this.loadedConsumers));
             }
           }, 3000);
@@ -207,11 +207,11 @@ export default class Slot {
     const priorityPolicy = this.slotConfig.priorityPolicy;
     if (
       priorityPolicy === 0 ||
-      (priorityPolicy === 2 && union.data.weight === this.consumerMaxWeight)
+      (priorityPolicy === 1 && union.data.weight === this.consumerMaxWeight)
     ) {
       this.race(union);
     } else if (
-      priorityPolicy === 1 &&
+      priorityPolicy === 2 &&
       this.loadedConsumers.length === this.consumerLength
     ) {
       this.race(getConsumerByWeightForRandom(this.loadedConsumers));
