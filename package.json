@@ -17,6 +17,7 @@
     "rollup-plugin-uglify": "^6.0.4"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
-  }
+    "prettier": "^2.1.1"
+  },
+  "license": "MIT"
 }

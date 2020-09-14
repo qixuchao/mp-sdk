@@ -54,7 +54,7 @@ const getConsumerByWeight = loadedConsumers => {
 const getConsumerByWeightForRandom = loadedConsumers => {
   let weight = [];
   let weightAmount = 0;
-  let union = {};
+  let union = null;
 
   each(loadedConsumers, (con, index) => {
     con.data.weight = con.data.weight && Math.max(con.data.weight, 1);
@@ -226,15 +226,17 @@ export default class Slot {
    */
   race(union) {
     clearTimeout(this.timeouter);
-    if (this.status !== '5') {
-      console.log('union', union);
-      callFunction(this.slotOptions.complete, true);
-      this.status = '5';
-      console.log('winer ' + union.name);
-      this.winner = union;
-      union.render(this.container);
-    } else {
-      //   union.destroy();
+    if (union) {
+      if (this.status !== '5') {
+        console.log('union', union);
+        callFunction(this.slotOptions.complete, true);
+        this.status = '5';
+        console.log('winer ' + union.name);
+        this.winner = union;
+        union.render(this.container);
+      } else {
+        union.destroy();
+      }
     }
   }
   reload() {
