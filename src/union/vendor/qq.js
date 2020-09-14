@@ -1,5 +1,4 @@
 /* global window */
-
 import { each } from '../../utils/index';
 import logger from '../../logger';
 import { UNION_TIMEOUT } from '../index';
@@ -9,6 +8,7 @@ import { UNION_TIMEOUT } from '../index';
  * 不渲染的也需要提前定义，再通过loadAd加载，然后通过之前定义onComplete重新渲染
  */
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
+
 export default Union => {
   let doClick, onClose;
   Union.register('gdt', {
@@ -16,8 +16,15 @@ export default Union => {
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
       window.TencentGDT = window.TencentGDT || [];
+
+      const inited = window.jsInited;
+
       var timeout = setTimeout(() => {
-        onTimeOut();
+        let errorCode = '10002';
+        if (inited) {
+          errorCode = '20000';
+        }
+        onTimeOut(errorCode);
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -25,7 +32,7 @@ export default Union => {
       // 广告初始化
       window.TencentGDT.push({
         placement_id: data.consumerSlotId, // {String} - 广告位id - 必填
-        app_id: data.appid, // {String} - appid - 必填
+        app_id: data.appId, // {String} - appId - 必填
         type: 'native', // 原生模板：native、激励视频：rewardVideo
         // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
         // display_type: 'banner',
@@ -39,7 +46,7 @@ export default Union => {
           } else {
             logger.info('无广告');
             this.logError(10000);
-            onTimeOut();
+            onTimeOut('10002');
             // 加载广告API，如广告回调无广告，可使用loadAd再次拉取广告
             // 注意：拉取广告频率每分钟不要超过20次，否则会被广告接口过滤，影响广告位填充率
             // setTimeout(function () {
@@ -72,7 +79,7 @@ export default Union => {
       };
 
       TencentGDT.TN.adClose = function (event, traceid) {
-        const union = getUnionInstance(traceid);
+        const union = getUnionInstance(event.traceid);
         if (union) {
           union.onClose();
           onClose.apply(this, arguments);
