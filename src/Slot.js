@@ -175,20 +175,19 @@ export default class Slot {
             });
 
           union.run(con, this.$container);
-
-          this.timeouter = setTimeout(() => {
-            if (this.slotConfig.priorityPolicy === 2) {
-              this.race(getConsumerByWeightForRandom(this.loadedConsumers));
-            } else if (this.slotConfig.priorityPolicy === 1) {
-              this.race(getConsumerByWeight(this.loadedConsumers));
-            }
-          }, 3000);
         } else {
           console.error(
             `Union 【${con.consumer.consumerType}】is not register`
           );
         }
       });
+      this.timeouter = setTimeout(() => {
+        if (this.slotConfig.priorityPolicy === 2) {
+          this.race(getConsumerByWeightForRandom(this.loadedConsumers));
+        } else if (this.slotConfig.priorityPolicy === 1) {
+          this.race(getConsumerByWeight(this.loadedConsumers));
+        }
+      }, 3000);
     } else {
       callFunction(this.slotOptions.complete, false);
     }
