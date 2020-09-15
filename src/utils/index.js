@@ -34,7 +34,7 @@ export const getRandom = (min, max) => {
   return Math.floor(min + Math.random() * max);
 };
 
-export const getRandomString = () => Math.random().toString(36);
+export const getRandomString = () => Math.random().toString(36).toUpperCase();
 
 export const getImei = () => {
   let imei = '';
