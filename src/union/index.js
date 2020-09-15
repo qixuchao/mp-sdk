@@ -172,12 +172,14 @@ export default class Union extends Event {
 
     // 同类联盟代码是否已经加载
     if (Union.vendorLoaded[this.name] === 'init') {
-      Union.vendorLoaded[this.name] = 'loading';
       if (!this.options.src) {
         this.status = '1';
         Union.vendorLoaded[this.name] = 'loaded';
-        return;
+        return this;
       }
+
+      Union.vendorLoaded[this.name] = 'loading';
+
       loadScript(
         this.options.src,
         () => {
