@@ -29,7 +29,7 @@ export default Union => {
       // 检测广告位
       let timeOut;
       timeOut = setTimeout(function () {
-        onTimeOut();
+        onTimeOut('10002');
         clearInterval(timer);
         timer = null;
       }, UNION_TIMEOUT);

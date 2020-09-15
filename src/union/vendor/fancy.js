@@ -11,7 +11,7 @@ export default Union => {
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
       let timeout = setTimeout(() => {
-        onTimeOut();
+        onTimeOut('10002');
         clearTimeout(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -60,8 +60,7 @@ export default Union => {
             this.$container.innerHTML = htmlStr;
             onLoaded();
           } else {
-            onTimeOut();
-            this.logError(10000);
+            onTimeOut('10000');
           }
         }
       });

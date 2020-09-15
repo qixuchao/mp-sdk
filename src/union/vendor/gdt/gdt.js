@@ -18,7 +18,7 @@ export default Union => {
       console.log('init', data.consumerSlotId);
       var timeout = setTimeout(() => {
         console.log('timeout');
-        onTimeOut();
+        onTimeOut('10002');
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -29,9 +29,8 @@ export default Union => {
           onLoaded();
         } else {
           logger.info('无广告');
-          this.logError(10000);
           console.log(timeout);
-          onTimeOut();
+          onTimeOut('10000');
         }
       });
     },
@@ -58,7 +57,7 @@ export default Union => {
       };
 
       TencentGDT.TN.adClose = function (event, traceid) {
-        const union = getUnionInstance(traceid);
+        const union = getUnionInstance(event.traceid);
         if (union) {
           union.onClose();
           onClose.apply(this, arguments);

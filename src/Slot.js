@@ -38,7 +38,7 @@ const getMaxConsumerWeight = consumers => {
 };
 
 const getConsumerByWeight = loadedConsumers => {
-  let union = {};
+  let union = null;
   let max = 0;
 
   each(loadedConsumers, (con, index) => {
@@ -225,7 +225,7 @@ export default class Slot {
    */
   race(union) {
     clearTimeout(this.timeouter);
-    if (union) {
+    if (union instanceof Union) {
       if (this.status !== '5') {
         callFunction(this.slotOptions.complete, true);
         this.status = '5';
