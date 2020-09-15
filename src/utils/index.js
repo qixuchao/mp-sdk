@@ -43,9 +43,9 @@ export const getImei = () => {
   } catch (e) {}
 
   if (!imei) {
-    imei = `H${+new Date()}-${getRandomString().slice(
-      -4
-    )}-${getRandomString().slice(-4)}-${getRandomString().slice(-4)}`;
+    imei = `H${Math.floor(+new Date() / 10000)}-${getRandomString().slice(
+      -6
+    )}-${getRandomString().slice(-6)}-${getRandomString().slice(-4)}`;
 
     window.localStorage.setItem(MEDIA_STORAGE_NAME, imei);
   }
