@@ -67,30 +67,31 @@ export default Union => {
     },
     onShow() {
       const context = document.querySelector(`#${this.id}`);
+      if (context) {
+        const timer = setInterval(() => {
+          const iframe = context.querySelector(`iframe`);
 
-      const timer = setInterval(() => {
-        const iframe = context.querySelector(`iframe`);
+          if (iframe) {
+            clearInterval(timer);
+            const iframeDocument = iframe.contentWindow.document;
+            const imgList = iframeDocument.querySelectorAll('img');
+            const materials = [];
+            each(imgList, img => {
+              if (img && img.getAttribute) {
+                materials.push(img.getAttribute('src'));
+              }
+            });
 
-        if (iframe) {
-          clearInterval(timer);
-          const iframeDocument = iframe.contentWindow.document;
-          const imgList = iframeDocument.querySelectorAll('img');
-          const materials = [];
-          each(imgList, img => {
-            if (img && img.getAttribute) {
-              materials.push(img.getAttribute('src'));
-            }
-          });
+            const materialData = {
+              title: '',
+              desc: '',
+              imgList: materials
+            };
 
-          const materialData = {
-            title: '',
-            desc: '',
-            imgList: materials
-          };
-
-          this.log('imp', { EXT: materialData });
-        }
-      }, 500);
+            this.log('imp', { EXT: materialData });
+          }
+        }, 500);
+      }
     },
     getWeight() {},
     reload(data) {

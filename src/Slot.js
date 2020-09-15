@@ -29,7 +29,7 @@ const SLOT_STATUS = {
 
 const getMaxConsumerWeight = consumers => {
   let maxWeight = 0;
-  each(consumers, ({ weight = 0 }, index) => {
+  each(consumers, ({ weight = 0 }) => {
     if (weight > maxWeight) {
       maxWeight = weight;
     }
@@ -228,7 +228,6 @@ export default class Slot {
     clearTimeout(this.timeouter);
     if (union) {
       if (this.status !== '5') {
-        console.log('union', union);
         callFunction(this.slotOptions.complete, true);
         this.status = '5';
         console.log('winer ' + union.name);
