@@ -29,7 +29,6 @@ class GdtManager {
   }
   proxyComplete = consumerSlotId => {
     return res => {
-      console.log(res);
       let slot = this.slotMap[consumerSlotId];
       if (slot && slot.status === 1) {
         if (Array.isArray(res)) {

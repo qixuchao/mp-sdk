@@ -129,6 +129,7 @@ export default class Union extends Event {
     console.log('timeout');
 
     if (this.status === '1') {
+      this.status = '10';
       this.logError(errorCode);
       this.trigger('complete');
       this.destroy();
@@ -172,6 +173,11 @@ export default class Union extends Event {
     // 同类联盟代码是否已经加载
     if (Union.vendorLoaded[this.name] === 'init') {
       Union.vendorLoaded[this.name] = 'loading';
+      if (!this.options.src) {
+        this.status = '1';
+        Union.vendorLoaded[this.name] = 'loaded';
+        return;
+      }
       loadScript(
         this.options.src,
         () => {
