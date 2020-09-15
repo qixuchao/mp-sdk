@@ -6,7 +6,7 @@ import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';
 
-export const UNION_TIMEOUT = 1000 * 1.5;
+export const UNION_TIMEOUT = 1000 * 5;
 
 // 联盟实例的状态
 const STATUS = {
@@ -121,13 +121,11 @@ export default class Union extends Event {
     this.adInfo = adInfo;
 
     this.trigger('loaded');
-
     this.trigger('complete');
   };
 
   onTimeOut = (errorCode = '10002') => {
     console.log('timeout');
-
     if (this.status === '1') {
       this.status = '10';
       this.logError(errorCode);
