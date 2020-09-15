@@ -1,6 +1,7 @@
 /* global window */
 import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
 import { loadScript } from '../union/helper';
+import { MEDIA_STORAGE_NAME } from '../config';
 
 export const isDebug =
   /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
@@ -33,6 +34,25 @@ export const getRandom = (min, max) => {
   return Math.floor(min + Math.random() * max);
 };
 
+export const getRandomString = () => Math.random().toString(36);
+
+export const getImei = () => {
+  let imei = '';
+  try {
+    imei = window.localStorage.getItem(MEDIA_STORAGE_NAME);
+  } catch (e) {}
+
+  if (!imei) {
+    imei = `H${+new Date()}-${getRandomString().slice(
+      -4
+    )}-${getRandomString().slice(-4)}-${getRandomString().slice(-4)}`;
+
+    window.localStorage.setItem(MEDIA_STORAGE_NAME, imei);
+  }
+
+  return imei;
+};
+
 export const generateName = (prefix, suffix) => {
   prefix = prefix || '';
   suffix = suffix || '';
@@ -56,7 +76,8 @@ export const macroReplace = (
     OS: 3, // H5
     APP: window.location.hostname,
     IP: '',
-    TS: +new Date()
+    TS: +new Date(),
+    IMEI: getImei()
   };
 
   const encode = value => {
