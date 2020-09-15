@@ -1,8 +1,7 @@
 import Event from '../internal/Event';
 import { isUndefined, isFunction } from '../utils/type';
-import { each, macroReplace } from '../utils/index';
 import logger from '../logger';
-import registerQQ from './vendor/qq';
+import registerQQ from './vendor/gdt/gdt';
 import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';

@@ -60,7 +60,7 @@ export const macroReplace = (
   };
 
   const encode = value => {
-    if (isPlainObject(value) || isLikeArray(value)) {
+    if (isPlainObject(value) || Array.isArray(value)) {
       value = JSON.stringify(value);
     }
     return needEncode ? encodeURIComponent(value) : value;
