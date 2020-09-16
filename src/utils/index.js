@@ -2,6 +2,7 @@
 import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
 import { loadScript } from '../union/helper';
 import { MEDIA_STORAGE_NAME } from '../config';
+import browser from './browser';
 
 export const isDebug =
   /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
@@ -73,8 +74,9 @@ export const macroReplace = (
 ) => {
   // 内置数据
   const builtData = {
-    OS: 3, // H5
+    OS: browser.isAndroid ? 1 : browser.isIos ? 2 : '0',
     APP: window.location.hostname,
+    CLIENTTYPE: 3, //H5
     IP: '',
     TS: +new Date(),
     IMEI: getImei()
