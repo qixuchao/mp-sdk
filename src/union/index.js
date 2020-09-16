@@ -5,6 +5,7 @@ import registerQQ from './vendor/gdt/gdt';
 import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';
+import { each } from '../utils/index';
 
 export const UNION_TIMEOUT = 1000 * 5;
 
@@ -228,6 +229,13 @@ export default class Union extends Event {
   render(selector) {
     this.log('winner');
     const container = document.querySelector(selector);
+
+    each(container.children, child => {
+      if (child.id !== `#${this.id}`) {
+        child.style.display = 'none';
+      }
+    });
+
     if (container) {
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       this.callHook('onBeforeMount');
@@ -245,8 +253,8 @@ export default class Union extends Event {
     }
   }
   hasReload() {
-    if (this.reload) {
-      this.reload(this.data.consumer);
+    if (this.options.reload) {
+      this.callHook('reload', this.data.consumer);
       return true;
     } else {
       return false;

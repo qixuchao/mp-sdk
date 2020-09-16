@@ -94,7 +94,7 @@ export default Union => {
     },
     getWeight() {},
     reload(data) {
-      window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
+      GdtManager().loadAd(data.consumerSlotId);
     }
   });
 };

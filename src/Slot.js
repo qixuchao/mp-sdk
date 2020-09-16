@@ -92,7 +92,6 @@ export default class Slot {
    */
   constructor(container, slotConfig = {}, config, slotOptions = {}) {
     this.container = container;
-    this.$container = document.querySelector(container);
 
     // 是否并非请求
     this.isConcurrent = slotConfig.isConcurrent;
@@ -105,15 +104,17 @@ export default class Slot {
     this.slotId = slotConfig.slotId;
     this.status = '0';
 
+    const $container = document.querySelector(container);
+
     this.slotContainerSize = {
       width:
-        this.$container.clientWidth ||
-        this.$container.scrollWidth ||
-        this.$container.offsetWidth,
+        $container.clientWidth ||
+        $container.scrollWidth ||
+        $container.offsetWidth,
       height:
-        this.$container.clientHeight ||
-        this.$container.scrollHeight ||
-        this.$container.offsetHeight
+        $container.clientHeight ||
+        $container.scrollHeight ||
+        $container.offsetHeight
     };
 
     //
@@ -136,6 +137,12 @@ export default class Slot {
 
   distribute() {
     if (this.consumerLength > 0) {
+      // 单页情况会将原来的广告位给移出，不能缓存
+      const $container = document.querySelector(this.container);
+
+      // reload时清除上次加载成功的consumer
+      this.loadedConsumers = [];
+
       each(this.consumers, con => {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
@@ -174,7 +181,7 @@ export default class Slot {
               callFunction(this.slotConfig.onClose);
             });
 
-          union.run(con, this.$container);
+          union.run(con, $container);
         } else {
           console.error(
             `Union 【${con.consumer.consumerType}】is not register`
@@ -238,10 +245,8 @@ export default class Slot {
     }
   }
   reload() {
-    if (!(this.winner && this.winner.hasReload())) {
-      this.status = '7';
-      this.distribute();
-    }
+    this.distribute();
+    this.status = '7';
     return this;
   }
 }
