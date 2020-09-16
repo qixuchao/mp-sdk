@@ -245,6 +245,9 @@ export default class Slot {
     }
   }
   reload() {
+    if (this.winner) {
+      this.winner.reload(this.container);
+    }
     this.distribute();
     this.status = '7';
     return this;
