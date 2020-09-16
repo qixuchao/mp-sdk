@@ -5,6 +5,7 @@ import registerQQ from './vendor/gdt/gdt';
 import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import { loadScript, createWrapper } from './helper';
+import { each } from '../utils/index';
 
 export const UNION_TIMEOUT = 1000 * 5;
 
@@ -228,6 +229,7 @@ export default class Union extends Event {
   render(selector) {
     this.log('winner');
     const container = document.querySelector(selector);
+
     if (container) {
       // 处理不同联盟渲染在填充前预处理，保证显示正常
       this.callHook('onBeforeMount');
@@ -244,14 +246,6 @@ export default class Union extends Event {
       console.error(`Slot 【${selector}】 does not exist`);
     }
   }
-  hasReload() {
-    if (this.reload) {
-      this.reload(this.data.consumer);
-      return true;
-    } else {
-      return false;
-    }
-  }
   callHook(fnName, ...args) {
     const fn = this.options[fnName];
     return isFunction(fn) && fn.apply(this, args);
@@ -264,7 +258,11 @@ export default class Union extends Event {
   onClose() {
     this.trigger('close');
   }
-
+  reload(slotContainerSeletor) {
+    this.destroy();
+    this.getContainer(document.querySelector(slotContainerSeletor));
+    this.status = '7';
+  }
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&

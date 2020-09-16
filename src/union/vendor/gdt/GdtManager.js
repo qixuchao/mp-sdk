@@ -54,7 +54,6 @@ class GdtManager {
     });
   };
   bindSlot(consumerSlotId, container, complete) {
-    console.log(consumerSlotId, container, complete);
     const slot = this.slotMap[consumerSlotId];
     if (slot) {
       slot.status = 1;
