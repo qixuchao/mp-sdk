@@ -68,7 +68,7 @@ export default Union => {
           this.data.consumer.consumerSlotId
         );
 
-        if (adMaterialData.data) {
+        if (adMaterialData && adMaterialData.data) {
           const materialReportData = {
             title: adMaterialData.data[0].txt,
             desc: adMaterialData.data[0].desc,
