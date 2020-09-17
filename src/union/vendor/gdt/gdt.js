@@ -66,12 +66,13 @@ export default Union => {
       if (window.GDT && window.GDT.getPosData) {
         const adMaterialData = window.GDT.getPosData(
           this.data.consumer.consumerSlotId
-        ).data;
-        if (adMaterialData) {
+        );
+
+        if (adMaterialData.data) {
           const materialReportData = {
-            title: adMaterialData[0].txt,
-            desc: adMaterialData[0].desc,
-            imgList: [adMaterialData[0].img, adMaterialData[0].img2]
+            title: adMaterialData.data[0].txt,
+            desc: adMaterialData.data[0].desc,
+            imgList: [adMaterialData.data[0].img, adMaterialData.data[0].img2]
           };
           this.log('imp', { EXT: materialReportData });
         }
