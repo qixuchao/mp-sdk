@@ -1,5 +1,4 @@
 /* global window */
-import { each } from '../../../utils/index';
 import logger from '../../../logger';
 import { UNION_TIMEOUT } from '../../index';
 import GdtManager from './GdtManager';
@@ -64,16 +63,18 @@ export default Union => {
       };
     },
     onShow() {
-      const adMaterialData = window.GDT.getPosData(
-        this.data.consumer.consumerSlotId
-      ).data;
-      if (adMaterialData) {
-        const materialReportData = {
-          title: adMaterialData[0].txt,
-          desc: adMaterialData[0].desc,
-          imgList: [adMaterialData[0].img, adMaterialData[0].img2]
-        };
-        this.log('imp', { EXT: materialReportData });
+      if (window.GDT && window.GDT.getPosData) {
+        const adMaterialData = window.GDT.getPosData(
+          this.data.consumer.consumerSlotId
+        ).data;
+        if (adMaterialData) {
+          const materialReportData = {
+            title: adMaterialData[0].txt,
+            desc: adMaterialData[0].desc,
+            imgList: [adMaterialData[0].img, adMaterialData[0].img2]
+          };
+          this.log('imp', { EXT: materialReportData });
+        }
       }
     },
     getWeight() {},
