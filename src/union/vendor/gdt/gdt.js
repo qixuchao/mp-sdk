@@ -1,5 +1,4 @@
 /* global window */
-import { each } from '../../../utils/index';
 import logger from '../../../logger';
 import { UNION_TIMEOUT } from '../../index';
 import GdtManager from './GdtManager';
@@ -15,7 +14,6 @@ export default Union => {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
-      console.log('init', data.consumerSlotId);
       var timeout = setTimeout(() => {
         console.log('timeout');
         onTimeOut('10002');
@@ -65,31 +63,19 @@ export default Union => {
       };
     },
     onShow() {
-      const context = document.querySelector(`#${this.id}`);
-      if (context) {
-        const timer = setInterval(() => {
-          const iframe = context.querySelector(`iframe`);
+      if (window.GDT && window.GDT.getPosData) {
+        const adMaterialData = window.GDT.getPosData(
+          this.data.consumer.consumerSlotId
+        );
 
-          if (iframe) {
-            clearInterval(timer);
-            const iframeDocument = iframe.contentWindow.document;
-            const imgList = iframeDocument.querySelectorAll('img');
-            const materials = [];
-            each(imgList, img => {
-              if (img && img.getAttribute) {
-                materials.push(img.getAttribute('src'));
-              }
-            });
-
-            const materialData = {
-              title: '',
-              desc: '',
-              imgList: materials
-            };
-
-            this.log('imp', { EXT: materialData });
-          }
-        }, 500);
+        if (adMaterialData && adMaterialData.data) {
+          const materialReportData = {
+            title: adMaterialData.data[0].txt,
+            desc: adMaterialData.data[0].desc,
+            imgList: [adMaterialData.data[0].img, adMaterialData.data[0].img2]
+          };
+          this.log('imp', { EXT: materialReportData });
+        }
       }
     },
     getWeight() {},
