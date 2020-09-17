@@ -15,7 +15,6 @@ export default Union => {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
     onInit(data, { onLoaded, onTimeOut }) {
-      console.log('init', data.consumerSlotId);
       var timeout = setTimeout(() => {
         console.log('timeout');
         onTimeOut('10002');
@@ -23,10 +22,23 @@ export default Union => {
         timeout = null;
       }, UNION_TIMEOUT);
 
+      const getMaterialData = () => {
+        const adMaterialData = window.GDT.getPosData(data.consumerSlotId).data;
+        if (adMaterialData) {
+          const materialReportData = {
+            title: adMaterialData[0].txt,
+            desc: adMaterialData[0].desc,
+            imgList: [adMaterialData[0].img, adMaterialData[0].img2]
+          };
+          this.log('imp', { EXT: materialReportData });
+        }
+      };
+
       GdtManager().bindSlot(data.consumerSlotId, this.id, status => {
         clearInterval(timeout);
         if (status) {
           onLoaded();
+          getMaterialData();
         } else {
           logger.info('无广告');
           console.log(timeout);
@@ -64,34 +76,7 @@ export default Union => {
         }
       };
     },
-    onShow() {
-      const context = document.querySelector(`#${this.id}`);
-      if (context) {
-        const timer = setInterval(() => {
-          const iframe = context.querySelector(`iframe`);
-
-          if (iframe) {
-            clearInterval(timer);
-            const iframeDocument = iframe.contentWindow.document;
-            const imgList = iframeDocument.querySelectorAll('img');
-            const materials = [];
-            each(imgList, img => {
-              if (img && img.getAttribute) {
-                materials.push(img.getAttribute('src'));
-              }
-            });
-
-            const materialData = {
-              title: '',
-              desc: '',
-              imgList: materials
-            };
-
-            this.log('imp', { EXT: materialData });
-          }
-        }, 500);
-      }
-    },
+    onShow() {},
     getWeight() {},
     reload(data) {
       GdtManager().loadAd(data.consumerSlotId);
