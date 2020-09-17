@@ -22,23 +22,10 @@ export default Union => {
         timeout = null;
       }, UNION_TIMEOUT);
 
-      const getMaterialData = () => {
-        const adMaterialData = window.GDT.getPosData(data.consumerSlotId).data;
-        if (adMaterialData) {
-          const materialReportData = {
-            title: adMaterialData[0].txt,
-            desc: adMaterialData[0].desc,
-            imgList: [adMaterialData[0].img, adMaterialData[0].img2]
-          };
-          this.log('imp', { EXT: materialReportData });
-        }
-      };
-
       GdtManager().bindSlot(data.consumerSlotId, this.id, status => {
         clearInterval(timeout);
         if (status) {
           onLoaded();
-          getMaterialData();
         } else {
           logger.info('无广告');
           console.log(timeout);
@@ -76,7 +63,19 @@ export default Union => {
         }
       };
     },
-    onShow() {},
+    onShow() {
+      const adMaterialData = window.GDT.getPosData(
+        this.data.consumer.consumerSlotId
+      ).data;
+      if (adMaterialData) {
+        const materialReportData = {
+          title: adMaterialData[0].txt,
+          desc: adMaterialData[0].desc,
+          imgList: [adMaterialData[0].img, adMaterialData[0].img2]
+        };
+        this.log('imp', { EXT: materialReportData });
+      }
+    },
     getWeight() {},
     reload(data) {
       GdtManager().loadAd(data.consumerSlotId);
