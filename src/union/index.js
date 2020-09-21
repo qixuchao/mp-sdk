@@ -215,7 +215,11 @@ export default class Union extends Event {
   log(type, extralData = {}) {
     let data = {
       REQUESTID: this.requestId, // 一次广告加载周期内（从bid到bidsuc到imp）的上报请求该字段需保持一致，可以按如下规则生成：slotId-consumerSlotId-ts-(100以内随机数)
-      DATA: { ...this.requestData, ...extralData.DATA },
+      DATA: {
+        ...this.requestData,
+        ...extralData.DATA,
+        pageUrl: window.location.href
+      },
       EXT: extralData.EXT
     };
 

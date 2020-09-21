@@ -9,7 +9,6 @@ import GdtManager from './GdtManager';
  */
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 export default Union => {
-  let doClick, onClose;
   Union.register('gdt', {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
@@ -34,33 +33,7 @@ export default Union => {
     },
     onBeforeMount() {},
     onMounted() {
-      if (doClick) {
-        return;
-      }
-      doClick = TencentGDT.TN.doClick;
-      onClose = TencentGDT.TN.adClose;
-
-      const getUnionInstance = traceid => {
-        var container = document.querySelector('div[id*="' + traceid + '"]');
-
-        return Union.unionInstances[container.parentNode.id];
-      };
-
-      TencentGDT.TN.doClick = function (event, traceid) {
-        const union = getUnionInstance(traceid);
-        if (union) {
-          union.onClick();
-          doClick.apply(this, arguments);
-        }
-      };
-
-      TencentGDT.TN.adClose = function (event, traceid) {
-        const union = getUnionInstance(event.traceid);
-        if (union) {
-          union.onClose();
-          onClose.apply(this, arguments);
-        }
-      };
+      GdtManager().bindEvent(Union);
     },
     onShow() {
       if (window.GDT && window.GDT.getPosData) {
