@@ -218,7 +218,7 @@ export default class Union extends Event {
       DATA: {
         ...this.requestData,
         ...extralData.DATA,
-        pageUrl: window.location.href
+        referer: window.location.href
       },
       EXT: extralData.EXT
     };
