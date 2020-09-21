@@ -1,5 +1,7 @@
 import { each } from '../../../utils/index';
 
+let doClick;
+let onClose;
 /**
  * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
  * 后面可以通过window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
@@ -65,6 +67,34 @@ class GdtManager {
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }
+  }
+  bindEvent(Union) {
+    if (doClick) {
+      return;
+    }
+    doClick = TencentGDT.TN.doClick;
+    onClose = TencentGDT.TN.adClose;
+    const getUnionInstance = traceid => {
+      var container = document.querySelector('div[id*="' + traceid + '"]');
+
+      return Union.unionInstances[container.parentNode.id];
+    };
+
+    TencentGDT.TN.doClick = function (event, traceid) {
+      const union = getUnionInstance(traceid);
+      if (union) {
+        union.onClick();
+        doClick.apply(this, arguments);
+      }
+    };
+
+    TencentGDT.TN.adClose = function (event, traceid) {
+      const union = getUnionInstance(event.traceid);
+      if (union) {
+        union.onClose();
+        onClose.apply(this, arguments);
+      }
+    };
   }
   loadAd(consumerSlotId) {
     window.TencentGDT.NATIVE && window.TencentGDT.NATIVE.loadAd(consumerSlotId);
