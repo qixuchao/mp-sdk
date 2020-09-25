@@ -20,7 +20,7 @@ class GdtManager {
           if (consumer.consumer.consumerType === 'gdt') {
             this.slotMap[consumer.consumer.consumerSlotId] = {
               consumerSlotId: consumer.consumer.consumerSlotId,
-              appid: consumer.consumer.appId,
+              appid: consumer.consumer.appId || 1110655203,
               status: 0
             };
           }

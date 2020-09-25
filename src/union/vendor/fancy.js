@@ -18,14 +18,14 @@ export default Union => {
 
       const params = {
         ip: 'client',
-        mid: data.appId,
+        mid: data.appId || 209,
         si: data.consumerSlotId,
         rr: window.location.href,
         secure: 1, // https
         reqid: this.requestId,
         device_type: 1, //移动端
         mimes: 'img,c',
-        rsize: `${this.slotSize.width}*${this.slotSize.height}`, // 广告位容器的尺寸
+        rsize: `${this.slotSize.width}*${this.slotSize.height || 54}`, // 广告位容器的尺寸
         device: JSON.stringify({
           height: screen.height,
           width: screen.width,

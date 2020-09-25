@@ -90,9 +90,24 @@ class Mp {
     this.MEDIA_CONFIG = {};
     if (config.slotBiddings) {
       each(config.slotBiddings, slotBidding => {
-        this.MEDIA_CONFIG[slotBidding.slotId] = slotBidding;
+        this.MEDIA_CONFIG[slotBidding.slotId] = this.uniqueConsumer(
+          slotBidding
+        );
       });
     }
+  }
+
+  // 去除同一广告位下相同的消耗方
+  uniqueConsumer(slotBidding) {
+    let slotBidConsumers = {};
+    each(slotBidding.slotBidding, consumer => {
+      const consumerType = consumer.consumer.consumerType;
+      if (!slotBidConsumers[consumerType]) {
+        slotBidConsumers[consumerType] = consumer;
+      }
+    });
+    slotBidding.slotBidding = Object.values(slotBidConsumers);
+    return slotBidding;
   }
 
   /**
