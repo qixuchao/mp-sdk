@@ -263,7 +263,6 @@ export default class Union extends Event {
     this.trigger('close');
   }
   reload(slotContainerSeletor) {
-    this.destroy();
     this.getContainer(document.querySelector(slotContainerSeletor));
     this.status = '7';
   }

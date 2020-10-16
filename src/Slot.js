@@ -244,8 +244,12 @@ export default class Slot {
       }
     }
   }
-  reload() {
+  reload(container) {
     if (this.winner) {
+      if (this.container === container) {
+        this.winner.destroy();
+      }
+      this.container = container;
       this.winner.reload(this.container);
     }
     this.distribute();
