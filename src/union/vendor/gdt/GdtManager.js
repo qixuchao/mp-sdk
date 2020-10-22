@@ -13,11 +13,6 @@ class GdtManager {
     this.slotMap = {};
     this.init();
   }
-  // 初始化之后立马执行 ，先放到ready列表，待执行之后执行
-  clearReadyFns = fns => {
-    let fn = fns.shift();
-    fn && fn();
-  };
   init() {
     if (window.M$P_M_C && window.M$P_M_C.slotBiddings) {
       each(window.M$P_M_C.slotBiddings, item => {
@@ -41,14 +36,21 @@ class GdtManager {
       let slot = this.slotMap[consumerSlotId];
       let fn;
       // 获取广告位对应的广告素材
-      let materialData = window.GDT.getPosData(consumerSlotId).data;
+      let materialData = [];
+      try {
+        materialData = window.GDT.getPosData(consumerSlotId).data;
+      } catch (e) {}
+
       if (slot && slot.status === 1 && slot.fns) {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
             let currentSlot = slot.fns.shift();
             if (currentSlot) {
               window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
-              currentSlot.complete(true, materialData[index]);
+              currentSlot.complete(
+                true,
+                materialData[index] && materialData[index]
+              );
               fn = slot.next.shift();
             } else {
               return false;
@@ -84,10 +86,6 @@ class GdtManager {
     const slot = this.slotMap[consumerSlotId];
     if (slot) {
       slot.status = 1;
-
-      // 保证多次执行按照队列执行
-      slot.fns = slot.fns || [];
-      slot.next = slot.next || [];
 
       slot.fns.push({
         container,

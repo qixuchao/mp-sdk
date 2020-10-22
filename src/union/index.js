@@ -262,10 +262,7 @@ export default class Union extends Event {
   onClose() {
     this.trigger('close');
   }
-  reload(slotContainerSeletor) {
-    this.getContainer(document.querySelector(slotContainerSeletor));
-    this.status = '7';
-  }
+
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&

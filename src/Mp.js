@@ -190,17 +190,12 @@ class Mp {
    * @param {Object} options slot传入配置
    */
   fillAd(container, slotConfig, force, options) {
-    // 强制渲染先移除前一个广告
-    //if (this.slots[slotConfig.id] && force) {
-    // this.slots[slotConfig.id] = this.slots[slotConfig.id].reload(container);
-    //} else {
     this.slots[slotConfig.id] = new Slot(
       container,
       slotConfig,
       this.config,
       options
     );
-    // }
   }
 }
 

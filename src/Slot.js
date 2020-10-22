@@ -244,17 +244,4 @@ export default class Slot {
       }
     }
   }
-  reload(container) {
-    if (this.winner) {
-      if (this.container === container) {
-        this.winner.destroy();
-      }
-      this.container = container;
-      this.winner.reload(this.container);
-    }
-    this.container = container;
-    this.distribute();
-    this.status = '7';
-    return this;
-  }
 }
