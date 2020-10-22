@@ -231,6 +231,7 @@ export default class Union extends Event {
 
   render(selector) {
     this.log('winner');
+
     const container = document.querySelector(selector);
 
     if (container) {
@@ -261,11 +262,7 @@ export default class Union extends Event {
   onClose() {
     this.trigger('close');
   }
-  reload(slotContainerSeletor) {
-    this.destroy();
-    this.getContainer(document.querySelector(slotContainerSeletor));
-    this.status = '7';
-  }
+
   destroy = () => {
     this.status = '10';
     this.$container.parentNode &&

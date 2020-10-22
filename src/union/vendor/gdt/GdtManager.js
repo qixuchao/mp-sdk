@@ -20,8 +20,10 @@ class GdtManager {
           if (consumer.consumer.consumerType === 'gdt') {
             this.slotMap[consumer.consumer.consumerSlotId] = {
               consumerSlotId: consumer.consumer.consumerSlotId,
-              appid: consumer.consumer.appId,
-              status: 0
+              appid: consumer.consumer.appId || 1110655203,
+              status: 0,
+              fns: [], // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
+              next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
             };
           }
         });
@@ -32,16 +34,41 @@ class GdtManager {
   proxyComplete = consumerSlotId => {
     return res => {
       let slot = this.slotMap[consumerSlotId];
-      if (slot && slot.status === 1) {
+      let fn;
+      // 获取广告位对应的广告素材
+      let materialData = [];
+      try {
+        materialData = window.GDT.getPosData(consumerSlotId).data;
+      } catch (e) {}
+
+      if (slot && slot.status === 1 && slot.fns) {
         if (Array.isArray(res)) {
-          window.TencentGDT.NATIVE.renderAd(res[0], slot.container);
-          slot.complete(true);
+          res.forEach((ad, index) => {
+            let currentSlot = slot.fns.shift();
+            if (currentSlot) {
+              window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
+              currentSlot.complete(
+                true,
+                materialData[index] && materialData[index]
+              );
+              fn = slot.next.shift();
+            } else {
+              return false;
+            }
+          });
         } else {
-          slot.complete(false);
+          let currentSlot = slot.fns.shift();
+          currentSlot.complete(false);
         }
       }
+      if (!fn) {
+        fn = slot.next.shift();
+      }
+
+      fn && fn();
     };
   };
+
   initSlot = slot => {
     // 广告初始化
     window.TencentGDT.push({
@@ -51,7 +78,7 @@ class GdtManager {
       // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
       // display_type: 'banner',
       // containerid: this.id,
-      count: 1, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
+      count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
       onComplete: this.proxyComplete(slot.consumerSlotId)
     });
   };
@@ -59,10 +86,17 @@ class GdtManager {
     const slot = this.slotMap[consumerSlotId];
     if (slot) {
       slot.status = 1;
-      slot.container = container;
-      slot.complete = complete;
-      if (window.jsInited) {
+
+      slot.fns.push({
+        container,
+        complete
+      });
+      if (window.jsInited && window.GDT && window.GDT.load) {
         this.loadAd(consumerSlotId);
+      } else {
+        slot.next.push(() => {
+          this.loadAd(consumerSlotId);
+        });
       }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
