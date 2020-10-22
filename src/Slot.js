@@ -252,6 +252,7 @@ export default class Slot {
       this.container = container;
       this.winner.reload(this.container);
     }
+    this.container = container;
     this.distribute();
     this.status = '7';
     return this;
