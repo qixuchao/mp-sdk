@@ -1,4 +1,4 @@
-import { each } from '../../../utils/index';
+import { each, addParam } from '../../../utils/index';
 
 let doClick;
 let onClose;
@@ -31,7 +31,12 @@ class GdtManager {
       each(this.slotMap, this.initSlot);
     }
   }
+
+  static exposeCount = 0;
+
   proxyComplete = consumerSlotId => {
+    let adKeys = [];
+    let isRepeatAd = false;
     return res => {
       let slot = this.slotMap[consumerSlotId];
       let fn;
@@ -44,18 +49,36 @@ class GdtManager {
       if (slot && slot.status === 1 && slot.fns) {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
-            let currentSlot = slot.fns.shift();
-            if (currentSlot) {
-              window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
-              currentSlot.complete(
-                true,
-                materialData[index] && materialData[index]
-              );
-              fn = slot.next.shift();
+            const adKey = ad.advertisement_id + ad.placement_id;
+            if (adKeys.indexOf(adKey) === -1) {
+              let currentSlot = slot.fns.shift();
+
+              let currentMaterial = materialData[index] && materialData[index];
+
+              if (currentSlot) {
+                adKeys.push(adKey);
+
+                setTimeout(() => {
+                  new Image().src = addParam(currentMaterial.apurl, {
+                    callback: '_cb_gdtjson' + GdtManager.exposeCount++,
+                    datatype: 'jsonp'
+                  });
+                }, 1000);
+
+                window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
+                currentSlot.complete(true, currentMaterial);
+                fn = slot.next.shift();
+              } else {
+                return false;
+              }
             } else {
-              return false;
+              isRepeatAd = true;
             }
           });
+          let currentSlot = slot.fns.shift();
+          if (isRepeatAd) {
+            currentSlot.complete(false, null, '10006');
+          }
         } else {
           let currentSlot = slot.fns.shift();
           currentSlot.complete(false);
@@ -82,13 +105,14 @@ class GdtManager {
       onComplete: this.proxyComplete(slot.consumerSlotId)
     });
   };
-  bindSlot(consumerSlotId, container, complete) {
+  bindSlot(consumerSlotId, slotInstance, complete) {
+    this.unionInstance = slotInstance;
     const slot = this.slotMap[consumerSlotId];
     if (slot) {
       slot.status = 1;
 
       slot.fns.push({
-        container,
+        container: this.unionInstance.id,
         complete
       });
       if (window.jsInited && window.GDT && window.GDT.load) {
@@ -108,6 +132,9 @@ class GdtManager {
     }
     doClick = TencentGDT.TN.doClick;
     onClose = TencentGDT.TN.adClose;
+
+    TencentGDT.TN.doExpose = () => {};
+
     const getUnionInstance = traceid => {
       var container = document.querySelector('div[id*="' + traceid + '"]');
 

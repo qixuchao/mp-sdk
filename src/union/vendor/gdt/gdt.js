@@ -18,16 +18,20 @@ export default Union => {
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
-      GdtManager().bindSlot(data.consumerSlotId, this.id, (status, adInfo) => {
-        clearInterval(timeout);
-        if (status) {
-          onLoaded(adInfo);
-        } else {
-          logger.info('无广告');
-          console.log(timeout);
-          onTimeOut('10000');
+      GdtManager().bindSlot(
+        data.consumerSlotId,
+        this,
+        (status, adInfo, code = '10000') => {
+          clearInterval(timeout);
+          if (status) {
+            onLoaded(adInfo);
+          } else {
+            logger.info('无广告');
+            console.log(timeout);
+            onTimeOut(code);
+          }
         }
-      });
+      );
     },
     onBeforeMount() {},
     onMounted() {
