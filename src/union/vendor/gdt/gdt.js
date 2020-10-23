@@ -18,7 +18,7 @@ export default Union => {
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
-      GdtManager().bindSlot(data.consumerSlotId, this.id, (status, adInfo) => {
+      GdtManager().bindSlot(data.consumerSlotId, this, (status, adInfo) => {
         clearInterval(timeout);
         if (status) {
           onLoaded(adInfo);
