@@ -36,6 +36,7 @@ class GdtManager {
 
   proxyComplete = consumerSlotId => {
     let adKeys = [];
+    let isRepeatAd = false;
     return res => {
       let slot = this.slotMap[consumerSlotId];
       let fn;
@@ -54,9 +55,9 @@ class GdtManager {
 
               let currentMaterial = materialData[index] && materialData[index];
 
-              adKeys.push(adKey);
-
               if (currentSlot) {
+                adKeys.push(adKey);
+
                 setTimeout(() => {
                   new Image().src = addParam(currentMaterial.apurl, {
                     callback: '_cb_gdtjson' + GdtManager.exposeCount++,
@@ -71,9 +72,13 @@ class GdtManager {
                 return false;
               }
             } else {
-              this.unionInstance.logError('10006');
+              isRepeatAd = true;
             }
           });
+          let currentSlot = slot.fns.shift();
+          if (isRepeatAd) {
+            currentSlot.complete(false, null, '10006');
+          }
         } else {
           let currentSlot = slot.fns.shift();
           currentSlot.complete(false);
