@@ -36,9 +36,9 @@ const PRIORITY_POLICY_TYPE = {
  */
 
 const getMaxConsumerWeight = consumers => {
-  let maxWeight = 0;
-  each(consumers, ({ weight = 0 }) => {
-    if (weight > maxWeight) {
+  let maxWeight = 10;
+  each(consumers, ({ weight = 10 }) => {
+    if (weight < maxWeight) {
       maxWeight = weight;
     }
   });
