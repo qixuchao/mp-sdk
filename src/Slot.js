@@ -167,6 +167,7 @@ export default class Slot {
             policyVersion: this.config.policyVersion,
             slotId: this.slotId,
             err: 0,
+            mediaId: this.config.mediaId,
             consumerType: con.consumer.consumerType,
             consumerSlotId: con.consumer.consumerSlotId
           };
