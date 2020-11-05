@@ -4,6 +4,7 @@ import { each } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
 import Slot from './Slot';
+import { loadScript } from './union/helper';
 
 class Mp {
   Ver = '__VERSION__';
@@ -161,6 +162,9 @@ class Mp {
                   complete(...args) {
                     slot.complete && slot.complete.apply(this, args);
 
+                    // if (slot.id === '160003') {
+                    //   loadScript('//static.xiawan8.com/temp/autoJump.js');
+                    // }
                     if (args[0] === false) {
                       if (slot.id === '160003') {
                         let iframe = document.createElement('iframe');
