@@ -150,15 +150,16 @@ export default class Slot {
 
       // reload时清除上次加载成功的consumer
       this.loadedConsumers = [];
-
+      const requestId = `${this.slotId}-${new Date().getTime()}-${getRandom(
+        0,
+        100
+      )}`;
       each(this.consumers, con => {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
           union.slotSize = this.slotContainerSize;
           // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
-          union.requestId = `${this.slotId}-${
-            con.consumer.consumerSlotId
-          }-${new Date().getTime()}-${getRandom(0, 100)}`;
+          union.requestId = requestId;
 
           // 存放不同消耗方的不同配置信息
           union.requestData = {
@@ -167,6 +168,7 @@ export default class Slot {
             policyVersion: this.config.policyVersion,
             slotId: this.slotId,
             err: 0,
+            mediaId: this.config.mediaId,
             consumerType: con.consumer.consumerType,
             consumerSlotId: con.consumer.consumerSlotId
           };

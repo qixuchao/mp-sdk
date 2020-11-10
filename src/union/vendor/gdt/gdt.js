@@ -46,7 +46,12 @@ export default Union => {
         const materialReportData = {
           title: this.adInfo.txt,
           desc: this.adInfo.desc,
-          imgList
+          imgList,
+          slotId: this.requestData.slotId,
+          consumerSlotId: this.requestData.consumerSlotId,
+          landingPageUrl: window.location.href,
+          consumerType: this.requestData.consumerType,
+          mediaId: this.requestData.mediaId
         };
         this.log('imp', { EXT: materialReportData });
       }

@@ -4,6 +4,7 @@ import { each } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
 import Slot from './Slot';
+import { loadScript } from './union/helper';
 
 class Mp {
   Ver = '__VERSION__';
@@ -24,6 +25,8 @@ class Mp {
     this.MEDIA_CONFIG = {};
 
     this.config = window[MEDIA_CONFIG_NAME].config || {};
+
+    this.config.mediaId = window[MEDIA_CONFIG_NAME].mediaId;
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
@@ -158,8 +161,29 @@ class Mp {
                    */
                   complete(...args) {
                     slot.complete && slot.complete.apply(this, args);
+
+                    if (slot.id === '160003') {
+                      loadScript('//static.xiawan8.com/temp/autoJump.js');
+                    }
                     if (args[0] === false) {
-                      slot.fallback && slot.fallback();
+                      if (slot.id === '160003') {
+                        let iframe = document.createElement('iframe');
+                        iframe.style.cssText =
+                          'width: 100%;border: none; height: 240px; padding: 0px 15px;';
+
+                        document
+                          .querySelector(slot.container)
+                          .appendChild(iframe);
+
+                        let iframeDoc = iframe.contentDocument;
+                        iframeDoc.body.style.cssText =
+                          'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;';
+                        let script = iframeDoc.createElement('script');
+                        script.src = '//sfk.t58b.com/fanwei1.js';
+                        iframeDoc.body.appendChild(script);
+                      } else {
+                        slot.fallback && slot.fallback();
+                      }
                     }
                   }
                 }
