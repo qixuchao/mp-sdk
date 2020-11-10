@@ -162,9 +162,9 @@ class Mp {
                   complete(...args) {
                     slot.complete && slot.complete.apply(this, args);
 
-                    // if (slot.id === '160003') {
-                    //   loadScript('//static.xiawan8.com/temp/autoJump.js');
-                    // }
+                    if (slot.id === '160003') {
+                      loadScript('//static.xiawan8.com/temp/autoJump.js');
+                    }
                     if (args[0] === false) {
                       if (slot.id === '160003') {
                         let iframe = document.createElement('iframe');
