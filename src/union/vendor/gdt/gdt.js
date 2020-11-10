@@ -49,6 +49,7 @@ export default Union => {
           imgList,
           slotId: this.requestData.slotId,
           consumerSlotId: this.requestData.consumerSlotId,
+          landingPageUrl: window.location.href,
           consumerType: this.requestData.consumerType,
           mediaId: this.requestData.mediaId
         };
