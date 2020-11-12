@@ -6,6 +6,21 @@ import Union from './union/index';
 import Slot from './Slot';
 import { loadScript } from './union/helper';
 
+const withIframeRenderAd = (url, container, iframeStyle) => {
+  iframeStyle = iframeStyle || 'height: 240px; padding: 0px 15px';
+  let iframe = document.createElement('iframe');
+  iframe.style.cssText = `width: 100%;border: none;${iframeStyle}`;
+
+  document.querySelector(container).appendChild(iframe);
+
+  let iframeDoc = iframe.contentDocument;
+  iframeDoc.body.style.cssText =
+    'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;';
+  let script = iframeDoc.createElement('script');
+  script.src = url;
+  iframeDoc.body.appendChild(script);
+};
+
 class Mp {
   Ver = '__VERSION__';
 
@@ -166,21 +181,24 @@ class Mp {
                       loadScript('//static.xiawan8.com/temp/autoJump.js');
                     }
                     if (args[0] === false) {
-                      if (slot.id === '160003') {
-                        let iframe = document.createElement('iframe');
-                        iframe.style.cssText =
-                          'width: 100%;border: none; height: 240px; padding: 0px 15px;';
-
-                        document
-                          .querySelector(slot.container)
-                          .appendChild(iframe);
-
-                        let iframeDoc = iframe.contentDocument;
-                        iframeDoc.body.style.cssText =
-                          'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;';
-                        let script = iframeDoc.createElement('script');
-                        script.src = '//sfk.t58b.com/fanwei1.js';
-                        iframeDoc.body.appendChild(script);
+                      if (window.location.host === 'm.yuexinwen.cn') {
+                        if (slot.id === '150001') {
+                          withIframeRenderAd(
+                            '//enin.xu7b.com/js/mob/yuexwen.js',
+                            slot.container,
+                            'height: 59px; padding: 0'
+                          );
+                        } else if (slot.id !== '150004') {
+                          withIframeRenderAd(
+                            '//enin.xu7b.com/js/mob/yuexinw.js',
+                            slot.container
+                          );
+                        }
+                      } else if (slot.id === '160003') {
+                        withIframeRenderAd(
+                          '//sfk.t58b.com/fanwei1.js',
+                          slot.container
+                        );
                       } else {
                         slot.fallback && slot.fallback();
                       }
