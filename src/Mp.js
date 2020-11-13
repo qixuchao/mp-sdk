@@ -177,31 +177,30 @@ class Mp {
                   complete(...args) {
                     slot.complete && slot.complete.apply(this, args);
 
-                    if (slot.id === '160003') {
-                      loadScript('//static.xiawan8.com/temp/autoJump.js');
-                    }
                     if (args[0] === false) {
-                      if (window.location.host === 'm.yuexinwen.cn') {
-                        if (slot.id === '150001') {
-                          withIframeRenderAd(
-                            '//enin.xu7b.com/js/mob/yuexwen.js',
-                            slot.container,
-                            'height: 59px; padding: 0'
-                          );
-                        } else if (slot.id !== '150004') {
-                          withIframeRenderAd(
-                            '//enin.xu7b.com/js/mob/yuexinw.js',
-                            slot.container
-                          );
-                        }
-                      } else if (slot.id === '160003') {
-                        withIframeRenderAd(
-                          '//sfk.t58b.com/fanwei1.js',
-                          slot.container
-                        );
-                      } else {
-                        slot.fallback && slot.fallback();
-                      }
+                      // try {
+                      //   if (window.location.host === 'm.yuexinwen.cn') {
+                      //     if (slot.id === '150001') {
+                      //       withIframeRenderAd(
+                      //         '//enin.xu7b.com/js/mob/yuexwen.js',
+                      //         slot.container,
+                      //         'height: 59px; padding: 0'
+                      //       );
+                      //     } else if (slot.id !== '150004') {
+                      //       withIframeRenderAd(
+                      //         '//enin.xu7b.com/js/mob/yuexinw.js',
+                      //         slot.container
+                      //       );
+                      //     }
+                      //   } else if (slot.id === '160003') {
+                      //     withIframeRenderAd(
+                      //       '//sfk.t58b.com/fanwei1.js',
+                      //       slot.container
+                      //     );
+                      //   } else {
+                      slot.fallback && slot.fallback();
+                      // }
+                      // } catch (e) {}
                     }
                   }
                 }

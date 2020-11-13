@@ -35,14 +35,14 @@ const PRIORITY_POLICY_TYPE = {
  * @returns [Array]
  */
 
-const getMaxConsumerWeight = consumers => {
-  let maxWeight = 10;
+const getHighestPriorityComsuner = consumers => {
+  let highest = 10;
   each(consumers, ({ weight = 10 }) => {
-    if (weight && weight < maxWeight) {
-      maxWeight = weight;
+    if (weight && weight < highest) {
+      highest = weight;
     }
   });
-  return maxWeight;
+  return highest;
 };
 
 const getConsumerByWeight = loadedConsumers => {
@@ -130,7 +130,7 @@ export default class Slot {
 
     this.consumers = slotConfig.slotBidding;
 
-    this.consumerMaxWeight = getMaxConsumerWeight(this.consumers);
+    this.highestPriority = getHighestPriorityComsuner(this.consumers);
 
     this.loadedConsumers = [];
 
@@ -223,7 +223,7 @@ export default class Slot {
     const priorityPolicy = this.slotConfig.priorityPolicy;
     if (
       priorityPolicy === 0 ||
-      (priorityPolicy === 3 && union.data.weight === this.consumerMaxWeight)
+      (priorityPolicy === 3 && union.data.weight === this.highestPriority)
     ) {
       this.race(union);
     } else if (

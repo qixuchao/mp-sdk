@@ -4,6 +4,7 @@ import logger from '../logger';
 import registerQQ from './vendor/gdt/gdt';
 import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
+import registerAdimatch from './vendor/adimatch';
 import { loadScript, createWrapper } from './helper';
 
 export const UNION_TIMEOUT = 1000 * 5;
@@ -274,3 +275,4 @@ export default class Union extends Event {
 registerQQ(Union);
 registerBaidu(Union);
 registerFancy(Union);
+registerAdimatch(Union);
