@@ -239,3 +239,18 @@ export const jsonp = (url, opts) => {
 
   loadScript(addParam(url, data));
 };
+
+export const withIframeRenderAd = (url, container, iframeStyle) => {
+  iframeStyle = iframeStyle || 'height: 240px; padding: 0px 15px';
+  let iframe = document.createElement('iframe');
+  iframe.style.cssText = `width: 100%;border: none;${iframeStyle}`;
+
+  document.querySelector(container).appendChild(iframe);
+
+  let iframeDoc = iframe.contentDocument;
+  iframeDoc.body.style.cssText =
+    'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;';
+  let script = iframeDoc.createElement('script');
+  script.src = url;
+  iframeDoc.body.appendChild(script);
+};

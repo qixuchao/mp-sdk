@@ -7,27 +7,51 @@ const pkg = require('../package.json');
 
 const env = process.env.NODE_ENV;
 
-const config = {
-  input: 'src/index.js',
-  output: {
-    format: 'iife',
-    banner: `/* mp.js v${pkg.version} */`,
-    file: 'dist/mp.js' // equivalent to --output
-    //name: "_M_P_"
+const config = [
+  {
+    input: 'src/index.js',
+    output: {
+      format: 'iife',
+      banner: `/* mp.js v${pkg.version} */`,
+      file: 'dist/mp.js' // equivalent to --output
+      //name: "_M_P_"
+    },
+    plugins: [
+      babel({
+        exclude: 'node_modules/**' // only transpile our source code
+      }),
+      replace({
+        __VERSION__: pkg.version
+      }),
+      uglify({
+        compress: {
+          drop_console: true
+        }
+      })
+    ]
   },
-  plugins: [
-    babel({
-      exclude: 'node_modules/**' // only transpile our source code
-    }),
-    replace({
-      __VERSION__: pkg.version
-    }),
-    uglify({
-      compress: {
-        drop_console: true
-      }
-    })
-  ]
-};
+  {
+    input: 'src/index.js',
+    output: {
+      format: 'iife',
+      banner: `/* mp.js v${pkg.version} */`,
+      file: `dist/mp-${pkg.version}.js` // equivalent to --output
+      //name: "_M_P_"
+    },
+    plugins: [
+      babel({
+        exclude: 'node_modules/**' // only transpile our source code
+      }),
+      replace({
+        __VERSION__: pkg.version
+      }),
+      uglify({
+        compress: {
+          drop_console: true
+        }
+      })
+    ]
+  }
+];
 
 export default config;
