@@ -53,20 +53,21 @@ export default Union => {
         data: params,
         callback: data => {
           clearTimeout(timeout);
-          if (!(Array.isArray(data.ad) && data.ad.length && data.ad[0].src)) {
-            // const htmlStr = macroReplace(data.ad[0].src, {
-            //   M_PRECLICK: trackingClickUrls
-            // });
-            // this.$container.innerHTML = htmlStr;
+          if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
+            const htmlStr = macroReplace(data.ad[0].src, {
+              M_PRECLICK: trackingClickUrls
+            });
 
-            onLoaded();
+            onLoaded(htmlStr);
           } else {
             onTimeOut('10000');
           }
         }
       });
     },
-    onBeforeMount() {},
+    onBeforeMount() {
+      this.$container.innerHTML = this.adInfo;
+    },
     onMounted() {},
     onShow() {
       this.log('imp');
