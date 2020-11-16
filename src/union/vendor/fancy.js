@@ -57,7 +57,6 @@ export default Union => {
             const htmlStr = macroReplace(data.ad[0].src, {
               M_PRECLICK: trackingClickUrls
             });
-
             onLoaded(htmlStr);
           } else {
             onTimeOut('10000');
