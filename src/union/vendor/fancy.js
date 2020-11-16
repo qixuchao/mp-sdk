@@ -57,13 +57,15 @@ export default Union => {
             const htmlStr = macroReplace(data.ad[0].src, {
               M_PRECLICK: trackingClickUrls
             });
-            this.$container.innerHTML = htmlStr;
-            onLoaded();
+            onLoaded(htmlStr);
           } else {
             onTimeOut('10000');
           }
         }
       });
+    },
+    onBeforeMount() {
+      this.$container.innerHTML = this.adInfo;
     },
     onMounted() {},
     onShow() {

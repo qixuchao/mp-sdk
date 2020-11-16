@@ -177,9 +177,6 @@ class Mp {
                   complete(...args) {
                     slot.complete && slot.complete.apply(this, args);
 
-                    if (slot.id === '160003') {
-                      loadScript('//static.xiawan8.com/temp/autoJump.js');
-                    }
                     if (args[0] === false) {
                       if (window.location.host === 'm.yuexinwen.cn') {
                         if (slot.id === '150001') {
