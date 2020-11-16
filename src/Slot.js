@@ -154,6 +154,8 @@ export default class Slot {
         0,
         100
       )}`;
+      this.status = '1';
+
       each(this.consumers, con => {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
@@ -198,6 +200,7 @@ export default class Slot {
           );
         }
       });
+
       this.timeouter = setTimeout(() => {
         if (this.slotConfig.priorityPolicy === 1) {
           this.race(getConsumerByWeightForRandom(this.loadedConsumers));
@@ -240,15 +243,17 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
+    console.log('this.status timeout union.name', this.timeouter);
     clearTimeout(this.timeouter);
     if (union instanceof Union) {
-      if (this.status !== '5') {
+      console.log('this.status', union, this.status);
+      if (this.status === '4') {
         callFunction(this.slotOptions.complete, true);
         this.status = '5';
         console.log('winer ' + union.name);
         this.winner = union;
         union.render(this.container);
-      } else {
+      } else if (this.status !== '5') {
         union.destroy();
       }
     }
