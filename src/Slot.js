@@ -243,10 +243,8 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
-    console.log('this.status timeout union.name', this.timeouter);
     clearTimeout(this.timeouter);
     if (union instanceof Union) {
-      console.log('this.status', union, this.status);
       if (this.status === '4') {
         callFunction(this.slotOptions.complete, true);
         this.status = '5';

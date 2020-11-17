@@ -1,4 +1,5 @@
 import { each, addParam } from '../../../utils/index';
+import { addEventListener, isVisible } from '../../helper';
 
 let doClick;
 let onClose;
@@ -58,13 +59,6 @@ class GdtManager {
               if (currentSlot) {
                 adKeys.push(adKey);
 
-                setTimeout(() => {
-                  new Image().src = addParam(currentMaterial.apurl, {
-                    callback: '_cb_gdtjson' + GdtManager.exposeCount++,
-                    datatype: 'jsonp'
-                  });
-                }, 1000);
-
                 window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
                 currentSlot.complete(true, currentMaterial);
                 fn = slot.next.shift();
@@ -110,7 +104,6 @@ class GdtManager {
     const slot = this.slotMap[consumerSlotId];
     if (slot) {
       slot.status = 1;
-
       slot.fns.push({
         container: this.unionInstance.id,
         complete
@@ -126,6 +119,7 @@ class GdtManager {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }
   }
+
   bindEvent(Union) {
     if (doClick) {
       return;

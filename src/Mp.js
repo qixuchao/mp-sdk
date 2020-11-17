@@ -1,6 +1,7 @@
 /* gloabl window */
 import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
-import { each, withIframeRenderAd } from './utils/index';
+import { withIframeRenderAd } from './union/helper';
+import { each } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
 import Slot from './Slot';
