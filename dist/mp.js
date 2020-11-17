@@ -494,7 +494,7 @@
     B = B.filter(function (t) {
       var n = t.container,
         e = t.callback;
-      return V(n, e);
+      return !V(n, e);
     });
   }
   var B = [],
@@ -506,7 +506,7 @@
         }
         return !1;
       })(t);
-      return e && n && n(), !e;
+      return e && n && n(), e;
     };
   function U(t, n) {
     V(t, n) || B.push({ container: t, callback: n });
@@ -825,7 +825,7 @@
               width: screen.width,
               density: 2
             }),
-            v: '1.9.1'
+            v: '1.9.2'
           },
           a = [
             k(this.data.trackingV2Data.clickTracking[0], {
@@ -999,7 +999,7 @@
                       (n.requestId = o),
                       (n.requestData = {
                         category: i.isConcurrent,
-                        sdkVersion: '1.9.1',
+                        sdkVersion: '1.9.2',
                         policyVersion: i.config.policyVersion,
                         slotId: i.slotId,
                         err: 0,
@@ -1067,7 +1067,7 @@
     })(),
     nt = (function () {
       function n(t) {
-        c(this, n), s(this, 'Ver', '1.9.1'), (this.slots = {}), this.init(t);
+        c(this, n), s(this, 'Ver', '1.9.2'), (this.slots = {}), this.init(t);
       }
       return (
         e(n, [
