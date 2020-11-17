@@ -4,8 +4,8 @@ import { throttle } from './index';
 let _list = [];
 
 const checkList = () => {
-  _list = _list.filter(({ container, callback }) =>
-    inView(container, callback)
+  _list = _list.filter(
+    ({ container, callback }) => !inView(container, callback)
   );
 };
 
@@ -14,7 +14,7 @@ const inView = (container, callback) => {
   if (isVisibleFlag) {
     callback && callback();
   }
-  return !isVisibleFlag;
+  return isVisibleFlag;
 };
 
 addEventListener(window.document, 'touchmove', throttle(checkList, 150));
