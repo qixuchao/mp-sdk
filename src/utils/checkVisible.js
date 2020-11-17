@@ -1,5 +1,5 @@
 import { isVisible, addEventListener } from '../union/helper';
-import { throttle } from '../utils/index';
+import { throttle } from './index';
 
 let _list = [];
 

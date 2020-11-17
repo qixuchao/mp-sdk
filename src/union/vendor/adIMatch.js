@@ -1,7 +1,7 @@
 /* global window */
 import { withIframeRenderAd, addEventListener } from '../helper';
 import { each } from '../../utils/index';
-import checkVisible from '../../checkVisible/index';
+import checkVisible from '../../utils/checkVisible';
 
 export default Union => {
   Union.register('custom', {

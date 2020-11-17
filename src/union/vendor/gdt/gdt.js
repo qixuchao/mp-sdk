@@ -2,7 +2,7 @@
 import logger from '../../../logger';
 import { UNION_TIMEOUT } from '../../index';
 import GdtManager from './GdtManager';
-import checkVisible from '../../../checkVisible/index';
+import checkVisible from '../../../utils/checkVisible';
 import { addParam } from '../../../utils/index';
 
 /**
