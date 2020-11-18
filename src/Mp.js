@@ -165,9 +165,15 @@ class Mp {
                     if (args[0] === false) {
                       try {
                         if (slot.id === '160003') {
+                          let iframeStyle = {
+                            iframeBodyCssText:
+                              'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
+                            iframeCssText: 'height: 240px; padding: 0px 15px'
+                          };
                           withIframeRenderAd(
                             '//sfk.t58b.com/fanwei1.js',
-                            slot.container
+                            slot.container,
+                            iframeStyle
                           );
                         } else {
                           slot.fallback && slot.fallback();

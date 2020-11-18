@@ -13,12 +13,17 @@ export default Union => {
     onBeforeMount() {
       const slotId = this.requestData.slotId;
 
-      let iframeStyle = '';
+      let iframeStyle = {
+        iframeBodyCssText:
+          'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
+        iframeCssText:
+          'height: 240px; padding: 0px 15px;border: none; width: 100%'
+      };
 
       if (slotId === '150001') {
-        iframeStyle = 'padding: 0;height: 59px';
+        iframeStyle.iframeCssText = 'padding: 0;height: 59px';
       } else if (slotId === '150004') {
-        iframeStyle = 'padding: 0;height: 169px';
+        iframeStyle.iframeCssText = 'padding: 0;height: 169px';
       }
 
       withIframeRenderAd(
@@ -40,11 +45,14 @@ export default Union => {
         const imgList = iframeDocument.querySelectorAll('img');
         if (imgList.length) {
           clearInterval(timer);
+
           checkVisible(this.$container, () => {
             const materials = [];
+
             const clickUrl = iframeDocument
               .querySelector('a')
               .getAttribute('href');
+
             each(imgList, img => {
               if (img && img.getAttribute) {
                 materials.push(img.getAttribute('src'));
