@@ -141,13 +141,13 @@ class GdtManager {
     doClick = TencentGDT.TN.doClick;
     onClose = TencentGDT.TN.adClose;
 
-    TencentGDT.TN.doExpose = () => {};
-
     const getUnionInstance = traceid => {
       const container = document.querySelector('div[id*="' + traceid + '"]');
 
       return Union.unionInstances[container.parentNode.id];
     };
+
+    window.GDT.view && (window.GDT.view = () => {});
 
     TencentGDT.TN.doClick = function (event, traceid) {
       const union = getUnionInstance(traceid);
