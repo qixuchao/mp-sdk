@@ -9,7 +9,6 @@ import { addParam } from '../../../utils/index';
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
  * 不渲染的也需要提前定义，再通过loadAd加载，然后通过之前定义onComplete重新渲染
  */
-
 let exposeCount = 0;
 // (window[MODEL_NAME] = window[MODEL_NAME] || []).push(({ union }) => {
 export default Union => {
@@ -22,6 +21,7 @@ export default Union => {
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
+
       GdtManager().bindSlot(
         data.consumerSlotId,
         this,
@@ -57,7 +57,6 @@ export default Union => {
             consumerType: this.requestData.consumerType,
             mediaId: this.requestData.mediaId
           };
-
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
             datatype: 'jsonp'
