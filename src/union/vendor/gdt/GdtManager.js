@@ -153,7 +153,6 @@ class GdtManager {
       const union = getUnionInstance(traceid);
       if (union) {
         union.onClick();
-        console.log(event);
         doClick.apply(this, arguments);
       }
     };
