@@ -3,6 +3,16 @@ import { addEventListener, isVisible } from '../../helper';
 
 let doClick;
 let onClose;
+
+/**
+  标记状态广点通的complete方法的执行状态，处理初始化时如果方法未执行完成，多次调用广点通请求的问题
+ */
+const status = {
+  0: '初始化',
+  1: 'complete执行等待',
+  2: 'complete执行完成'
+};
+
 /**
  * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
  * 后面可以通过window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
@@ -12,6 +22,7 @@ class GdtManager {
   constructor() {
     window.TencentGDT = window.TencentGDT || [];
     this.slotMap = {};
+    this.status = 0;
     this.init();
   }
   init() {
@@ -33,12 +44,11 @@ class GdtManager {
     }
   }
 
-  static exposeCount = 0;
-
   proxyComplete = consumerSlotId => {
     let adKeys = [];
     let isRepeatAd = false;
     return res => {
+      this.status = 2;
       let slot = this.slotMap[consumerSlotId];
       let fn;
       // 获取广告位对应的广告素材
@@ -108,12 +118,16 @@ class GdtManager {
         container: this.unionInstance.id,
         complete
       });
-      if (window.jsInited && window.GDT && window.GDT.load) {
-        this.loadAd(consumerSlotId);
-      } else {
-        slot.next.push(() => {
+      if (![0, 1].includes(this.status)) {
+        if (window.jsInited && window.GDT && window.GDT.load) {
           this.loadAd(consumerSlotId);
-        });
+        } else {
+          slot.next.push(() => {
+            this.loadAd(consumerSlotId);
+          });
+        }
+      } else {
+        this.status = 1;
       }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
@@ -130,7 +144,7 @@ class GdtManager {
     TencentGDT.TN.doExpose = () => {};
 
     const getUnionInstance = traceid => {
-      var container = document.querySelector('div[id*="' + traceid + '"]');
+      const container = document.querySelector('div[id*="' + traceid + '"]');
 
       return Union.unionInstances[container.parentNode.id];
     };
@@ -139,6 +153,7 @@ class GdtManager {
       const union = getUnionInstance(traceid);
       if (union) {
         union.onClick();
+        console.log(event);
         doClick.apply(this, arguments);
       }
     };

@@ -16,7 +16,8 @@ export default Union => {
       let iframeStyle = {
         iframeBodyCssText:
           'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-        iframeCssText: 'height: 240px; padding: 0px 15px'
+        iframeCssText:
+          'height: 240px; padding: 0px 15px;border: none; width: 100%'
       };
 
       if (slotId === '150001') {

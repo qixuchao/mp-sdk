@@ -35,7 +35,7 @@ export function addEventListener(el, eventName, callback, isUseCapture) {
 
 export const withIframeRenderAd = (url, container, props) => {
   let iframe = document.createElement('iframe');
-  iframe.style.cssText = props.iframeCssText`width: 100%;border: none;${iframeStyle}`;
+  iframe.style.cssText = props.iframeCssText;
 
   document.querySelector(container).appendChild(iframe);
 
@@ -50,9 +50,7 @@ export const withIframeRenderAd = (url, container, props) => {
 export const isVisible = ele => {
   if (ele) {
     const eleRect = ele.getBoundingClientRect();
-    return (
-      eleRect.top + eleRect.height > 0 && eleRect.top + 150 < window.innerHeight
-    );
+    return eleRect.top + eleRect.height > 0 && eleRect.top < window.innerHeight;
   }
   return false;
 };
