@@ -10,7 +10,7 @@ const checkList = () => {
 };
 
 const inView = (container, callback) => {
-  const isVisibleFlag = isVisible(container);
+  const isVisibleFlag = true || isVisible(container);
   if (isVisibleFlag) {
     callback && callback();
   }
