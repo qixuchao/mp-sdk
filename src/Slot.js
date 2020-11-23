@@ -250,6 +250,7 @@ export default class Slot {
         this.status = '5';
         console.log('winer ' + union.name);
         this.winner = union;
+        union.$container._slot_ = this;
         union.render(this.container);
       } else if (this.status !== '5') {
         union.destroy();

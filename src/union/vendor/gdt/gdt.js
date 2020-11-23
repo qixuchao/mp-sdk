@@ -57,11 +57,22 @@ export default Union => {
             consumerType: this.requestData.consumerType,
             mediaId: this.requestData.mediaId
           };
+
+          new Image().src = addParam('//l.fancyapi.com/action', {
+            data: JSON.stringify({
+              ...this.requestData,
+              requestId: this.requestId
+            }),
+            action: 'imp',
+            aid: '20201119',
+            url: window.location.href,
+            _rm: +new Date()
+          });
+
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
             datatype: 'jsonp'
           });
-
           this.log('imp', { EXT: materialReportData });
         }
       });
