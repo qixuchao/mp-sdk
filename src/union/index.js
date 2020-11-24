@@ -6,7 +6,6 @@ import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import registerAdIMatch from './vendor/adIMatch';
 import { loadScript, createWrapper } from './helper';
-import { addParam } from '../utils/index';
 
 export const UNION_TIMEOUT = 1000 * 5;
 

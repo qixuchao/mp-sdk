@@ -21,9 +21,11 @@ export default Union => {
       };
 
       if (slotId === '150001') {
-        iframeStyle.iframeCssText = 'padding: 0;height: 59px';
+        iframeStyle.iframeCssText =
+          'width: 100%;padding: 0;height: 59px; border: none;';
       } else if (slotId === '150004') {
-        iframeStyle.iframeCssText = 'padding: 0;height: 169px';
+        iframeStyle.iframeCssText =
+          'padding: 0;height: 169px;border: none;width: 100%;';
       }
 
       withIframeRenderAd(
