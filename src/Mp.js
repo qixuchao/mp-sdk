@@ -100,13 +100,13 @@ class Mp {
     }
   }
 
-  // 去除同一广告位下相同的消耗方
+  // 去除同一广告位下相同的消耗方id
   uniqueConsumer(slotBidding) {
     let slotBidConsumers = {};
     each(slotBidding.slotBidding, consumer => {
-      const consumerType = consumer.consumer.consumerType;
-      if (!slotBidConsumers[consumerType]) {
-        slotBidConsumers[consumerType] = consumer;
+      const consumerSlotId = consumer.consumer.consumerSlotId;
+      if (!slotBidConsumers[consumerSlotId]) {
+        slotBidConsumers[consumerSlotId] = consumer;
       }
     });
     slotBidding.slotBidding = Object.values(slotBidConsumers);

@@ -1,5 +1,4 @@
 import { each, addParam } from '../../../utils/index';
-import { addEventListener, isVisible } from '../../helper';
 
 let doClick;
 let onClose;
@@ -32,7 +31,7 @@ class GdtManager {
           if (consumer.consumer.consumerType === 'gdt') {
             this.slotMap[consumer.consumer.consumerSlotId] = {
               consumerSlotId: consumer.consumer.consumerSlotId,
-              appid: consumer.consumer.appId || 1110655203,
+              appid: '',
               status: 0,
               fns: [], // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
               next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
@@ -48,7 +47,7 @@ class GdtManager {
     let adKeys = [];
     let isRepeatAd = false;
     return res => {
-      this.status = 2;
+      this.status = 1;
       let slot = this.slotMap[consumerSlotId];
       let fn;
       // 获取广告位对应的广告素材
@@ -118,7 +117,7 @@ class GdtManager {
         container: this.unionInstance.id,
         complete
       });
-      if (![0, 1].includes(this.status)) {
+      if (this.status !== 0) {
         if (window.jsInited && window.GDT && window.GDT.load) {
           this.loadAd(consumerSlotId);
         } else {

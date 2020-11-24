@@ -233,7 +233,6 @@ export default class Union extends Event {
 
   render(selector) {
     this.log('winner');
-
     const container = document.querySelector(selector);
 
     if (container) {
