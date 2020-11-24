@@ -47,7 +47,7 @@ class GdtManager {
     let adKeys = [];
     let isRepeatAd = false;
     return res => {
-      // this.status = 1;
+      this.status = 1;
       let slot = this.slotMap[consumerSlotId];
       let fn;
       // 获取广告位对应的广告素材
@@ -117,15 +117,16 @@ class GdtManager {
         container: this.unionInstance.id,
         complete
       });
-      // if (this.status !== 1) {
-      if (window.jsInited && window.GDT && window.GDT.load) {
+      if (
+        (window.jsInited && window.GDT && window.GDT.load) ||
+        this.status === 1
+      ) {
         this.loadAd(consumerSlotId);
       } else {
         slot.next.push(() => {
           this.loadAd(consumerSlotId);
         });
       }
-      // }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }
