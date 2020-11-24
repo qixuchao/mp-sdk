@@ -117,15 +117,16 @@ class GdtManager {
         container: this.unionInstance.id,
         complete
       });
-      if (
-        (window.jsInited && window.GDT && window.GDT.load) ||
-        this.status === 1
-      ) {
-        this.loadAd(consumerSlotId);
-      } else {
-        slot.next.push(() => {
+      if (this.status !== 0) {
+        if (window.jsInited && window.GDT && window.GDT.load) {
           this.loadAd(consumerSlotId);
-        });
+        } else {
+          slot.next.push(() => {
+            this.loadAd(consumerSlotId);
+          });
+        }
+      } else {
+        this.status = 1;
       }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
