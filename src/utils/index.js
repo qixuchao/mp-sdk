@@ -3,6 +3,7 @@ import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
 import { loadScript } from '../union/helper';
 import { MEDIA_STORAGE_NAME } from '../config';
 import browser from './browser';
+import Fingerprint2 from './finger';
 
 export const isDebug =
   /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
@@ -37,21 +38,25 @@ export const getRandom = (min, max) => {
 
 export const getRandomString = () => Math.random().toString(36).toUpperCase();
 
-export const getImei = () => {
-  let imei = '';
-  try {
-    imei = window.localStorage.getItem(MEDIA_STORAGE_NAME);
-  } catch (e) {}
+export const getFingerPrint = callback => {
+  let fingerCode = null;
 
+  return fingerCode;
+};
+
+let imei = window.localStorage.getItem(MEDIA_STORAGE_NAME);
+export const getImei = callback => {
   if (!imei) {
-    imei = `H${Math.floor(+new Date() / 10000)}-${getRandomString().slice(
-      -6
-    )}-${getRandomString().slice(-6)}-${getRandomString().slice(-4)}`;
-
-    window.localStorage.setItem(MEDIA_STORAGE_NAME, imei);
+    new Fingerprint2().get(result => {
+      if (result) {
+        imei = result;
+        window.localStorage.setItem(MEDIA_STORAGE_NAME, result);
+        callback && callback(imei);
+      }
+    });
+  } else {
+    callback && callback(imei);
   }
-
-  return imei;
 };
 
 export const generateName = (prefix, suffix) => {
@@ -79,7 +84,7 @@ export const macroReplace = (
     CLIENTTYPE: 3, //H5
     IP: '',
     TS: +new Date(),
-    IMEI: getImei()
+    IMEI: imei
   };
 
   const encode = value => {
@@ -259,4 +264,28 @@ export const throttle = (fn, time) => {
       fn(params);
     }
   };
+};
+
+const getCurrentDate = () => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const endTime =
+    date.getFullYear() + '-' + month + '-' + date.getDate() + ' 23:59:59';
+  return new Date(endTime).getTime();
+};
+
+//写cookies
+export const setCookie = (name, value) => {
+  const exp = new Date();
+  exp.setTime(getCurrentDate());
+  document.cookie =
+    name + '=' + escape(value) + ';expires=' + exp.toGMTString();
+};
+
+//读取cookies
+export const getCookie = function (name) {
+  let arr,
+    reg = new RegExp(name + '=([^;]*)');
+  if ((arr = document.cookie.match(reg))) return unescape(arr[1]);
+  else return null;
 };

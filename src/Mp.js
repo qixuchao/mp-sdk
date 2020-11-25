@@ -1,10 +1,45 @@
 /* gloabl window */
-import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
+import { MODEL_NAME, MEDIA_CONFIG_NAME, SLOT_COOKIE_NAME } from './config';
 import { withIframeRenderAd } from './union/helper';
-import { each } from './utils/index';
+import { each, getCookie, setCookie, getImei } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
 import Slot from './Slot';
+
+const reCalcConsumerWeight = slotConfig => {
+  let slotCookie = {};
+  try {
+    slotCookie = JSON.parse(getCookie(SLOT_COOKIE_NAME)) || {};
+  } catch (e) {}
+
+  const slotId = slotConfig.id;
+
+  if (slotCookie[slotId] && slotCookie[slotId].length) {
+    let gdtConsumerNum = 0;
+    each(slotConfig.slotBidding, consumer => {
+      if (consumer.consumer.consumerType === 'gdt') {
+        gdtConsumerNum++;
+
+        if (slotCookie[slotId].includes(consumer.consumer.consumerSlotId)) {
+          consumer.weight = 1;
+        } else {
+          consumer.weight = 100 - slotCookie[slotId].length;
+        }
+      }
+    });
+    if (slotCookie[slotId].length === gdtConsumerNum) {
+      each(slotConfig.slotBidding, consumer => {
+        if (consumer.consumer.consumerType === 'gdt') {
+          consumer.weight = 100;
+          return false;
+        }
+      });
+      slotCookie[slotId] = [];
+      setCookie(SLOT_COOKIE_NAME, JSON.stringify(slotCookie));
+    }
+  }
+  return slotConfig;
+};
 
 class Mp {
   Ver = '__VERSION__';
@@ -29,8 +64,11 @@ class Mp {
     this.config.mediaId = window[MEDIA_CONFIG_NAME].mediaId;
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
-
-    this.handler(this._originalList);
+    getImei(() => {
+      this.handler(this._originalList);
+      this.ready = true;
+    });
+    //his.handler(this._originalList);
   }
 
   /**
@@ -124,9 +162,13 @@ class Mp {
    *    Funciton 待sdk初始化之后执行，如果已经初始化，则立即执行
    *
    * */
-  push(params) {
-    this.handler([params]);
-  }
+  push = params => {
+    if (!this.ready) {
+      (this._originalList = this._originalList || []).push(params);
+    } else {
+      this.handler([params]);
+    }
+  };
 
   handler(slots) {
     each(slots, slot => {
@@ -209,6 +251,7 @@ class Mp {
    * @param {Object} options slot传入配置
    */
   fillAd(container, slotConfig, force, options) {
+    slotConfig = reCalcConsumerWeight(slotConfig);
     this.slots[slotConfig.id] = new Slot(
       container,
       slotConfig,
