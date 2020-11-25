@@ -1,10 +1,43 @@
 /* gloabl window */
-import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
+import { MODEL_NAME, MEDIA_CONFIG_NAME, SLOT_COOKIE_NAME } from './config';
 import { withIframeRenderAd } from './union/helper';
-import { each } from './utils/index';
+import { each, getCookie, setCookie } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import Union from './union/index';
 import Slot from './Slot';
+
+const reCalcConsumerWeight = slotConfig => {
+  let slotCookie = {};
+  try {
+    slotCookie = JSON.parse(getCookie(SLOT_COOKIE_NAME)) || {};
+  } catch (e) {}
+
+  const slotId = slotConfig.id;
+
+  if (slotCookie[slotId] && slotCookie[slotId].length) {
+    let gdtConsumerNum = 0;
+    each(slotConfig.slotBidding, consumer => {
+      if (consumer.consumer.consumerType === 'gdt') {
+        gdtConsumerNum++;
+
+        if (slotCookie[slotId].includes(consumer.consumer.consumerSlotId)) {
+          consumer.weight = 1;
+        } else {
+          consumer.weight = 100 - slotCookie[slotId].length;
+        }
+      }
+    });
+    if (slotCookie[slotId].length === gdtConsumerNum) {
+      slotCookie[slotId] = [];
+      setCookie(
+        SLOT_COOKIE_NAME,
+        JSON.stringify(slotCookie),
+        24 * 60 * 60 * 1000
+      );
+    }
+  }
+  return slotConfig;
+};
 
 class Mp {
   Ver = '__VERSION__';
@@ -100,13 +133,13 @@ class Mp {
     }
   }
 
-  // 去除同一广告位下相同的消耗方
+  // 去除同一广告位下相同的消耗方id
   uniqueConsumer(slotBidding) {
     let slotBidConsumers = {};
     each(slotBidding.slotBidding, consumer => {
-      const consumerType = consumer.consumer.consumerType;
-      if (!slotBidConsumers[consumerType]) {
-        slotBidConsumers[consumerType] = consumer;
+      const consumerSlotId = consumer.consumer.consumerSlotId;
+      if (!slotBidConsumers[consumerSlotId]) {
+        slotBidConsumers[consumerSlotId] = consumer;
       }
     });
     slotBidding.slotBidding = Object.values(slotBidConsumers);
@@ -209,6 +242,7 @@ class Mp {
    * @param {Object} options slot传入配置
    */
   fillAd(container, slotConfig, force, options) {
+    slotConfig = reCalcConsumerWeight(slotConfig);
     this.slots[slotConfig.id] = new Slot(
       container,
       slotConfig,

@@ -3,6 +3,7 @@ import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
 import { loadScript } from '../union/helper';
 import { MEDIA_STORAGE_NAME } from '../config';
 import browser from './browser';
+import Fingerprint2 from './finger';
 
 export const isDebug =
   /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
@@ -44,11 +45,12 @@ export const getImei = () => {
   } catch (e) {}
 
   if (!imei) {
-    imei = `H${Math.floor(+new Date() / 10000)}-${getRandomString().slice(
-      -6
-    )}-${getRandomString().slice(-6)}-${getRandomString().slice(-4)}`;
-
-    window.localStorage.setItem(MEDIA_STORAGE_NAME, imei);
+    new Fingerprint2().get(function (result) {
+      if (result) {
+        imei = result;
+        window.localStorage.setItem(MEDIA_STORAGE_NAME, result);
+      }
+    });
   }
 
   return imei;
@@ -259,4 +261,21 @@ export const throttle = (fn, time) => {
       fn(params);
     }
   };
+};
+
+//写cookies
+export const setCookie = (name, value, expire) => {
+  expire = expire || 0;
+  const exp = new Date();
+  exp.setTime(exp.getTime() + expire);
+  document.cookie =
+    name + '=' + escape(value) + ';expires=' + exp.toGMTString();
+};
+
+//读取cookies
+export const getCookie = function (name) {
+  let arr,
+    reg = new RegExp(name + '=([^;]*)');
+  if ((arr = document.cookie.match(reg))) return unescape(arr[1]);
+  else return null;
 };
