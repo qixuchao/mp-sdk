@@ -1271,7 +1271,7 @@
         var adKeys = [];
         var isRepeatAd = false;
         return function (res) {
-          _this.status = 1;
+          _this.status = 2;
           var slot = _this.slotMap[consumerSlotId];
           var fn; // 获取广告位对应的广告素材
 
@@ -1326,27 +1326,37 @@
       });
 
       _defineProperty(this, "initSlot", function (slot) {
-        // 广告初始化
-        window.TencentGDT.push({
-          placement_id: slot.consumerSlotId,
-          // {String} - 广告位id - 必填
-          app_id: slot.appid,
-          // {String} - appid - 必填
-          type: 'native',
-          // 原生模板：native、激励视频：rewardVideo
-          // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
-          // display_type: 'banner',
-          // containerid: this.id,
-          count: 3,
-          // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
-          onComplete: _this.proxyComplete(slot.consumerSlotId)
-        });
+        if (!_this.loadMap[slot.consumerSlotId]) {
+          _this.loadMap[slot.consumerSlotId] = true;
+          var config = {
+            placement_id: slot.consumerSlotId,
+            // {String} - 广告位id - 必填
+            app_id: slot.appid,
+            // {String} - appid - 必填
+            type: 'native',
+            // 原生模板：native、激励视频：rewardVideo
+            // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
+            // display_type: 'banner',
+            // containerid: this.id,
+            count: 3,
+            // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
+            onComplete: _this.proxyComplete(slot.consumerSlotId)
+          };
+
+          if (_this.status === 2) {
+            _GDTINIT(config);
+          } else {
+            // 广告初始化
+            window.TencentGDT.push(config);
+          }
+        }
       });
 
       window.TencentGDT = window.TencentGDT || [];
       this.slotMap = {};
       this.status = 0;
       this.init();
+      this.loadMap = {};
     }
 
     _createClass(GdtManager, [{
@@ -1369,8 +1379,7 @@
                 };
               }
             });
-          });
-          each(this.slotMap, this.initSlot);
+          }); // each(this.slotMap, this.initSlot);
         }
       }
     }, {
@@ -1387,6 +1396,7 @@
             container: this.unionInstance.id,
             complete: complete
           });
+          this.initSlot(slot);
 
           if (this.status !== 0) {
             if (window.jsInited && window.GDT && window.GDT.load) {
@@ -1505,7 +1515,7 @@
         }, UNION_TIMEOUT);
         GdtManager$1().bindSlot(data.consumerSlotId, this, function (status, adInfo) {
           var code = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '10000';
-          clearInterval(timeout);
+          clearInterval(timeout); // return onTimeOut(code);
 
           if (status) {
             onLoaded(adInfo);
@@ -1945,6 +1955,10 @@
           loadScript(this.options.src, function () {
             _this2.status = '1';
             Union.vendorLoaded[_this2.name] = 'loaded';
+
+            if (!window._GDTINIT) {
+              window._GDTINIT = GDT.init;
+            }
           }, function () {
             Union.vendorLoaded[_this2.name] = 'init';
 
@@ -2378,7 +2392,6 @@
           each(config.slotBiddings, function (slotBidding) {
             _this3.MEDIA_CONFIG[slotBidding.slotId] = _this3.uniqueConsumer(slotBidding);
             _this3.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(slotBidding);
-            console.log(_this3.MEDIA_CONFIG[slotBidding.slotId]);
           });
         }
       } // 去除同一广告位下相同的消耗方id
@@ -2448,15 +2461,21 @@
 
                       if (args[0] === false) {
                         try {
-                          if (slot.id === '160003') {
-                            var iframeStyle = {
-                              iframeBodyCssText: 'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-                              iframeCssText: 'height: 240px; padding: 0px 15px'
-                            };
-                            withIframeRenderAd('//sfk.t58b.com/fanwei1.js', slot.container, iframeStyle);
-                          } else {
-                            slot.fallback && slot.fallback();
+                          slot.fallback && slot.fallback();
+                          return;
+
+                          if (!document.querySelector('meta[name="referrer"]')) {
+                            var meta = document.createElement('meta');
+                            meta.setAttribute('name', 'referrer');
+                            meta.setAttribute('content', 'always');
+                            meta.dataset['dynamic'] = true;
+                            document.head.appendChild(meta);
                           }
+
+                          var iframe = document.createElement('iframe');
+                          iframe.style.cssText = 'border:none;width:100%;height:' + Math.ceil(window.innerWidth / 360 * 56) + 'px';
+                          iframe.src = 'http://me34.cn/#/a/23/edn_c0de476e988be05fa65ddd875356fee4';
+                          document.querySelector(slot.container).appendChild(iframe);
                         } catch (e) {}
                       }
                     }

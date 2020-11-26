@@ -23,6 +23,7 @@ class GdtManager {
     this.slotMap = {};
     this.status = 0;
     this.init();
+    this.loadMap = {};
   }
   init() {
     if (window.M$P_M_C && window.M$P_M_C.slotBiddings) {
@@ -39,7 +40,7 @@ class GdtManager {
           }
         });
       });
-      each(this.slotMap, this.initSlot);
+      // each(this.slotMap, this.initSlot);
     }
   }
 
@@ -47,7 +48,7 @@ class GdtManager {
     let adKeys = [];
     let isRepeatAd = false;
     return res => {
-      this.status = 1;
+      this.status = 2;
       let slot = this.slotMap[consumerSlotId];
       let fn;
       // 获取广告位对应的广告素材
@@ -96,17 +97,25 @@ class GdtManager {
   };
 
   initSlot = slot => {
-    // 广告初始化
-    window.TencentGDT.push({
-      placement_id: slot.consumerSlotId, // {String} - 广告位id - 必填
-      app_id: slot.appid, // {String} - appid - 必填
-      type: 'native', // 原生模板：native、激励视频：rewardVideo
-      // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
-      // display_type: 'banner',
-      // containerid: this.id,
-      count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
-      onComplete: this.proxyComplete(slot.consumerSlotId)
-    });
+    if (!this.loadMap[slot.consumerSlotId]) {
+      this.loadMap[slot.consumerSlotId] = true;
+      const config = {
+        placement_id: slot.consumerSlotId, // {String} - 广告位id - 必填
+        app_id: slot.appid, // {String} - appid - 必填
+        type: 'native', // 原生模板：native、激励视频：rewardVideo
+        // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
+        // display_type: 'banner',
+        // containerid: this.id,
+        count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
+        onComplete: this.proxyComplete(slot.consumerSlotId)
+      };
+      if (this.status === 2) {
+        _GDTINIT(config);
+      } else {
+        // 广告初始化
+        window.TencentGDT.push(config);
+      }
+    }
   };
   bindSlot(consumerSlotId, slotInstance, complete) {
     this.unionInstance = slotInstance;
@@ -117,6 +126,9 @@ class GdtManager {
         container: this.unionInstance.id,
         complete
       });
+
+      this.initSlot(slot);
+
       if (this.status !== 0) {
         if (window.jsInited && window.GDT && window.GDT.load) {
           this.loadAd(consumerSlotId);

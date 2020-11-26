@@ -21,23 +21,19 @@ const config = {
     serve({
       contentBase: ['.'],
       onListening: function (server) {
-        console.log('====', server);
         server.on('request', function (req, res) {
-          console.log(req.url);
-
           const send = body => {
             res.write(body);
             res.end();
           };
 
           if (/\/media\/\d+.js/.test(req.url)) {
-            let filePath = path.resolve('.', '.' + req.url);
+            const filePath = path.resolve('.', '.' + req.url);
+            const sdkFilePath = path.resolve('.', './dist/mp.js');
 
             try {
               const content = fs.readFileSync(filePath);
-              const sdkContent = fs.readFileSync(
-                path.resolve('.', './dist/mp.js')
-              );
+              const sdkContent = fs.readFileSync(sdkFilePath);
               send(content.toString() + '\n' + sdkContent.toString());
             } catch (e) {
               send(e);

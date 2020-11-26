@@ -183,6 +183,9 @@ export default class Union extends Event {
         () => {
           this.status = '1';
           Union.vendorLoaded[this.name] = 'loaded';
+          if (!window._GDTINIT) {
+            window._GDTINIT = GDT.init;
+          }
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';

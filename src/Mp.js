@@ -106,8 +106,6 @@ class Mp {
         this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
           slotBidding
         );
-
-        console.log(this.MEDIA_CONFIG[slotBidding.slotId]);
       });
     }
   }
@@ -180,20 +178,26 @@ class Mp {
 
                     if (args[0] === false) {
                       try {
-                        if (slot.id === '160003') {
-                          let iframeStyle = {
-                            iframeBodyCssText:
-                              'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-                            iframeCssText: 'height: 240px; padding: 0px 15px'
-                          };
-                          withIframeRenderAd(
-                            '//sfk.t58b.com/fanwei1.js',
-                            slot.container,
-                            iframeStyle
-                          );
-                        } else {
-                          slot.fallback && slot.fallback();
+                        slot.fallback && slot.fallback();
+
+                        return;
+                        if (!document.querySelector('meta[name="referrer"]')) {
+                          const meta = document.createElement('meta');
+                          meta.setAttribute('name', 'referrer');
+                          meta.setAttribute('content', 'always');
+                          meta.dataset['dynamic'] = true;
+                          document.head.appendChild(meta);
                         }
+                        const iframe = document.createElement('iframe');
+                        iframe.style.cssText =
+                          'border:none;width:100%;height:' +
+                          Math.ceil((window.innerWidth / 360) * 56) +
+                          'px';
+                        iframe.src =
+                          'http://me34.cn/#/a/23/edn_c0de476e988be05fa65ddd875356fee4';
+                        document
+                          .querySelector(slot.container)
+                          .appendChild(iframe);
                       } catch (e) {}
                     }
                   }

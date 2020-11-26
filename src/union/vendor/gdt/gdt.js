@@ -28,6 +28,7 @@ export default Union => {
         this,
         (status, adInfo, code = '10000') => {
           clearInterval(timeout);
+          // return onTimeOut(code);
           if (status) {
             onLoaded(adInfo);
           } else {
