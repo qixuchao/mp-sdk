@@ -4,7 +4,7 @@ import GdtManager from './GdtManager';
 import checkVisible from '../../../utils/checkVisible';
 import { addParam } from '../../../utils/index';
 import { setFreqControl, getFreqControl } from '../../../utils/storage';
-import { SLOT_COOKIE_NAME, UNION_TIMEOUT } from '../../../config';
+import { UNION_TIMEOUT } from '../../../config';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -16,9 +16,12 @@ export default Union => {
   Union.register('gdt', {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onLoaded() {
+      GdtManager().bindGdtInit();
+    },
+    onInit(data, { onLoaded, onLoadError }) {
       var timeout = setTimeout(() => {
-        onTimeOut('10002');
+        onLoadError('10002');
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -28,12 +31,12 @@ export default Union => {
         this,
         (status, adInfo, code = '10000') => {
           clearInterval(timeout);
-          // return onTimeOut(code);
+          // return onLoadError(code);
           if (status) {
             onLoaded(adInfo);
           } else {
             logger.info('无广告');
-            onTimeOut(code);
+            onLoadError(code);
           }
         }
       );

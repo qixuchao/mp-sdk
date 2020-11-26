@@ -11,7 +11,8 @@ const status = {
   1: 'complete执行等待',
   2: 'complete执行完成'
 };
-
+let count = 0;
+let _GDTINIT = null;
 /**
  * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
  * 后面可以通过window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
@@ -56,8 +57,8 @@ class GdtManager {
       try {
         materialData = window.GDT.getPosData(consumerSlotId).data;
       } catch (e) {}
-
-      if (slot && slot.status === 1 && slot.fns) {
+      console.log(slot);
+      if (slot && slot.fns) {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
             const adKey = ad.advertisement_id + ad.placement_id;
@@ -96,6 +97,11 @@ class GdtManager {
     };
   };
 
+  bindGdtInit() {
+    if (!_GDTINIT) {
+      _GDTINIT = GDT.init;
+    }
+  }
   initSlot = slot => {
     if (!this.loadMap[slot.consumerSlotId]) {
       this.loadMap[slot.consumerSlotId] = true;
@@ -109,7 +115,7 @@ class GdtManager {
         count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
         onComplete: this.proxyComplete(slot.consumerSlotId)
       };
-      if (this.status === 2) {
+      if (window.jsInited) {
         _GDTINIT(config);
       } else {
         // 广告初始化
@@ -120,25 +126,42 @@ class GdtManager {
   bindSlot(consumerSlotId, slotInstance, complete) {
     this.unionInstance = slotInstance;
     const slot = this.slotMap[consumerSlotId];
+    console.log('====bind', count, slot);
     if (slot) {
-      slot.status = 1;
       slot.fns.push({
         container: this.unionInstance.id,
         complete
       });
 
-      this.initSlot(slot);
+      if (count++ < 3) {
+        this.initSlot(slot);
+      }
 
-      if (this.status !== 0) {
-        if (window.jsInited && window.GDT && window.GDT.load) {
-          this.loadAd(consumerSlotId);
-        } else {
-          slot.next.push(() => {
-            this.loadAd(consumerSlotId);
-          });
-        }
-      } else {
+      // 第一次加入
+      if (this.status === 0) {
         this.status = 1;
+        // this.initSlot(slot);
+      } else {
+        // 广点通默认逻辑会将originConfiglist中未加载配置自动加载
+        if (window.GDT && window.GDT.load && this.status === 2) {
+          console.log('2222', this.status);
+          // this.initSlot(slot);
+          this.loadAd(consumerSlotId);
+        } else if (window.jsInited) {
+          console.log('jsInited', consumerSlotId);
+          // setTimeout(() => {
+          // this.initSlot(slot);
+          // this.loadAd(consumerSlotId);
+          // }, 100);
+          // slot.next.push(() => {
+          //   slot.status = 1;
+          //   this.loadAd(consumerSlotId);
+          // });
+        }
+      }
+
+      if (slot.status === 0) {
+        slot.status = 1;
       }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);

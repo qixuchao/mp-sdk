@@ -19,7 +19,7 @@ export default Union => {
   Union.register('bd', {
     src: '//cpro.baidustatic.com/cpro/ui/cm.js',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onInit(data, { onLoaded, onLoadError }) {
       (window.slotbydup = window.slotbydup || []).push({
         id: data.consumerSlotId,
         container: this.id,
@@ -28,7 +28,7 @@ export default Union => {
       // 检测广告位
       let timeOut;
       timeOut = setTimeout(function () {
-        onTimeOut('10002');
+        onLoadError('10002');
         clearInterval(timer);
         timer = null;
       }, UNION_TIMEOUT);

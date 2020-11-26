@@ -70,6 +70,7 @@ export default class Union extends Event {
    *    options.src {String}
    *    options.sandbox {Boolean} default: true
    *    options.onInit {Function}
+   *    options.onLoaded {Function}
    *    options.onBeforeMount
    *    options.onMounted {Function}
    *    options.getWeight {Function} 返回权重值
@@ -117,6 +118,7 @@ export default class Union extends Event {
    * 数据加载完成
    */
   onLoaded = adInfo => {
+    console.log('load complete:', (new Date() - this.startTime) / 1000 + 's');
     this.log('bidSuc', adInfo);
     this.adInfo = adInfo;
 
@@ -124,8 +126,14 @@ export default class Union extends Event {
     this.trigger('complete');
   };
 
-  onTimeOut = (errorCode = '10002') => {
-    console.log('timeout');
+  onLoadError = (errorCode = '10002') => {
+    console.error(
+      'loaderror:',
+      (new Date() - this.startTime) / 1000 + 's',
+      this.name,
+      this.data.consumer.consumerSlotId,
+      ERROR_TYPE[errorCode]
+    );
     if (this.status === '1') {
       this.status = '10';
       this.logError(errorCode);
@@ -160,10 +168,12 @@ export default class Union extends Event {
       this.log('bid');
 
       this.callHook('onInit', data.consumer || {}, {
-        onTimeOut: this.onTimeOut,
+        onLoadError: this.onLoadError,
         onLoaded: this.onLoaded
       });
     };
+
+    this.startTime = +new Date();
 
     this.trigger('init');
     onInit();
@@ -183,9 +193,7 @@ export default class Union extends Event {
         () => {
           this.status = '1';
           Union.vendorLoaded[this.name] = 'loaded';
-          if (!window._GDTINIT) {
-            window._GDTINIT = GDT.init;
-          }
+          this.callHook('onLoaded');
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';

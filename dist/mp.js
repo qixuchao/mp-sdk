@@ -158,54 +158,7 @@
   var MEDIA_CONFIG_NAME = 'M$P_M_C'; // localstorage 存贮数据的属性名
 
   var MEDIA_STORAGE_NAME = 'M$P_BF';
-  var UNION_TIMEOUT = 1000 * 5;
-
-  var loadScript = function loadScript(src, success, fail) {
-    // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
-    var fisrtScript = document.getElementsByTagName('script')[0];
-    var script = document.createElement('script');
-
-    script.onload = function () {
-      script = script.onload = null;
-      success && success();
-    };
-
-    script.onerror = function () {
-      script = script.onerror = null;
-      fail && fail();
-    };
-
-    script.src = src;
-    fisrtScript.parentNode.insertBefore(script, fisrtScript);
-  };
-  var createWrapper = function createWrapper() {
-    var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
-    var tagName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'div';
-    var id = arguments.length > 2 ? arguments[2] : undefined;
-    var tag = document.createElement(tagName);
-    tag.id = id;
-    tag.style.display = 'none';
-    tag.className = id;
-    context.appendChild(tag);
-    return tag;
-  };
-  function addEventListener(el, eventName, callback, isUseCapture) {
-    if (el.addEventListener) {
-      el.addEventListener(eventName, callback, !!isUseCapture);
-    } else {
-      el.attachEvent('on' + eventName, callback);
-    }
-  }
-  var withIframeRenderAd = function withIframeRenderAd(url, container, props) {
-    var iframe = document.createElement('iframe');
-    iframe.style.cssText = props.iframeCssText;
-    document.querySelector(container).appendChild(iframe);
-    var iframeDoc = iframe.contentDocument;
-    iframeDoc.body.style.cssText = props.iframeBodyCssText;
-    var script = iframeDoc.createElement('script');
-    script.src = url;
-    iframeDoc.body.appendChild(script);
-  };
+  var UNION_TIMEOUT = 1000 * 10;
 
   var isUndefined = function isUndefined(value) {
     return value === undefined;
@@ -265,6 +218,53 @@
     }
 
     return Object.getPrototypeOf(value) === proto;
+  };
+
+  var loadScript = function loadScript(src, success, fail) {
+    // 寻找script，而不是直接往body中插入，避免代码在head中执行或文档不规范
+    var fisrtScript = document.getElementsByTagName('script')[0];
+    var script = document.createElement('script');
+
+    script.onload = function () {
+      script = script.onload = null;
+      success && success();
+    };
+
+    script.onerror = function () {
+      script = script.onerror = null;
+      fail && fail();
+    };
+
+    script.src = src;
+    fisrtScript.parentNode.insertBefore(script, fisrtScript);
+  };
+  var createWrapper = function createWrapper() {
+    var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
+    var tagName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'div';
+    var id = arguments.length > 2 ? arguments[2] : undefined;
+    var tag = document.createElement(tagName);
+    tag.id = id;
+    tag.style.display = 'none';
+    tag.className = id;
+    context.appendChild(tag);
+    return tag;
+  };
+  function addEventListener(el, eventName, callback, isUseCapture) {
+    if (el.addEventListener) {
+      el.addEventListener(eventName, callback, !!isUseCapture);
+    } else {
+      el.attachEvent('on' + eventName, callback);
+    }
+  }
+  var withIframeRenderAd = function withIframeRenderAd(url, container, props) {
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = props.iframeCssText;
+    document.querySelector(container).appendChild(iframe);
+    var iframeDoc = iframe.contentDocument;
+    iframeDoc.body.style.cssText = props.iframeBodyCssText;
+    var script = iframeDoc.createElement('script');
+    script.src = url;
+    iframeDoc.body.appendChild(script);
   };
 
   /*global window*/
@@ -1255,6 +1255,8 @@
 
   var doClick;
   var onClose;
+  var count = 0;
+  var _GDTINIT = null;
   /**
    * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
    * 后面可以通过window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
@@ -1281,7 +1283,9 @@
             materialData = window.GDT.getPosData(consumerSlotId).data;
           } catch (e) {}
 
-          if (slot && slot.status === 1 && slot.fns) {
+          console.log(slot);
+
+          if (slot && slot.fns) {
             if (Array.isArray(res)) {
               res.forEach(function (ad, index) {
                 var adKey = ad.advertisement_id + ad.placement_id;
@@ -1343,7 +1347,7 @@
             onComplete: _this.proxyComplete(slot.consumerSlotId)
           };
 
-          if (_this.status === 2) {
+          if (window.jsInited) {
             _GDTINIT(config);
           } else {
             // 广告初始化
@@ -1383,31 +1387,52 @@
         }
       }
     }, {
+      key: "bindGdtInit",
+      value: function bindGdtInit() {
+        if (!_GDTINIT) {
+          _GDTINIT = GDT.init;
+        }
+      }
+    }, {
       key: "bindSlot",
       value: function bindSlot(consumerSlotId, slotInstance, complete) {
-        var _this3 = this;
-
         this.unionInstance = slotInstance;
         var slot = this.slotMap[consumerSlotId];
+        console.log('====bind', count, slot);
 
         if (slot) {
-          slot.status = 1;
           slot.fns.push({
             container: this.unionInstance.id,
             complete: complete
           });
-          this.initSlot(slot);
 
-          if (this.status !== 0) {
-            if (window.jsInited && window.GDT && window.GDT.load) {
-              this.loadAd(consumerSlotId);
-            } else {
-              slot.next.push(function () {
-                _this3.loadAd(consumerSlotId);
-              });
-            }
+          if (count++ < 3) {
+            this.initSlot(slot);
+          } // 第一次加入
+
+
+          if (this.status === 0) {
+            this.status = 1; // this.initSlot(slot);
           } else {
-            this.status = 1;
+            // 广点通默认逻辑会将originConfiglist中未加载配置自动加载
+            if (window.GDT && window.GDT.load && this.status === 2) {
+              console.log('2222', this.status); // this.initSlot(slot);
+
+              this.loadAd(consumerSlotId);
+            } else if (window.jsInited) {
+              console.log('jsInited', consumerSlotId); // setTimeout(() => {
+              // this.initSlot(slot);
+              // this.loadAd(consumerSlotId);
+              // }, 100);
+              // slot.next.push(() => {
+              //   slot.status = 1;
+              //   this.loadAd(consumerSlotId);
+              // });
+            }
+          }
+
+          if (slot.status === 0) {
+            slot.status = 1;
           }
         } else {
           console.error("\u5E7F\u70B9\u901A\u6D88\u8017\u65B9id\u4E0D\u5B58\u5728".concat(consumerSlotId));
@@ -1505,23 +1530,26 @@
     Union.register('gdt', {
       src: '//qzs.qq.com/qzone/biz/res/i.js',
       sandbox: false,
+      onLoaded: function onLoaded() {
+        GdtManager$1().bindGdtInit();
+      },
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onTimeOut = _ref.onTimeOut;
+            onLoadError = _ref.onLoadError;
         var timeout = setTimeout(function () {
-          onTimeOut('10002');
+          onLoadError('10002');
           clearInterval(timeout);
           timeout = null;
         }, UNION_TIMEOUT);
         GdtManager$1().bindSlot(data.consumerSlotId, this, function (status, adInfo) {
           var code = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '10000';
-          clearInterval(timeout); // return onTimeOut(code);
+          clearInterval(timeout); // return onLoadError(code);
 
           if (status) {
             onLoaded(adInfo);
           } else {
             logger.info('无广告');
-            onTimeOut(code);
+            onLoadError(code);
           }
         });
       },
@@ -1601,7 +1629,7 @@
         var _this = this;
 
         var onLoaded = _ref.onLoaded,
-            onTimeOut = _ref.onTimeOut;
+            onLoadError = _ref.onLoadError;
         (window.slotbydup = window.slotbydup || []).push({
           id: data.consumerSlotId,
           container: this.id,
@@ -1610,7 +1638,7 @@
 
         var timeOut;
         timeOut = setTimeout(function () {
-          onTimeOut('10002');
+          onLoadError('10002');
           clearInterval(timer);
           timer = null;
         }, UNION_TIMEOUT);
@@ -1640,9 +1668,9 @@
       sandbox: false,
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onTimeOut = _ref.onTimeOut;
+            onLoadError = _ref.onLoadError;
         var timeout = setTimeout(function () {
-          onTimeOut('10002');
+          onLoadError('10002');
           clearTimeout(timeout);
           timeout = null;
         }, UNION_TIMEOUT);
@@ -1689,7 +1717,7 @@
               });
               onLoaded(htmlStr);
             } else {
-              onTimeOut('10000');
+              onLoadError('10000');
             }
           }
         });
@@ -1711,7 +1739,7 @@
       sandbox: false,
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onTimeOut = _ref.onTimeOut;
+            onLoadError = _ref.onLoadError;
         setTimeout(onLoaded);
       },
       onBeforeMount: function onBeforeMount() {
@@ -1830,6 +1858,7 @@
        *    options.src {String}
        *    options.sandbox {Boolean} default: true
        *    options.onInit {Function}
+       *    options.onLoaded {Function}
        *    options.onBeforeMount
        *    options.onMounted {Function}
        *    options.getWeight {Function} 返回权重值
@@ -1852,6 +1881,8 @@
       _this = _super.call(this);
 
       _defineProperty(_assertThisInitialized(_this), "onLoaded", function (adInfo) {
+        console.log('load complete:', (new Date() - _this.startTime) / 1000 + 's');
+
         _this.log('bidSuc', adInfo);
 
         _this.adInfo = adInfo;
@@ -1861,9 +1892,9 @@
         _this.trigger('complete');
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onTimeOut", function () {
+      _defineProperty(_assertThisInitialized(_this), "onLoadError", function () {
         var errorCode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '10002';
-        console.log('timeout');
+        console.error('loaderror:', (new Date() - _this.startTime) / 1000 + 's', _this.name, _this.data.consumer.consumerSlotId, ERROR_TYPE[errorCode]);
 
         if (_this.status === '1') {
           _this.status = '10';
@@ -1936,11 +1967,12 @@
           _this2.log('bid');
 
           _this2.callHook('onInit', data.consumer || {}, {
-            onTimeOut: _this2.onTimeOut,
+            onLoadError: _this2.onLoadError,
             onLoaded: _this2.onLoaded
           });
         };
 
+        this.startTime = +new Date();
         this.trigger('init');
         onInit(); // 同类联盟代码是否已经加载
 
@@ -1956,9 +1988,7 @@
             _this2.status = '1';
             Union.vendorLoaded[_this2.name] = 'loaded';
 
-            if (!window._GDTINIT) {
-              window._GDTINIT = GDT.init;
-            }
+            _this2.callHook('onLoaded');
           }, function () {
             Union.vendorLoaded[_this2.name] = 'init';
 
@@ -2317,6 +2347,20 @@
     }
 
     return slotConfig;
+  }; // 去除同一广告位下相同的消耗方id
+
+
+  var uniqueConsumer = function uniqueConsumer(slotBidding) {
+    var slotBidConsumers = {};
+    each(slotBidding.slotBidding, function (consumer) {
+      var consumerSlotId = consumer.consumer.consumerSlotId;
+
+      if (!slotBidConsumers[consumerSlotId]) {
+        slotBidConsumers[consumerSlotId] = consumer;
+      }
+    });
+    slotBidding.slotBidding = Object.values(slotBidConsumers);
+    return slotBidding;
   };
 
   var Mp = /*#__PURE__*/function () {
@@ -2390,25 +2434,10 @@
 
         if (config.slotBiddings) {
           each(config.slotBiddings, function (slotBidding) {
-            _this3.MEDIA_CONFIG[slotBidding.slotId] = _this3.uniqueConsumer(slotBidding);
-            _this3.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(slotBidding);
+            _this3.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
+            _this3.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(_this3.MEDIA_CONFIG[slotBidding.slotId]);
           });
         }
-      } // 去除同一广告位下相同的消耗方id
-
-    }, {
-      key: "uniqueConsumer",
-      value: function uniqueConsumer(slotBidding) {
-        var slotBidConsumers = {};
-        each(slotBidding.slotBidding, function (consumer) {
-          var consumerSlotId = consumer.consumer.consumerSlotId;
-
-          if (!slotBidConsumers[consumerSlotId]) {
-            slotBidConsumers[consumerSlotId] = consumer;
-          }
-        });
-        slotBidding.slotBidding = Object.values(slotBidConsumers);
-        return slotBidding;
       }
       /**
        * @param {Object|Function}  params 支持对象和方法

@@ -1,6 +1,5 @@
 /* gloabl window */
-import { MODEL_NAME, MEDIA_CONFIG_NAME, SLOT_COOKIE_NAME } from './config';
-import { withIframeRenderAd } from './union/helper';
+import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
 import { each, getImei } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import { getFreqControl, setFreqControl } from './utils/storage';
@@ -44,6 +43,19 @@ const reCalcConsumerWeight = slotConfig => {
     setFreqControl(slotId, []);
   }
   return slotConfig;
+};
+
+// 去除同一广告位下相同的消耗方id
+const uniqueConsumer = slotBidding => {
+  let slotBidConsumers = {};
+  each(slotBidding.slotBidding, consumer => {
+    const consumerSlotId = consumer.consumer.consumerSlotId;
+    if (!slotBidConsumers[consumerSlotId]) {
+      slotBidConsumers[consumerSlotId] = consumer;
+    }
+  });
+  slotBidding.slotBidding = Object.values(slotBidConsumers);
+  return slotBidding;
 };
 
 class Mp {
@@ -99,28 +111,13 @@ class Mp {
     this.MEDIA_CONFIG = {};
     if (config.slotBiddings) {
       each(config.slotBiddings, slotBidding => {
-        this.MEDIA_CONFIG[slotBidding.slotId] = this.uniqueConsumer(
-          slotBidding
-        );
+        this.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
 
         this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
-          slotBidding
+          this.MEDIA_CONFIG[slotBidding.slotId]
         );
       });
     }
-  }
-
-  // 去除同一广告位下相同的消耗方id
-  uniqueConsumer(slotBidding) {
-    let slotBidConsumers = {};
-    each(slotBidding.slotBidding, consumer => {
-      const consumerSlotId = consumer.consumer.consumerSlotId;
-      if (!slotBidConsumers[consumerSlotId]) {
-        slotBidConsumers[consumerSlotId] = consumer;
-      }
-    });
-    slotBidding.slotBidding = Object.values(slotBidConsumers);
-    return slotBidding;
   }
 
   /**

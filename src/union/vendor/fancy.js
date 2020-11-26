@@ -9,9 +9,9 @@ export default Union => {
   Union.register('ptgapi', {
     src: '',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onInit(data, { onLoaded, onLoadError }) {
       let timeout = setTimeout(() => {
-        onTimeOut('10002');
+        onLoadError('10002');
         clearTimeout(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -59,7 +59,7 @@ export default Union => {
             });
             onLoaded(htmlStr);
           } else {
-            onTimeOut('10000');
+            onLoadError('10000');
           }
         }
       });
