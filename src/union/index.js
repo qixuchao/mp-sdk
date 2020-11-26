@@ -7,8 +7,6 @@ import registerFancy from './vendor/fancy';
 import registerAdIMatch from './vendor/adIMatch';
 import { loadScript, createWrapper } from './helper';
 
-export const UNION_TIMEOUT = 1000 * 5;
-
 // 联盟实例的状态
 const STATUS = {
   0: 'init',

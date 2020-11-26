@@ -1,6 +1,6 @@
 /* global window */
 import { addParam, macroReplace, jsonp, each } from '../../utils/index';
-import { UNION_TIMEOUT } from '../index';
+import { UNION_TIMEOUT } from '../../config';
 
 const url = 'https://g.fancyapi.com/s2s';
 // const testUrl = 'https://g132.test.amnetapi.com/s2s';

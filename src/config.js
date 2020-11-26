@@ -8,3 +8,5 @@ export const MEDIA_CONFIG_NAME = 'M$P_M_C';
 export const MEDIA_STORAGE_NAME = 'M$P_BF';
 
 export const SLOT_COOKIE_NAME = 'MP_SLOT';
+
+export const UNION_TIMEOUT = 1000 * 5;

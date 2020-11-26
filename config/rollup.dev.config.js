@@ -1,7 +1,8 @@
 // rollup.config.js
 const babel = require('rollup-plugin-babel');
 const serve = require('rollup-plugin-serve');
-const { uglify } = require('rollup-plugin-uglify');
+const fs = require('fs');
+const path = require('path');
 const pkg = require('../package.json');
 
 const env = process.env.NODE_ENV;
@@ -18,7 +19,33 @@ const config = {
       exclude: 'node_modules/**' // only transpile our source code
     }),
     serve({
-      contentBase: ['.']
+      contentBase: ['.'],
+      onListening: function (server) {
+        console.log('====', server);
+        server.on('request', function (req, res) {
+          console.log(req.url);
+
+          const send = body => {
+            res.write(body);
+            res.end();
+          };
+
+          if (/\/media\/\d+.js/.test(req.url)) {
+            let filePath = path.resolve('.', '.' + req.url);
+
+            try {
+              const content = fs.readFileSync(filePath);
+              const sdkContent = fs.readFileSync(
+                path.resolve('.', './dist/mp.js')
+              );
+              send(content.toString() + '\n' + sdkContent.toString());
+            } catch (e) {
+              send(e);
+              console.log(e);
+            }
+          }
+        });
+      }
     })
   ]
 };

@@ -38,12 +38,6 @@ export const getRandom = (min, max) => {
 
 export const getRandomString = () => Math.random().toString(36).toUpperCase();
 
-export const getFingerPrint = callback => {
-  let fingerCode = null;
-
-  return fingerCode;
-};
-
 let imei = window.localStorage.getItem(MEDIA_STORAGE_NAME);
 export const getImei = callback => {
   if (!imei) {
@@ -264,28 +258,4 @@ export const throttle = (fn, time) => {
       fn(params);
     }
   };
-};
-
-const getCurrentDate = () => {
-  const date = new Date();
-  const month = date.getMonth() + 1;
-  const endTime =
-    date.getFullYear() + '-' + month + '-' + date.getDate() + ' 23:59:59';
-  return new Date(endTime).getTime();
-};
-
-//写cookies
-export const setCookie = (name, value) => {
-  const exp = new Date();
-  exp.setTime(getCurrentDate());
-  document.cookie =
-    name + '=' + escape(value) + ';expires=' + exp.toGMTString();
-};
-
-//读取cookies
-export const getCookie = function (name) {
-  let arr,
-    reg = new RegExp(name + '=([^;]*)');
-  if ((arr = document.cookie.match(reg))) return unescape(arr[1]);
-  else return null;
 };

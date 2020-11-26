@@ -1,5 +1,4 @@
-import { MODEL_NAME } from '../../config';
-import { UNION_TIMEOUT } from '../index';
+import { MODEL_NAME, UNION_TIMEOUT } from '../../config';
 
 /*
 <div class="_1gho6uvlbfj"></div>

@@ -1,10 +1,10 @@
 /* global window */
 import logger from '../../../logger';
-import { UNION_TIMEOUT } from '../../index';
 import GdtManager from './GdtManager';
 import checkVisible from '../../../utils/checkVisible';
-import { addParam, getCookie, setCookie } from '../../../utils/index';
-import { SLOT_COOKIE_NAME } from '../../../config';
+import { addParam } from '../../../utils/index';
+import { setFreqControl, getFreqControl } from '../../../utils/storage';
+import { SLOT_COOKIE_NAME, UNION_TIMEOUT } from '../../../config';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -58,20 +58,21 @@ export default Union => {
             consumerType: this.requestData.consumerType,
             mediaId: this.requestData.mediaId
           };
-          let slotCookie = {};
-          try {
-            slotCookie = JSON.parse(getCookie(SLOT_COOKIE_NAME)) || {};
-          } catch (e) {}
 
-          (slotCookie[this.requestData.slotId] =
-            slotCookie[this.requestData.slotId] || []).push(
-            this.requestData.consumerSlotId
-          );
+          let fcData = getFreqControl();
+          let fcSlots = [];
+          const slotId = this.requestData.slotId;
 
-          slotCookie[this.requestData.slotId] = Array.from(
-            new Set(slotCookie[this.requestData.slotId])
-          );
-          setCookie(SLOT_COOKIE_NAME, JSON.stringify(slotCookie));
+          if (fcData[slotId]) {
+            fcSlots = fcData[slotId];
+            if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
+              fcSlots.push(this.requestData.consumerSlotId);
+            }
+          } else {
+            fcSlots = [this.requestData.consumerSlotId];
+          }
+
+          setFreqControl(slotId, fcSlots);
 
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
