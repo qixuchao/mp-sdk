@@ -5,4 +5,6 @@ export const MODEL_NAME = 'M$P';
 export const MEDIA_CONFIG_NAME = 'M$P_M_C';
 
 // localstorage 存贮数据的属性名
-export const MEDIA_STORAGE_NAME = 'M$P_UID';
+export const MEDIA_STORAGE_NAME = 'M$P_BF';
+
+export const UNION_TIMEOUT = 1000 * 10;

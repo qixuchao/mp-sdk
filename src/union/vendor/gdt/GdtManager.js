@@ -12,6 +12,7 @@ const status = {
   2: 'complete执行完成'
 };
 
+let _GDTINIT = null;
 /**
  * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
  * 后面可以通过window.TencentGDT.NATIVE.loadAd(data.consumerSlotId);
@@ -23,6 +24,8 @@ class GdtManager {
     this.slotMap = {};
     this.status = 0;
     this.init();
+    this.loadMap = {};
+    this.next = []; //存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
   }
   init() {
     if (window.M$P_M_C && window.M$P_M_C.slotBiddings) {
@@ -33,13 +36,13 @@ class GdtManager {
               consumerSlotId: consumer.consumer.consumerSlotId,
               appid: '',
               status: 0,
-              fns: [], // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
-              next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
+              fns: [] // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
+              // next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
             };
           }
         });
       });
-      each(this.slotMap, this.initSlot);
+      // each(this.slotMap, this.initSlot);
     }
   }
 
@@ -47,16 +50,16 @@ class GdtManager {
     let adKeys = [];
     let isRepeatAd = false;
     return res => {
-      this.status = 1;
+      this.status = 2;
       let slot = this.slotMap[consumerSlotId];
-      let fn;
+
       // 获取广告位对应的广告素材
       let materialData = [];
       try {
         materialData = window.GDT.getPosData(consumerSlotId).data;
       } catch (e) {}
 
-      if (slot && slot.status === 1 && slot.fns) {
+      if (slot && slot.fns) {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
             const adKey = ad.advertisement_id + ad.placement_id;
@@ -70,7 +73,7 @@ class GdtManager {
 
                 window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
                 currentSlot.complete(true, currentMaterial);
-                fn = slot.next.shift();
+                // fn = slot.next.shift();
               } else {
                 return false;
               }
@@ -87,47 +90,94 @@ class GdtManager {
           currentSlot.complete(false);
         }
       }
-      if (!fn) {
-        fn = slot.next.shift();
-      }
+
+      let fn = this.next.shift();
 
       fn && fn();
     };
   };
 
+  bindGdtInit() {
+    if (!_GDTINIT) {
+      _GDTINIT = GDT.init;
+    }
+  }
+
   initSlot = slot => {
-    // 广告初始化
-    window.TencentGDT.push({
-      placement_id: slot.consumerSlotId, // {String} - 广告位id - 必填
-      app_id: slot.appid, // {String} - appid - 必填
-      type: 'native', // 原生模板：native、激励视频：rewardVideo
-      // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
-      // display_type: 'banner',
-      // containerid: this.id,
-      count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
-      onComplete: this.proxyComplete(slot.consumerSlotId)
-    });
+    if (!this.loadMap[slot.consumerSlotId]) {
+      this.loadMap[slot.consumerSlotId] = true;
+      const config = {
+        placement_id: slot.consumerSlotId, // {String} - 广告位id - 必填
+        app_id: slot.appid, // {String} - appid - 必填
+        type: 'native', // 原生模板：native、激励视频：rewardVideo
+        // banner：banner广告 interstitial：插屏广告 。 banner、插屏广告必须填写display_type，具体值见各个广告文档说明。
+        // display_type: 'banner',
+        // containerid: this.id,
+        count: 3, // {Number} - 拉取广告的数量，默认是3，最高支持10 - 选填
+        onComplete: this.proxyComplete(slot.consumerSlotId)
+      };
+      if (window.jsInited) {
+        _GDTINIT(config);
+      } else {
+        // 广告初始化
+        window.TencentGDT.push(config);
+      }
+    }
   };
   bindSlot(consumerSlotId, slotInstance, complete) {
     this.unionInstance = slotInstance;
     const slot = this.slotMap[consumerSlotId];
+    console.log('====bind', slot);
     if (slot) {
-      slot.status = 1;
       slot.fns.push({
         container: this.unionInstance.id,
         complete
       });
-      if (this.status !== 0) {
-        if (window.jsInited && window.GDT && window.GDT.load) {
+
+      if (!window.jsInited) {
+        this.initSlot(slot);
+      } else {
+        if (window.GDT && window.GDT.load) {
+          this.initSlot(slot);
           this.loadAd(consumerSlotId);
         } else {
-          slot.next.push(() => {
+          this.next.push(() => {
+            this.initSlot(slot);
             this.loadAd(consumerSlotId);
           });
         }
-      } else {
-        this.status = 1;
       }
+
+      // // 第一次加入
+      // if (this.status === 0) {
+      //   this.status = 1;
+      // } else {
+      //   if (!window.jsInited) {
+      //     this.initSlot(slot);
+      //   } else {
+      //     if (window.GDT && window.GDT.load) {
+      //       this.initSlot(slot);
+      //       this.loadAd(consumerSlotId);
+      //     } else {
+      //     }
+      //   }
+
+      //   // if (window.GDT && window.GDT.load && this.status === 2) {
+      //   //   console.log('2222', this.status);
+      //   //   this.initSlot(slot);
+      //   //   this.loadAd(consumerSlotId);
+      //   // } else if (window.jsInited) {
+      //   //   console.log('jsInited', consumerSlotId);
+      //   //   setTimeout(() => {
+      //   //     this.initSlot(slot);
+      //   //     this.loadAd(consumerSlotId);
+      //   //   }, 500);
+      //   //   // slot.next.push(() => {
+      //   //   //   slot.status = 1;
+      //   //   //   this.loadAd(consumerSlotId);
+      //   //   // });
+      //   // }
+      // }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }

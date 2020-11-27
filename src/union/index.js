@@ -7,8 +7,6 @@ import registerFancy from './vendor/fancy';
 import registerAdIMatch from './vendor/adIMatch';
 import { loadScript, createWrapper } from './helper';
 
-export const UNION_TIMEOUT = 1000 * 5;
-
 // 联盟实例的状态
 const STATUS = {
   0: 'init',
@@ -72,6 +70,7 @@ export default class Union extends Event {
    *    options.src {String}
    *    options.sandbox {Boolean} default: true
    *    options.onInit {Function}
+   *    options.onLoaded {Function}
    *    options.onBeforeMount
    *    options.onMounted {Function}
    *    options.getWeight {Function} 返回权重值
@@ -119,6 +118,7 @@ export default class Union extends Event {
    * 数据加载完成
    */
   onLoaded = adInfo => {
+    console.log('load complete:', (new Date() - this.startTime) / 1000 + 's');
     this.log('bidSuc', adInfo);
     this.adInfo = adInfo;
 
@@ -126,8 +126,15 @@ export default class Union extends Event {
     this.trigger('complete');
   };
 
-  onTimeOut = (errorCode = '10002') => {
-    console.log('timeout');
+  onError = (errorCode = '10002') => {
+    console.error(
+      'loaderror:',
+      (new Date() - this.startTime) / 1000 + 's',
+      this.name,
+      this.data.consumer.consumerSlotId,
+      this.requestData.slotId,
+      ERROR_TYPE[errorCode]
+    );
     if (this.status === '1') {
       this.status = '10';
       this.logError(errorCode);
@@ -162,10 +169,12 @@ export default class Union extends Event {
       this.log('bid');
 
       this.callHook('onInit', data.consumer || {}, {
-        onTimeOut: this.onTimeOut,
+        onError: this.onError,
         onLoaded: this.onLoaded
       });
     };
+
+    this.startTime = +new Date();
 
     this.trigger('init');
     onInit();
@@ -185,6 +194,7 @@ export default class Union extends Event {
         () => {
           this.status = '1';
           Union.vendorLoaded[this.name] = 'loaded';
+          this.callHook('onLoaded');
         },
         () => {
           Union.vendorLoaded[this.name] = 'init';

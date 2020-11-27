@@ -1,5 +1,4 @@
-import { MODEL_NAME } from '../../config';
-import { UNION_TIMEOUT } from '../index';
+import { MODEL_NAME, UNION_TIMEOUT } from '../../config';
 
 /*
 <div class="_1gho6uvlbfj"></div>
@@ -20,7 +19,7 @@ export default Union => {
   Union.register('bd', {
     src: '//cpro.baidustatic.com/cpro/ui/cm.js',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onInit(data, { onLoaded, onError }) {
       (window.slotbydup = window.slotbydup || []).push({
         id: data.consumerSlotId,
         container: this.id,
@@ -29,7 +28,7 @@ export default Union => {
       // 检测广告位
       let timeOut;
       timeOut = setTimeout(function () {
-        onTimeOut('10002');
+        onError('10002');
         clearInterval(timer);
         timer = null;
       }, UNION_TIMEOUT);

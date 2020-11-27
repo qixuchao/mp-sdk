@@ -1,6 +1,6 @@
 /* global window */
 import { addParam, macroReplace, jsonp, each } from '../../utils/index';
-import { UNION_TIMEOUT } from '../index';
+import { UNION_TIMEOUT } from '../../config';
 
 const url = 'https://g.fancyapi.com/s2s';
 // const testUrl = 'https://g132.test.amnetapi.com/s2s';
@@ -9,9 +9,9 @@ export default Union => {
   Union.register('ptgapi', {
     src: '',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onInit(data, { onLoaded, onError }) {
       let timeout = setTimeout(() => {
-        onTimeOut('10002');
+        onError('10002');
         clearTimeout(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -59,7 +59,7 @@ export default Union => {
             });
             onLoaded(htmlStr);
           } else {
-            onTimeOut('10000');
+            onError('10000');
           }
         }
       });

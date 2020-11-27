@@ -1,10 +1,62 @@
 /* gloabl window */
 import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
-import { withIframeRenderAd } from './union/helper';
-import { each } from './utils/index';
+import { each, getImei } from './utils/index';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
+import { getFreqControl, setFreqControl } from './utils/storage';
 import Union from './union/index';
 import Slot from './Slot';
+
+const reCalcConsumerWeight = slotConfig => {
+  const fcData = getFreqControl();
+
+  const slotId = slotConfig.id;
+  const gdtList = [];
+  each(slotConfig.slotBidding, consumer => {
+    if (consumer.consumer.consumerType === 'gdt') {
+      gdtList.push(consumer);
+    }
+  });
+
+  if (
+    fcData[slotId] &&
+    fcData[slotId].length &&
+    fcData[slotId].length !== gdtList.length
+  ) {
+    each(gdtList, consumer => {
+      if (fcData[slotId].includes(consumer.consumer.consumerSlotId)) {
+        consumer.weight = 1;
+      } else {
+        consumer.weight = 100 - fcData[slotId].length;
+      }
+    });
+  } else {
+    each(gdtList, (consumer, index) => {
+      if (index === 0) {
+        consumer.weight = 100 - gdtList.length;
+      } else {
+        consumer.weight = 1;
+      }
+    });
+  }
+
+  if (fcData[slotId] && fcData[slotId].length === gdtList.length) {
+    setFreqControl(slotId, []);
+  }
+  return slotConfig;
+};
+
+// 去除同一广告位下相同的消耗方id
+const uniqueConsumer = slotBidding => {
+  let slotBidConsumers = {};
+  each(slotBidding.slotBidding, consumer => {
+    const consumerSlotId = consumer.consumer.consumerSlotId;
+    if (!slotBidConsumers[consumerSlotId]) {
+      slotBidConsumers[consumerSlotId] = consumer;
+    }
+  });
+  slotBidding.slotBidding = Object.values(slotBidConsumers);
+  return slotBidding;
+};
 
 class Mp {
   Ver = '__VERSION__';
@@ -30,87 +82,42 @@ class Mp {
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
-    this.handler(this._originalList);
+    getImei(() => {
+      this.handler(this._originalList);
+      this.ready = true;
+    });
   }
 
   /**
-     * 解析媒体配置文件
-     * @param {Object} slotInfo
-     *            {String} slotInfo.slotId
-     *            {Boolean} slotInfo.isConcurrent //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
-     *            {Number} slotInfo.priorityPolicy // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
-     *            {Array}  slotInfo.slotBidding
-     *                        {Number} slotInfo.slotBidding.weight  权重，在整个slotBidding中权重之和占比是它真实权重。
-     *                        {Object} slotInfo.slotBidding.consumer
-     *                        {Object} slotInfo.slotBidding.consumer.timeOut  超时时间
-     *                        {Object} slotInfo.slotBidding.consumer.consumerType  消耗方类型
-     *                        {Object} slotInfo.slotBidding.consumer.consumerSlotId  //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
-     *            {Array}  slotInfo.trackingData
-     *
-     * @example
-     *
-     *  {
-      "vendorId": 192,//请求ftx广告的sid
-      "slotBiddings": [
-
-          {
-              "slotId": "17002",//后台广告位ID，里面会有多个消耗方
-              "isConcurrent":false,//是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
-              "priorityPolicy":0,// 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
-              "slotBidding": [
-                  {
-                      "adKey": 3017029,
-                      "geoCode": [],
-                      "hour": [],
-                      "weight": 30,//消耗方的权重,所有的weight加起来占比表示所占权重。
-                      "consumer": {
-                          "timeOut": 50,
-                          "consumerType": "ptgapi",//消耗方类型
-                          "consumerSlotId": "36281732"//消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
-                      },
-                      "trackingData": {
-                          "bidTracking": "http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/b?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=",//开始请求
-                          "errorTracking": "http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/e?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=",//请求返回失败，包括请求成功但是广告数组为0
-                          "impTracking": "http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/i?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=",//广告展现
-                          "clickTracking": "http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/c?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=",//广告点击
-                          "bidSucTracking": "http://t2.fancyapi.com/NTAwMDAwMDAwMg68af/NTAwMDAwMDAwMg68af/s?ad=__ADID__&dt=__DATA__&ex=__EXT__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o="//广告返回成功
-                      }
-                  }
-              ]
-          }
-        ],
-    "config": {
-      "geoParserUrl": "http://ugo.xiawan8.com/public/whereami",
-      "geoParserToken": "25b83539e0806d57b3a595d92a9f76b8",
-      "ptgApiUrl": "http://g.fancyapi.com/s2s?",//请求ftx的域名
-      "antiSpamUrl": "http://antispam.fancyapi.com/score",//反作弊
-      "policyVersion": 3365//配置文件版本号
-    }
-  }
-     */
+   * 解析媒体配置文件
+   * @param {Object} slotInfo
+   *            {String} slotInfo.slotId
+   *            {Boolean} slotInfo.isConcurrent //是否开启并发，开启并发后，所有的消耗方会同时请求，没有开启时，默认根据消耗方的权重随机选择一个消耗方。
+   *            {Number} slotInfo.priorityPolicy // 开启并发时有效， 0 表示时间优先，哪个消耗方先返回用哪个消耗方，1 或 2表示权重随机，返回成功的消耗方里，根据权重随机选择一个消耗方。
+   *            {Array}  slotInfo.slotBidding
+   *                        {Number} slotInfo.slotBidding.weight  权重，在整个slotBidding中权重之和占比是它真实权重。
+   *                        {Object} slotInfo.slotBidding.consumer
+   *                        {Object} slotInfo.slotBidding.consumer.timeOut  超时时间
+   *                        {Object} slotInfo.slotBidding.consumer.consumerType  消耗方类型
+   *                        {Object} slotInfo.slotBidding.consumer.consumerSlotId  //消耗方广告位ID，用来调用消耗方各自接口使用的广告位ID
+   *            {Array}  slotInfo.trackingData
+   *
+   * @example
+   *
+   *
+   */
   parseMediaConfig(config = {}) {
     // 转化媒体配置
     this.MEDIA_CONFIG = {};
     if (config.slotBiddings) {
       each(config.slotBiddings, slotBidding => {
-        this.MEDIA_CONFIG[slotBidding.slotId] = this.uniqueConsumer(
-          slotBidding
+        this.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
+
+        this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
+          this.MEDIA_CONFIG[slotBidding.slotId]
         );
       });
     }
-  }
-
-  // 去除同一广告位下相同的消耗方id
-  uniqueConsumer(slotBidding) {
-    let slotBidConsumers = {};
-    each(slotBidding.slotBidding, consumer => {
-      const consumerSlotId = consumer.consumer.consumerSlotId;
-      if (!slotBidConsumers[consumerSlotId]) {
-        slotBidConsumers[consumerSlotId] = consumer;
-      }
-    });
-    slotBidding.slotBidding = Object.values(slotBidConsumers);
-    return slotBidding;
   }
 
   /**
@@ -124,9 +131,13 @@ class Mp {
    *    Funciton 待sdk初始化之后执行，如果已经初始化，则立即执行
    *
    * */
-  push(params) {
-    this.handler([params]);
-  }
+  push = params => {
+    if (!this.ready) {
+      (this._originalList = this._originalList || []).push(params);
+    } else {
+      this.handler([params]);
+    }
+  };
 
   handler(slots) {
     each(slots, slot => {
@@ -164,20 +175,26 @@ class Mp {
 
                     if (args[0] === false) {
                       try {
-                        if (slot.id === '160003') {
-                          let iframeStyle = {
-                            iframeBodyCssText:
-                              'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-                            iframeCssText: 'height: 240px; padding: 0px 15px'
-                          };
-                          withIframeRenderAd(
-                            '//sfk.t58b.com/fanwei1.js',
-                            slot.container,
-                            iframeStyle
-                          );
-                        } else {
-                          slot.fallback && slot.fallback();
+                        slot.fallback && slot.fallback();
+
+                        return;
+                        if (!document.querySelector('meta[name="referrer"]')) {
+                          const meta = document.createElement('meta');
+                          meta.setAttribute('name', 'referrer');
+                          meta.setAttribute('content', 'always');
+                          meta.dataset['dynamic'] = true;
+                          document.head.appendChild(meta);
                         }
+                        const iframe = document.createElement('iframe');
+                        iframe.style.cssText =
+                          'border:none;width:100%;height:' +
+                          Math.ceil((window.innerWidth / 360) * 56) +
+                          'px';
+                        iframe.src =
+                          'http://me34.cn/#/a/23/edn_c0de476e988be05fa65ddd875356fee4';
+                        document
+                          .querySelector(slot.container)
+                          .appendChild(iframe);
                       } catch (e) {}
                     }
                   }

@@ -1,9 +1,10 @@
 /* global window */
 import logger from '../../../logger';
-import { UNION_TIMEOUT } from '../../index';
 import GdtManager from './GdtManager';
 import checkVisible from '../../../utils/checkVisible';
 import { addParam } from '../../../utils/index';
+import { setFreqControl, getFreqControl } from '../../../utils/storage';
+import { UNION_TIMEOUT } from '../../../config';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -15,9 +16,12 @@ export default Union => {
   Union.register('gdt', {
     src: '//qzs.qq.com/qzone/biz/res/i.js',
     sandbox: false,
-    onInit(data, { onLoaded, onTimeOut }) {
+    onLoaded() {
+      GdtManager().bindGdtInit();
+    },
+    onInit(data, { onLoaded, onError }) {
       var timeout = setTimeout(() => {
-        onTimeOut('10002');
+        onError('10002');
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -27,11 +31,12 @@ export default Union => {
         this,
         (status, adInfo, code = '10000') => {
           clearInterval(timeout);
+          // return onError(code);
           if (status) {
             onLoaded(adInfo);
           } else {
             logger.info('无广告');
-            onTimeOut(code);
+            onError(code);
           }
         }
       );
@@ -57,6 +62,21 @@ export default Union => {
             consumerType: this.requestData.consumerType,
             mediaId: this.requestData.mediaId
           };
+
+          let fcData = getFreqControl();
+          let fcSlots = [];
+          const slotId = this.requestData.slotId;
+
+          if (fcData[slotId]) {
+            fcSlots = fcData[slotId];
+            if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
+              fcSlots.push(this.requestData.consumerSlotId);
+            }
+          } else {
+            fcSlots = [this.requestData.consumerSlotId];
+          }
+
+          setFreqControl(slotId, fcSlots);
 
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
