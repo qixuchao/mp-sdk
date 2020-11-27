@@ -6,3 +6,4 @@ npm-debug*
 .idea
 yarn-error.log
 .DS_Store
+.temp
