@@ -132,6 +132,7 @@ export default class Union extends Event {
       (new Date() - this.startTime) / 1000 + 's',
       this.name,
       this.data.consumer.consumerSlotId,
+      this.requestData.slotId,
       ERROR_TYPE[errorCode]
     );
     if (this.status === '1') {

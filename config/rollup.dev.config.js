@@ -12,7 +12,7 @@ const config = {
   output: {
     format: 'iife',
     banner: `/* mp.js v${pkg.version} */`,
-    file: 'dist/mp.js' // equivalent to --output
+    file: 'tmp/mp.js' // equivalent to --output
   },
   plugins: [
     babel({
@@ -29,7 +29,7 @@ const config = {
 
           if (/\/media\/\d+.js/.test(req.url)) {
             const filePath = path.resolve('.', '.' + req.url);
-            const sdkFilePath = path.resolve('.', './dist/mp.js');
+            const sdkFilePath = path.resolve('.', './tmp/mp.js');
 
             try {
               const content = fs.readFileSync(filePath);
