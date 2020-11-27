@@ -66,7 +66,6 @@ export default Union => {
           let fcData = getFreqControl();
           let fcSlots = [];
           const slotId = this.requestData.slotId;
-
           if (fcData[slotId]) {
             fcSlots = fcData[slotId];
             if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
@@ -75,7 +74,6 @@ export default Union => {
           } else {
             fcSlots = [this.requestData.consumerSlotId];
           }
-
           setFreqControl(slotId, fcSlots);
 
           new Image().src = addParam(this.adInfo.apurl, {
