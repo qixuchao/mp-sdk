@@ -1,6 +1,6 @@
 # 优量汇源码解读
 
-## 说明
+## 接口说明
 暴露全局变量有：
  - `TencentGDT.NATIVE` 供外部调用
  - `TencentGDT.TN ` 供模板调用
@@ -31,6 +31,8 @@
 | showWindow  |      |      |
 | init        |      |      |
 GDT在gdtlib和qps脚本加载之后会重新覆盖，同时会扩展更多属性和方法
+
+接口请求模块：gdt:comm/load.js
 
 
 ### GDT_HYB

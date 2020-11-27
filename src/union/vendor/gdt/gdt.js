@@ -19,9 +19,9 @@ export default Union => {
     onLoaded() {
       GdtManager().bindGdtInit();
     },
-    onInit(data, { onLoaded, onLoadError }) {
+    onInit(data, { onLoaded, onError }) {
       var timeout = setTimeout(() => {
-        onLoadError('10002');
+        onError('10002');
         clearInterval(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
@@ -31,12 +31,12 @@ export default Union => {
         this,
         (status, adInfo, code = '10000') => {
           clearInterval(timeout);
-          // return onLoadError(code);
+          // return onError(code);
           if (status) {
             onLoaded(adInfo);
           } else {
             logger.info('无广告');
-            onLoadError(code);
+            onError(code);
           }
         }
       );

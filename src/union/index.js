@@ -126,7 +126,7 @@ export default class Union extends Event {
     this.trigger('complete');
   };
 
-  onLoadError = (errorCode = '10002') => {
+  onError = (errorCode = '10002') => {
     console.error(
       'loaderror:',
       (new Date() - this.startTime) / 1000 + 's',
@@ -168,7 +168,7 @@ export default class Union extends Event {
       this.log('bid');
 
       this.callHook('onInit', data.consumer || {}, {
-        onLoadError: this.onLoadError,
+        onError: this.onError,
         onLoaded: this.onLoaded
       });
     };

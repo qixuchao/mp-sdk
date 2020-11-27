@@ -7,7 +7,7 @@ export default Union => {
   Union.register('custom', {
     src: '',
     sandbox: false,
-    onInit(data, { onLoaded, onLoadError }) {
+    onInit(data, { onLoaded, onError }) {
       setTimeout(onLoaded);
     },
     onBeforeMount() {

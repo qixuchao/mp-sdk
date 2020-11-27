@@ -11,7 +11,7 @@ const status = {
   1: 'complete执行等待',
   2: 'complete执行完成'
 };
-let count = 0;
+
 let _GDTINIT = null;
 /**
  * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
@@ -126,38 +126,42 @@ class GdtManager {
   bindSlot(consumerSlotId, slotInstance, complete) {
     this.unionInstance = slotInstance;
     const slot = this.slotMap[consumerSlotId];
-    console.log('====bind', count, slot);
+    console.log('====bind', slot);
     if (slot) {
       slot.fns.push({
         container: this.unionInstance.id,
         complete
       });
 
-      if (count++ < 3) {
-        this.initSlot(slot);
-      }
-
       // 第一次加入
       if (this.status === 0) {
         this.status = 1;
-        // this.initSlot(slot);
       } else {
-        // 广点通默认逻辑会将originConfiglist中未加载配置自动加载
-        if (window.GDT && window.GDT.load && this.status === 2) {
-          console.log('2222', this.status);
-          // this.initSlot(slot);
-          this.loadAd(consumerSlotId);
-        } else if (window.jsInited) {
-          console.log('jsInited', consumerSlotId);
-          // setTimeout(() => {
-          // this.initSlot(slot);
-          // this.loadAd(consumerSlotId);
-          // }, 100);
-          // slot.next.push(() => {
-          //   slot.status = 1;
-          //   this.loadAd(consumerSlotId);
-          // });
+        if (!window.jsInited) {
+          this.initSlot(slot);
+        } else {
+          if (window.GDT && window.GDT.load) {
+            this.initSlot(slot);
+            this.loadAd(consumerSlotId);
+          } else {
+          }
         }
+
+        // if (window.GDT && window.GDT.load && this.status === 2) {
+        //   console.log('2222', this.status);
+        //   this.initSlot(slot);
+        //   this.loadAd(consumerSlotId);
+        // } else if (window.jsInited) {
+        //   console.log('jsInited', consumerSlotId);
+        //   setTimeout(() => {
+        //     this.initSlot(slot);
+        //     this.loadAd(consumerSlotId);
+        //   }, 500);
+        //   // slot.next.push(() => {
+        //   //   slot.status = 1;
+        //   //   this.loadAd(consumerSlotId);
+        //   // });
+        // }
       }
 
       if (slot.status === 0) {

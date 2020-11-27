@@ -1255,7 +1255,6 @@
 
   var doClick;
   var onClose;
-  var count = 0;
   var _GDTINIT = null;
   /**
    * 由于广点通不支持重新加载广告配置，需要在第一次执行时将配置全部载入。
@@ -1398,37 +1397,40 @@
       value: function bindSlot(consumerSlotId, slotInstance, complete) {
         this.unionInstance = slotInstance;
         var slot = this.slotMap[consumerSlotId];
-        console.log('====bind', count, slot);
+        console.log('====bind', slot);
 
         if (slot) {
           slot.fns.push({
             container: this.unionInstance.id,
             complete: complete
-          });
-
-          if (count++ < 3) {
-            this.initSlot(slot);
-          } // 第一次加入
-
+          }); // 第一次加入
 
           if (this.status === 0) {
-            this.status = 1; // this.initSlot(slot);
+            this.status = 1;
           } else {
-            // 广点通默认逻辑会将originConfiglist中未加载配置自动加载
-            if (window.GDT && window.GDT.load && this.status === 2) {
-              console.log('2222', this.status); // this.initSlot(slot);
+            if (!window.jsInited) {
+              this.initSlot(slot);
+            } else {
+              if (window.GDT && window.GDT.load) {
+                this.initSlot(slot);
+                this.loadAd(consumerSlotId);
+              }
+            } // if (window.GDT && window.GDT.load && this.status === 2) {
+            //   console.log('2222', this.status);
+            //   this.initSlot(slot);
+            //   this.loadAd(consumerSlotId);
+            // } else if (window.jsInited) {
+            //   console.log('jsInited', consumerSlotId);
+            //   setTimeout(() => {
+            //     this.initSlot(slot);
+            //     this.loadAd(consumerSlotId);
+            //   }, 500);
+            //   // slot.next.push(() => {
+            //   //   slot.status = 1;
+            //   //   this.loadAd(consumerSlotId);
+            //   // });
+            // }
 
-              this.loadAd(consumerSlotId);
-            } else if (window.jsInited) {
-              console.log('jsInited', consumerSlotId); // setTimeout(() => {
-              // this.initSlot(slot);
-              // this.loadAd(consumerSlotId);
-              // }, 100);
-              // slot.next.push(() => {
-              //   slot.status = 1;
-              //   this.loadAd(consumerSlotId);
-              // });
-            }
           }
 
           if (slot.status === 0) {
@@ -1535,21 +1537,21 @@
       },
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onLoadError = _ref.onLoadError;
+            onError = _ref.onError;
         var timeout = setTimeout(function () {
-          onLoadError('10002');
+          onError('10002');
           clearInterval(timeout);
           timeout = null;
         }, UNION_TIMEOUT);
         GdtManager$1().bindSlot(data.consumerSlotId, this, function (status, adInfo) {
           var code = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '10000';
-          clearInterval(timeout); // return onLoadError(code);
+          clearInterval(timeout); // return onError(code);
 
           if (status) {
             onLoaded(adInfo);
           } else {
             logger.info('无广告');
-            onLoadError(code);
+            onError(code);
           }
         });
       },
@@ -1629,7 +1631,7 @@
         var _this = this;
 
         var onLoaded = _ref.onLoaded,
-            onLoadError = _ref.onLoadError;
+            onError = _ref.onError;
         (window.slotbydup = window.slotbydup || []).push({
           id: data.consumerSlotId,
           container: this.id,
@@ -1638,7 +1640,7 @@
 
         var timeOut;
         timeOut = setTimeout(function () {
-          onLoadError('10002');
+          onError('10002');
           clearInterval(timer);
           timer = null;
         }, UNION_TIMEOUT);
@@ -1668,9 +1670,9 @@
       sandbox: false,
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onLoadError = _ref.onLoadError;
+            onError = _ref.onError;
         var timeout = setTimeout(function () {
-          onLoadError('10002');
+          onError('10002');
           clearTimeout(timeout);
           timeout = null;
         }, UNION_TIMEOUT);
@@ -1717,7 +1719,7 @@
               });
               onLoaded(htmlStr);
             } else {
-              onLoadError('10000');
+              onError('10000');
             }
           }
         });
@@ -1739,7 +1741,7 @@
       sandbox: false,
       onInit: function onInit(data, _ref) {
         var onLoaded = _ref.onLoaded,
-            onLoadError = _ref.onLoadError;
+            onError = _ref.onError;
         setTimeout(onLoaded);
       },
       onBeforeMount: function onBeforeMount() {
@@ -1892,7 +1894,7 @@
         _this.trigger('complete');
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onLoadError", function () {
+      _defineProperty(_assertThisInitialized(_this), "onError", function () {
         var errorCode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '10002';
         console.error('loaderror:', (new Date() - _this.startTime) / 1000 + 's', _this.name, _this.data.consumer.consumerSlotId, ERROR_TYPE[errorCode]);
 
@@ -1967,7 +1969,7 @@
           _this2.log('bid');
 
           _this2.callHook('onInit', data.consumer || {}, {
-            onLoadError: _this2.onLoadError,
+            onError: _this2.onError,
             onLoaded: _this2.onLoaded
           });
         };
