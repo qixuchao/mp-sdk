@@ -29,8 +29,7 @@ const config = {
 
           if (/\/media\/\d+.js/.test(req.url)) {
             const filePath = path.resolve('.', '.' + req.url);
-            const sdkFilePath = path.resolve('.', './.temp/mp.js');
-
+            const sdkFilePath = path.resolve('.', './temp/mp.js');
             try {
               const content = fs.readFileSync(filePath);
               const sdkContent = fs.readFileSync(sdkFilePath);

@@ -9,37 +9,38 @@ import Slot from './Slot';
 const reCalcConsumerWeight = slotConfig => {
   const fcData = getFreqControl();
 
-  const slotId = slotConfig.id;
+  const slotId = slotConfig.slotId;
   const gdtList = [];
   each(slotConfig.slotBidding, consumer => {
     if (consumer.consumer.consumerType === 'gdt') {
       gdtList.push(consumer);
     }
   });
-
-  if (
-    fcData[slotId] &&
-    fcData[slotId].length &&
-    fcData[slotId].length !== gdtList.length
-  ) {
-    each(gdtList, consumer => {
-      if (fcData[slotId].includes(consumer.consumer.consumerSlotId)) {
-        consumer.weight = 1;
-      } else {
-        consumer.weight = 100 - fcData[slotId].length;
-      }
-    });
-  } else {
-    each(gdtList, (consumer, index) => {
-      if (index === 0) {
-        consumer.weight = 100 - gdtList.length;
-      } else {
-        consumer.weight = 1;
-      }
-    });
+  if (gdtList.length > 1) {
+    if (
+      fcData[slotId] &&
+      fcData[slotId].length &&
+      fcData[slotId].length !== gdtList.length
+    ) {
+      each(gdtList, consumer => {
+        if (fcData[slotId].includes(consumer.consumer.consumerSlotId)) {
+          consumer.weight = 1;
+        } else {
+          consumer.weight = 100 - fcData[slotId].length;
+        }
+      });
+    } else {
+      each(gdtList, (consumer, index) => {
+        if (index === 0) {
+          consumer.weight = 100 - gdtList.length;
+        } else {
+          consumer.weight = 1;
+        }
+      });
+    }
   }
 
-  if (fcData[slotId] && fcData[slotId].length === gdtList.length) {
+  if (fcData[slotId] && fcData[slotId].length >= gdtList.length) {
     setFreqControl(slotId, []);
   }
   return slotConfig;
