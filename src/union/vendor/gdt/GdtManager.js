@@ -25,6 +25,7 @@ class GdtManager {
     this.status = 0;
     this.init();
     this.loadMap = {};
+    this.next = []; //存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
   }
   init() {
     if (window.M$P_M_C && window.M$P_M_C.slotBiddings) {
@@ -35,8 +36,8 @@ class GdtManager {
               consumerSlotId: consumer.consumer.consumerSlotId,
               appid: '',
               status: 0,
-              fns: [], // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
-              next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
+              fns: [] // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
+              // next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
             };
           }
         });
@@ -51,13 +52,13 @@ class GdtManager {
     return res => {
       this.status = 2;
       let slot = this.slotMap[consumerSlotId];
-      let fn;
+
       // 获取广告位对应的广告素材
       let materialData = [];
       try {
         materialData = window.GDT.getPosData(consumerSlotId).data;
       } catch (e) {}
-      console.log(slot);
+
       if (slot && slot.fns) {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
@@ -72,7 +73,7 @@ class GdtManager {
 
                 window.TencentGDT.NATIVE.renderAd(ad, currentSlot.container);
                 currentSlot.complete(true, currentMaterial);
-                fn = slot.next.shift();
+                // fn = slot.next.shift();
               } else {
                 return false;
               }
@@ -89,9 +90,8 @@ class GdtManager {
           currentSlot.complete(false);
         }
       }
-      if (!fn) {
-        fn = slot.next.shift();
-      }
+
+      let fn = this.next.shift();
 
       fn && fn();
     };
@@ -102,6 +102,7 @@ class GdtManager {
       _GDTINIT = GDT.init;
     }
   }
+
   initSlot = slot => {
     if (!this.loadMap[slot.consumerSlotId]) {
       this.loadMap[slot.consumerSlotId] = true;
@@ -133,40 +134,50 @@ class GdtManager {
         complete
       });
 
-      // 第一次加入
-      if (this.status === 0) {
-        this.status = 1;
+      if (!window.jsInited) {
+        this.initSlot(slot);
       } else {
-        if (!window.jsInited) {
+        if (window.GDT && window.GDT.load) {
           this.initSlot(slot);
+          this.loadAd(consumerSlotId);
         } else {
-          if (window.GDT && window.GDT.load) {
+          this.next.push(() => {
             this.initSlot(slot);
             this.loadAd(consumerSlotId);
-          } else {
-          }
+          });
         }
-
-        // if (window.GDT && window.GDT.load && this.status === 2) {
-        //   console.log('2222', this.status);
-        //   this.initSlot(slot);
-        //   this.loadAd(consumerSlotId);
-        // } else if (window.jsInited) {
-        //   console.log('jsInited', consumerSlotId);
-        //   setTimeout(() => {
-        //     this.initSlot(slot);
-        //     this.loadAd(consumerSlotId);
-        //   }, 500);
-        //   // slot.next.push(() => {
-        //   //   slot.status = 1;
-        //   //   this.loadAd(consumerSlotId);
-        //   // });
-        // }
       }
 
-      if (slot.status === 0) {
-        slot.status = 1;
-      }
+      // // 第一次加入
+      // if (this.status === 0) {
+      //   this.status = 1;
+      // } else {
+      //   if (!window.jsInited) {
+      //     this.initSlot(slot);
+      //   } else {
+      //     if (window.GDT && window.GDT.load) {
+      //       this.initSlot(slot);
+      //       this.loadAd(consumerSlotId);
+      //     } else {
+      //     }
+      //   }
+
+      //   // if (window.GDT && window.GDT.load && this.status === 2) {
+      //   //   console.log('2222', this.status);
+      //   //   this.initSlot(slot);
+      //   //   this.loadAd(consumerSlotId);
+      //   // } else if (window.jsInited) {
+      //   //   console.log('jsInited', consumerSlotId);
+      //   //   setTimeout(() => {
+      //   //     this.initSlot(slot);
+      //   //     this.loadAd(consumerSlotId);
+      //   //   }, 500);
+      //   //   // slot.next.push(() => {
+      //   //   //   slot.status = 1;
+      //   //   //   this.loadAd(consumerSlotId);
+      //   //   // });
+      //   // }
+      // }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }

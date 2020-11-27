@@ -1,4 +1,4 @@
-/* mp.js v1.9.7 */
+/* mp.js v1.10.0 */
 (function () {
   'use strict';
 
@@ -1273,16 +1273,13 @@
         var isRepeatAd = false;
         return function (res) {
           _this.status = 2;
-          var slot = _this.slotMap[consumerSlotId];
-          var fn; // 获取广告位对应的广告素材
+          var slot = _this.slotMap[consumerSlotId]; // 获取广告位对应的广告素材
 
           var materialData = [];
 
           try {
             materialData = window.GDT.getPosData(consumerSlotId).data;
           } catch (e) {}
-
-          console.log(slot);
 
           if (slot && slot.fns) {
             if (Array.isArray(res)) {
@@ -1298,9 +1295,8 @@
                     adKeys.push(adKey);
                     window.TencentGDT.NATIVE.renderAd(ad, _currentSlot.container);
 
-                    _currentSlot.complete(true, currentMaterial);
+                    _currentSlot.complete(true, currentMaterial); // fn = slot.next.shift();
 
-                    fn = slot.next.shift();
                   } else {
                     return false;
                   }
@@ -1320,9 +1316,7 @@
             }
           }
 
-          if (!fn) {
-            fn = slot.next.shift();
-          }
+          var fn = _this.next.shift();
 
           fn && fn();
         };
@@ -1360,6 +1354,7 @@
       this.status = 0;
       this.init();
       this.loadMap = {};
+      this.next = []; //存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
     }
 
     _createClass(GdtManager, [{
@@ -1375,9 +1370,8 @@
                   consumerSlotId: consumer.consumer.consumerSlotId,
                   appid: '',
                   status: 0,
-                  fns: [],
-                  // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
-                  next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
+                  fns: [] // 存放callback 存在顺序不一致情况，但不影响，符合执行要求，先插入先执行
+                  // next: [] // 存在并发请求，用于频控处理，每次取3个，处理广告返回长度的next，然后再执行一次next方法 此逻辑循环
 
                 };
               }
@@ -1395,6 +1389,8 @@
     }, {
       key: "bindSlot",
       value: function bindSlot(consumerSlotId, slotInstance, complete) {
+        var _this3 = this;
+
         this.unionInstance = slotInstance;
         var slot = this.slotMap[consumerSlotId];
         console.log('====bind', slot);
@@ -1403,39 +1399,51 @@
           slot.fns.push({
             container: this.unionInstance.id,
             complete: complete
-          }); // 第一次加入
+          });
 
-          if (this.status === 0) {
-            this.status = 1;
+          if (!window.jsInited) {
+            this.initSlot(slot);
           } else {
-            if (!window.jsInited) {
+            if (window.GDT && window.GDT.load) {
               this.initSlot(slot);
+              this.loadAd(consumerSlotId);
             } else {
-              if (window.GDT && window.GDT.load) {
-                this.initSlot(slot);
-                this.loadAd(consumerSlotId);
-              }
-            } // if (window.GDT && window.GDT.load && this.status === 2) {
-            //   console.log('2222', this.status);
-            //   this.initSlot(slot);
-            //   this.loadAd(consumerSlotId);
-            // } else if (window.jsInited) {
-            //   console.log('jsInited', consumerSlotId);
-            //   setTimeout(() => {
-            //     this.initSlot(slot);
-            //     this.loadAd(consumerSlotId);
-            //   }, 500);
-            //   // slot.next.push(() => {
-            //   //   slot.status = 1;
-            //   //   this.loadAd(consumerSlotId);
-            //   // });
-            // }
+              this.next.push(function () {
+                _this3.initSlot(slot);
 
-          }
+                _this3.loadAd(consumerSlotId);
+              });
+            }
+          } // // 第一次加入
+          // if (this.status === 0) {
+          //   this.status = 1;
+          // } else {
+          //   if (!window.jsInited) {
+          //     this.initSlot(slot);
+          //   } else {
+          //     if (window.GDT && window.GDT.load) {
+          //       this.initSlot(slot);
+          //       this.loadAd(consumerSlotId);
+          //     } else {
+          //     }
+          //   }
+          //   // if (window.GDT && window.GDT.load && this.status === 2) {
+          //   //   console.log('2222', this.status);
+          //   //   this.initSlot(slot);
+          //   //   this.loadAd(consumerSlotId);
+          //   // } else if (window.jsInited) {
+          //   //   console.log('jsInited', consumerSlotId);
+          //   //   setTimeout(() => {
+          //   //     this.initSlot(slot);
+          //   //     this.loadAd(consumerSlotId);
+          //   //   }, 500);
+          //   //   // slot.next.push(() => {
+          //   //   //   slot.status = 1;
+          //   //   //   this.loadAd(consumerSlotId);
+          //   //   // });
+          //   // }
+          // }
 
-          if (slot.status === 0) {
-            slot.status = 1;
-          }
         } else {
           console.error("\u5E7F\u70B9\u901A\u6D88\u8017\u65B9id\u4E0D\u5B58\u5728".concat(consumerSlotId));
         }
