@@ -63,7 +63,7 @@ class GdtManager {
         if (Array.isArray(res)) {
           res.forEach((ad, index) => {
             const adKey = ad.advertisement_id + ad.placement_id;
-            if (adKeys.indexOf(adKey) === -1) {
+            if (!adKeys.includes(adKey)) {
               let currentSlot = slot.fns.shift();
 
               let currentMaterial = materialData[index] && materialData[index];
@@ -147,37 +147,6 @@ class GdtManager {
           });
         }
       }
-
-      // // 第一次加入
-      // if (this.status === 0) {
-      //   this.status = 1;
-      // } else {
-      //   if (!window.jsInited) {
-      //     this.initSlot(slot);
-      //   } else {
-      //     if (window.GDT && window.GDT.load) {
-      //       this.initSlot(slot);
-      //       this.loadAd(consumerSlotId);
-      //     } else {
-      //     }
-      //   }
-
-      //   // if (window.GDT && window.GDT.load && this.status === 2) {
-      //   //   console.log('2222', this.status);
-      //   //   this.initSlot(slot);
-      //   //   this.loadAd(consumerSlotId);
-      //   // } else if (window.jsInited) {
-      //   //   console.log('jsInited', consumerSlotId);
-      //   //   setTimeout(() => {
-      //   //     this.initSlot(slot);
-      //   //     this.loadAd(consumerSlotId);
-      //   //   }, 500);
-      //   //   // slot.next.push(() => {
-      //   //   //   slot.status = 1;
-      //   //   //   this.loadAd(consumerSlotId);
-      //   //   // });
-      //   // }
-      // }
     } else {
       console.error(`广点通消耗方id不存在${consumerSlotId}`);
     }
