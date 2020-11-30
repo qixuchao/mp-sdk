@@ -46,7 +46,7 @@ export default Union => {
       GdtManager().bindEvent(Union);
     },
     onShow() {
-      checkVisible(this.$container, () => {
+      const logImp = () => {
         if (this.adInfo) {
           const imgList = this.adInfo.img_list
             ? this.adInfo.img_list
@@ -74,7 +74,8 @@ export default Union => {
           } else {
             fcSlots = [this.requestData.consumerSlotId];
           }
-          setFreqControl(slotId, fcSlots);
+
+          M$P_M_C.config.isDynamicWeight && setFreqControl(slotId, fcSlots);
 
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
@@ -82,7 +83,15 @@ export default Union => {
           });
           this.log('imp', { EXT: materialReportData });
         }
-      });
+      };
+
+      if (!M$P_M_C.config.isCheckVisible) {
+        logImp();
+      } else {
+        checkVisible(this.$container, () => {
+          logImp();
+        });
+      }
     },
     getWeight() {},
     reload(data) {

@@ -79,8 +79,6 @@ class Mp {
 
     this.config = window[MEDIA_CONFIG_NAME].config || {};
 
-    this.config.mediaId = window[MEDIA_CONFIG_NAME].mediaId;
-
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
     getImei(() => {
@@ -114,9 +112,12 @@ class Mp {
       each(config.slotBiddings, slotBidding => {
         this.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
 
-        this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
-          this.MEDIA_CONFIG[slotBidding.slotId]
-        );
+        // 是否开启动态计算消耗方的权重
+        if (this.config.isDynamicWeight) {
+          this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
+            this.MEDIA_CONFIG[slotBidding.slotId]
+          );
+        }
       });
     }
   }
@@ -227,12 +228,7 @@ class Mp {
    * @param {Object} options slot传入配置
    */
   fillAd(container, slotConfig, force, options) {
-    this.slots[slotConfig.id] = new Slot(
-      container,
-      slotConfig,
-      this.config,
-      options
-    );
+    this.slots[slotConfig.id] = new Slot(container, slotConfig, options);
   }
 }
 

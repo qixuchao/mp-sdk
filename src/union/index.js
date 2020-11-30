@@ -243,6 +243,11 @@ export default class Union extends Event {
 
   render(selector) {
     this.log('winner');
+    console.log(
+      'render',
+      this.requestData.slotId,
+      this.requestData.consumerSlotId
+    );
     const container = document.querySelector(selector);
 
     if (container) {
