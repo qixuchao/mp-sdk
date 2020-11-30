@@ -169,7 +169,7 @@ export default class Slot {
             policyVersion: M$P_M_C.config.policyVersion,
             slotId: this.slotId,
             err: 0,
-            mediaId: M$P_M_C.config.mediaId,
+            mediaId: M$P_M_C.mediaId,
             consumerType: con.consumer.consumerType,
             consumerSlotId: con.consumer.consumerSlotId
           };

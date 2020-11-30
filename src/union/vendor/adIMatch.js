@@ -48,7 +48,7 @@ export default Union => {
         if (imgList.length) {
           clearInterval(timer);
 
-          checkVisible(this.$container, () => {
+          const logImp = () => {
             const materials = [];
 
             const clickUrl = iframeDocument
@@ -73,7 +73,15 @@ export default Union => {
             };
 
             this.log('imp', { EXT: JSON.stringify(materialData) });
-          });
+          };
+
+          if (!M$P_M_C.config.isCheckVisible) {
+            logImp();
+          } else {
+            checkVisible(this.$container, () => {
+              logImp();
+            });
+          }
         }
       }, 300);
     }
