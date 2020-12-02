@@ -2,6 +2,7 @@
 import { withIframeRenderAd, addEventListener } from '../helper';
 import { each } from '../../utils/index';
 import checkVisible from '../../utils/checkVisible';
+import { MODEL_NAME } from '../../config';
 
 export default Union => {
   Union.register('custom', {
@@ -75,7 +76,7 @@ export default Union => {
             this.log('imp', { EXT: JSON.stringify(materialData) });
           };
 
-          if (!M$P_M_C.config.isCheckVisible) {
+          if (!window[MODEL_NAME].config.isCheckVisible) {
             logImp();
           } else {
             checkVisible(this.$container, () => {
