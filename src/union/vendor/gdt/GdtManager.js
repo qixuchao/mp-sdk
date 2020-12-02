@@ -174,8 +174,6 @@ class GdtManager {
           'div[id*="' + traceid + '"]'
         );
 
-        console.log('event', event);
-
         const { width: w, height: h } = clickContainer.getBoundingClientRect();
         const { x, y } = event;
         const { width: pw, height: ph } = screen;
