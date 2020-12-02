@@ -170,7 +170,25 @@ class GdtManager {
     TencentGDT.TN.doClick = function (event, traceid) {
       const union = getUnionInstance(traceid);
       if (union) {
-        union.onClick();
+        const clickContainer = document.querySelector(
+          'div[id*="' + traceid + '"]'
+        );
+
+        console.log('event', event);
+
+        const { width: w, height: h } = clickContainer.getBoundingClientRect();
+        const { x, y } = event;
+        const { width: pw, height: ph } = screen;
+        union.onClick({
+          EXT: {
+            w,
+            h,
+            x,
+            y,
+            pw,
+            ph
+          }
+        });
         doClick.apply(this, arguments);
       }
     };

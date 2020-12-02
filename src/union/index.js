@@ -270,9 +270,9 @@ export default class Union extends Event {
     const fn = this.options[fnName];
     return isFunction(fn) && fn.apply(this, args);
   }
-  onClick() {
+  onClick(extralData) {
     console.log('click');
-    this.log('click');
+    this.log('click', extralData);
   }
 
   onClose() {
