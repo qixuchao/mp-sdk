@@ -98,7 +98,7 @@ export default class Slot {
    *                    slotOptions.fallback // 当广告位无渲染或渲染失败回调
    *                    slotOptions.onClose // 当广告位被关闭回调
    */
-  constructor(container, slotConfig = {}, config, slotOptions = {}) {
+  constructor(container, slotConfig = {}, slotOptions = {}) {
     this.container = container;
 
     // 是否并非请求
@@ -106,7 +106,6 @@ export default class Slot {
     this.priorityPolicy = slotConfig.priorityPolicy;
 
     this.slotConfig = slotConfig;
-    this.config = config;
     this.slotOptions = slotOptions;
 
     this.slotId = slotConfig.slotId;
@@ -167,10 +166,10 @@ export default class Slot {
           union.requestData = {
             category: this.isConcurrent,
             sdkVersion: '__VERSION__',
-            policyVersion: this.config.policyVersion,
+            policyVersion: M$P_M_C.config.policyVersion,
             slotId: this.slotId,
             err: 0,
-            mediaId: this.config.mediaId,
+            mediaId: M$P_M_C.mediaId,
             consumerType: con.consumer.consumerType,
             consumerSlotId: con.consumer.consumerSlotId
           };

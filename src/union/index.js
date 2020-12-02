@@ -243,6 +243,11 @@ export default class Union extends Event {
 
   render(selector) {
     this.log('winner');
+    console.log(
+      'render',
+      this.requestData.slotId,
+      this.requestData.consumerSlotId
+    );
     const container = document.querySelector(selector);
 
     if (container) {
@@ -265,9 +270,9 @@ export default class Union extends Event {
     const fn = this.options[fnName];
     return isFunction(fn) && fn.apply(this, args);
   }
-  onClick() {
+  onClick(extralData) {
     console.log('click');
-    this.log('click');
+    this.log('click', extralData);
   }
 
   onClose() {
