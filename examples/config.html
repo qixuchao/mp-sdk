@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配置管理</title>
+    <script src="http://unpkg.zhimg.com/vue@2.6.12/dist/vue.js"></script>
+    <script src="http://unpkg.zhimg.com/ant-design-vue@1.7.2/dist/antd.min.js"></script>
+    <link rel="stylesheet" href="http://unpkg.zhimg.com/ant-design-vue@1.7.2/dist/antd.min.css">
+    <style>
+        body {
+            margin: 0
+        }
+        ul,li{
+            list-style:none;
+        }
+        .container {
+            padding: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div style="margin-bottom:10px;">
+                <div>
+                    <a-input-search placeholder="请输入媒体id" style="width: 100%" @search="onLoadConfig" v-model="mediaId"/>
+                </div>
+                <div v-if="config">
+                    <a-tabs default-active-key="1" >
+                        <a-tab-pane key="1" :tab="'配置('+slotBiddings.length+')'">
+                            <a-collapse v-model="activeKey">
+                                <a-collapse-panel :key="index+''" :header="item.slotId + '('+item.slotBidding.length+')'"
+                                    v-for="(item,index) in slotBiddings">
+                                    <ul class="config-list">
+                                        <li v-for="(c,cindex) in item.slotBidding" :key="cindex">
+                                            {{consumerType[c.consumer.consumerType]}}：{{c.consumer.consumerSlotId}} <span @click="handleRemove(index,cindex)">删除</spa>
+                                        </li>
+                                    </ul>
+                                    <div slot="extra"><span @click="handleClick($event,item,index)">添加消耗方</span></div>
+                                </a-collapse-panel>
+                            </a-collapse>
+                        </a-tab-pane>
+                        <a-tab-pane key="2" tab="Raw">
+                            <a-textarea readOnly :rows="20" v-model="rawConfig" />
+                        </a-tab-pane>
+                    </a-tabs>
+                    <br/>
+                    <a-button @click="exportConfig">导出配置</a-button>
+                    <p>导出默认使用dist目录中mp文件，请确保你导出的版本正确</p>
+                </div>
+                <!-- <div v-else>配置未加载</div> -->
+            </div>
+        </div>
+        
+        <a-modal 
+            v-model="visible" 
+            title="新建消耗方" 
+            ok-text="确认" 
+            cancel-text="取消"
+            @ok="handleOk"
+            type="primary"
+        >
+        <a-form 
+            :form="form" 
+            :label-col="{ span: 5 }" 
+            :wrapper-col="{ span: 12 }" 
+            @submit="handleSubmit"
+        >
+        <a-form-item label="消耗方类型">
+            <a-select
+                v-decorator="['type',{initialValue:'gdt'}]"
+            >
+              <a-select-option value="gdt">
+                  优量汇
+              </a-select-option>
+              <a-select-option value="bd">
+                  百度
+              </a-select-option>
+              <a-select-option value="fancyapi">
+                  百度
+              </a-select-option>
+              <a-select-option value="custom">
+                  艾卖驰
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+            <a-form-item label="消耗方id">
+                <a-input placeholder="请输入消耗方id"
+                    v-decorator="['id', { rules: [{ required: true, message: '请输入消耗方id' }] }]"
+                />
+            </a-form-item>
+            <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+              <a-button type="primary" html-type="submit">
+                保存
+              </a-button>
+            </a-form-item> -->
+          </a-form> 
+        </a-modal>
+    </div>
+    <script>
+        function saveAs(blob, filename) {
+            var type = blob.type;
+            var force_saveable_type = "application/octet-stream";
+            if (type && type != force_saveable_type) {
+                // 强制下载，而非在浏览器中打开
+                var slice = blob.slice || blob.webkitSlice;
+                blob = slice.call(blob, 0, blob.size, force_saveable_type);
+            }
+
+            var url = URL.createObjectURL(blob);
+            var save_link = document.createElementNS(
+                "http://www.w3.org/1999/xhtml",
+                "a"
+            );
+            save_link.href = url;
+            save_link.download = filename;
+
+            var event = document.createEvent("MouseEvents");
+            event.initMouseEvent(
+                "click",
+                true,
+                false,
+                window,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false,
+                false,
+                false,
+                false,
+                0,
+                null
+            );
+            save_link.dispatchEvent(event);
+            URL.revokeObjectURL(url);
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    mediaId:"",
+                    slotBiddings: [],
+                    activeKey: 1,
+                    rawConfig: '',
+                    config: null,
+                    consumerType: {
+                    gdt: '优量汇',
+                    bd: '百度',
+                    custom: '艾卖驰',
+                    ptgapi: 'fancyapi',
+                },
+                visible:false,
+                exportLoading:false,
+                form:this.$form.createForm(this, { name: 'coordinated' })
+                }
+            },
+            methods: {
+                handleRemove(index,cindex){
+                    this.slotBiddings[index].slotBidding.splice(cindex,1);
+                },
+                exportConfig(){
+                    this.exportLoading = true;
+                    fetch('/dist/mp.js').then(response => response.text())
+                    .then(data => {
+                        this.exportLoading=false
+                        var bb = new Blob(['/* Created: '+new Date().toLocaleDateString()
++' */\nwindow.M$P_M_C='+JSON.stringify(this.config, null)+';'+data], {
+                            type: "application/javascript"
+                        });
+                        saveAs(bb, ''+this.mediaId+'.js');
+                    }).catch((e) => {
+                        this.$message.error(e)
+                        this.exportLoading=false
+                    })
+                },
+                handleOk(){
+                    this.form.validateFields((err, values) => {
+                        if (!err) {
+                            console.log('Received values of form: ', values);
+                            console.log(this.slotInfo)
+                            let consumer = JSON.parse(JSON.stringify(this.slotInfo.slotBidding[0]))
+                            consumer.consumer.consumerSlotId = values.id
+                            consumer.consumer.consumerType = values.type
+                            // this.slotInfo.slotBidding.push(consumer)
+
+                            this.slotBiddings[this.index].slotBidding.push(consumer);
+                            console.log(this.slotInfo)
+
+                            this.visible = false
+                        }
+                    });
+                },
+                handleClick(event,item,index) {
+                // If you don't want click extra trigger collapse, you can prevent this:
+                    event.stopPropagation();
+                    this.slotInfo = item;
+                    this.index = index;
+                    this.visible = true;
+                },
+                onLoadConfig(val) {
+                    if (val) {
+                        fetch('/media/' + val + '.js').then(response => response.text())
+                            .then(data => {
+                                this.rawConfig = data
+                                const temp = data.split('!function(){');
+                                try {
+                                    this.config = new Function('return ' + temp[0].match(/{[\s\S]*}/)[0])()
+                                    this.slotBiddings = this.config.slotBiddings;
+                                    this.sdkVersion = this.config.sdkVersion;
+                                } catch (e) {
+                                    console.log(e)
+                                    this.$message.error('配置格式错误')
+                                }
+
+                            }).catch((e) => {
+                                this.$message.error(e)
+                            })
+                    } else {
+                        this.$message.error('媒体id不能为空')
+                    }
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
