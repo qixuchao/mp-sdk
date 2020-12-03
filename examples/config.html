@@ -170,7 +170,7 @@
                     .then(data => {
                         this.exportLoading=false
                         var bb = new Blob(['/* Created: '+new Date().toLocaleDateString()
-+' */\nwindow.M$P_M_C='+JSON.stringify(this.config, null)+';'+data], {
++' */\nwindow.M$P_M_C='+JSON.stringify(this.config, null)+';\n'+data], {
                             type: "application/javascript"
                         });
                         saveAs(bb, ''+this.mediaId+'.js');
