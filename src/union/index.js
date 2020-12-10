@@ -5,6 +5,7 @@ import registerQQ from './vendor/gdt/gdt';
 import registerBaidu from './vendor/baidu';
 import registerFancy from './vendor/fancy';
 import registerAdIMatch from './vendor/adIMatch';
+import registerGoogle from './vendor/google';
 import { loadScript, createWrapper } from './helper';
 
 // 联盟实例的状态
@@ -23,7 +24,8 @@ export const ERROR_TYPE = {
   10002: '获取广告超时',
   10003: '广告异常',
   10006: '相同消耗方相同素材重复渲染',
-  20000: '广点通重复加载广告失败'
+  20000: '广点通重复加载广告失败',
+  40000: '消耗方错误'
 };
 
 /**
@@ -126,7 +128,7 @@ export default class Union extends Event {
     this.trigger('complete');
   };
 
-  onError = (errorCode = '10002') => {
+  onError = (errorCode = '10002', errorMessage = '') => {
     console.error(
       'loaderror:',
       (new Date() - this.startTime) / 1000 + 's',
@@ -135,9 +137,10 @@ export default class Union extends Event {
       this.requestData.slotId,
       ERROR_TYPE[errorCode]
     );
+
     if (this.status === '1') {
       this.status = '10';
-      this.logError(errorCode);
+      this.logError(errorCode, errorMessage);
       this.trigger('complete');
       this.destroy();
     }
@@ -210,11 +213,11 @@ export default class Union extends Event {
     return this;
   }
 
-  logError(code) {
+  logError(code, message) {
     const data = {
       DATA: {
         err: code,
-        errorMessage: ERROR_TYPE[code]
+        errorMessage: message || ERROR_TYPE[code]
       }
     };
     this.log('error', data);
@@ -290,3 +293,4 @@ registerQQ(Union);
 registerBaidu(Union);
 registerFancy(Union);
 registerAdIMatch(Union);
+registerGoogle(Union);

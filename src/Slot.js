@@ -1,5 +1,6 @@
 import { each, getRandom } from './utils/index';
 import Union from './union/index';
+import { MODEL_NAME } from './config';
 
 const callFunction = function () {
   return (
@@ -166,10 +167,10 @@ export default class Slot {
           union.requestData = {
             category: this.isConcurrent,
             sdkVersion: '__VERSION__',
-            policyVersion: M$P_M_C.config.policyVersion,
+            policyVersion: window[MODEL_NAME].config.policyVersion,
             slotId: this.slotId,
             err: 0,
-            mediaId: M$P_M_C.mediaId,
+            mediaId: window[MODEL_NAME].mediaId,
             consumerType: con.consumer.consumerType,
             consumerSlotId: con.consumer.consumerSlotId
           };

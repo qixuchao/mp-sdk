@@ -4,7 +4,7 @@ import GdtManager from './GdtManager';
 import checkVisible from '../../../utils/checkVisible';
 import { addParam } from '../../../utils/index';
 import { setFreqControl, getFreqControl } from '../../../utils/storage';
-import { UNION_TIMEOUT } from '../../../config';
+import { MODEL_NAME, UNION_TIMEOUT } from '../../../config';
 
 /**
  * 渲染逻辑上有点怪异，必须先定义TencentGDT，再加载js。js而且不能重复加载。
@@ -75,7 +75,8 @@ export default Union => {
             fcSlots = [this.requestData.consumerSlotId];
           }
 
-          M$P_M_C.config.isDynamicWeight && setFreqControl(slotId, fcSlots);
+          window[MODEL_NAME].config.isDynamicWeight &&
+            setFreqControl(slotId, fcSlots);
 
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
@@ -85,7 +86,7 @@ export default Union => {
         }
       };
 
-      if (!M$P_M_C.config.isCheckVisible) {
+      if (!window[MODEL_NAME].config.isCheckVisible) {
         logImp();
       } else {
         checkVisible(this.$container, () => {

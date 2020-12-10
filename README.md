@@ -72,3 +72,4 @@ yarn run build
 ## 已支持的联盟
 [-] 优量汇   
 [-] 百度    
+[-] google
