@@ -78,6 +78,7 @@ class Mp {
     this.MEDIA_CONFIG = {};
 
     this.config = window[MEDIA_CONFIG_NAME].config || {};
+    this.mediaId = window[MEDIA_CONFIG_NAME].mediaId;
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
