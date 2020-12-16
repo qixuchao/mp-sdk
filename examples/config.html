@@ -59,6 +59,31 @@
                 </div>
                 <!-- <div v-else>配置未加载</div> -->
             </div>
+            <div v-if="config">
+                <a-tabs default-active-key="1">
+                    <a-tab-pane key="1" :tab="'配置('+slotBiddings.length+')'">
+                        <a-collapse v-model="activeKey">
+                            <a-collapse-panel :key="index+''" :header="item.slotId + '('+item.slotBidding.length+')'"
+                                              v-for="(item,index) in slotBiddings">
+                                <ul class="config-list">
+                                    <li v-for="(c,cindex) in item.slotBidding" :key="cindex">
+                                        {{consumerType[c.consumer.consumerType]}}：{{c.consumer.consumerSlotId}} <span
+                                            @click="handleRemove(index,cindex)">删除</spa>
+                                    </li>
+                                </ul>
+                                <div slot="extra"><span @click="handleClick($event,item,index)">添加消耗方</span></div>
+                            </a-collapse-panel>
+                        </a-collapse>
+                    </a-tab-pane>
+                    <a-tab-pane key="2" tab="Raw">
+                        <a-textarea readOnly :rows="20" v-model="rawConfig"/>
+                    </a-tab-pane>
+                </a-tabs>
+                <br/>
+                <a-button @click="exportConfig">导出配置</a-button>
+                <p>导出默认使用dist目录中mp文件，请确保你导出的版本正确</p>
+            </div>
+            <!-- <div v-else>配置未加载</div> -->
         </div>
 
         <a-modal v-model="visible" title="新建消耗方" ok-text="确认" cancel-text="取消" @ok="handleOk" type="primary">
@@ -107,35 +132,35 @@
                 blob = slice.call(blob, 0, blob.size, force_saveable_type);
             }
 
-            var url = URL.createObjectURL(blob);
-            var save_link = document.createElementNS(
-                "http://www.w3.org/1999/xhtml",
-                "a"
-            );
-            save_link.href = url;
-            save_link.download = filename;
+        var url = URL.createObjectURL(blob);
+        var save_link = document.createElementNS(
+            "http://www.w3.org/1999/xhtml",
+            "a"
+        );
+        save_link.href = url;
+        save_link.download = filename;
 
-            var event = document.createEvent("MouseEvents");
-            event.initMouseEvent(
-                "click",
-                true,
-                false,
-                window,
-                0,
-                0,
-                0,
-                0,
-                0,
-                false,
-                false,
-                false,
-                false,
-                0,
-                null
-            );
-            save_link.dispatchEvent(event);
-            URL.revokeObjectURL(url);
-        }
+        var event = document.createEvent("MouseEvents");
+        event.initMouseEvent(
+            "click",
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        );
+        save_link.dispatchEvent(event);
+        URL.revokeObjectURL(url);
+    }
 
         new Vue({
             el: '#app',
@@ -214,18 +239,45 @@
                                     console.log(e)
                                     this.$message.error('配置格式错误')
                                 }
-
-                            }).catch((e) => {
-                                this.$message.error(e)
-                            })
-                    } else {
-                        this.$message.error('媒体id不能为空')
+                                this.visible = false
+                            });
                     }
+            },
+            handleClick(event, item, index) {
+                // If you don't want click extra trigger collapse, you can prevent this:
+                event.stopPropagation();
+                this.slotInfo = item;
+                this.index = index;
+                this.visible = true;
+            },
+            onLoadConfig(val) {
+                if (val) {
+                    fetch('/media/' + val + '.js').then(response => response.text())
+                        .then(data => {
+                            this.rawConfig = data
+                            const temp = data.split('!function(){');
+                            try {
+                                const config = temp[0].match(/{[\s\S]*}/)[0] || temp[0]
+                                console.log(temp[0].match(/{[\s\S]*}/)[0])
+                                this.config = new Function('return ' + config)()
+                                this.slotBiddings = this.config.slotBiddings;
+                                this.sdkVersion = this.config.sdkVersion;
+                            } catch (e) {
+                                console.log(e)
+                                this.$message.error('配置格式错误')
+                            }
 
+                        }).catch((e) => {
+                        this.$message.error(e)
+                    })
+                } else {
+                    this.$message.error('媒体id不能为空')
                 }
+
             }
-        })
-    </script>
+        }
+    })
+</script>
 </body>
 
 </html>

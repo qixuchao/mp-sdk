@@ -1,7 +1,7 @@
 /* global window */
 import { isPlainObject, isLikeArray, isUndefined, isFunction } from './type';
 import { loadScript } from '../union/helper';
-import { MEDIA_STORAGE_NAME } from '../config';
+import { MEDIA_STORAGE_NAME, MEDIA_STORAGE_UID } from '../config';
 import browser from './browser';
 import Fingerprint2 from './finger';
 
@@ -258,4 +258,18 @@ export const throttle = (fn, time) => {
       fn(params);
     }
   };
+};
+
+export const getTimeStamp = () => {
+  let timeStamp = '';
+  try {
+    timeStamp = window.localStorage.getItem(MEDIA_STORAGE_UID);
+  } catch (e) {}
+
+  if (!timeStamp) {
+    timeStamp = new Date().getTime().toString(32);
+    window.localStorage.setItem(MEDIA_STORAGE_UID, timeStamp);
+  }
+
+  return timeStamp;
 };

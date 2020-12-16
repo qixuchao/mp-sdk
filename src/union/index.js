@@ -7,6 +7,7 @@ import registerFancy from './vendor/fancy';
 import registerAdIMatch from './vendor/adIMatch';
 import registerGoogle from './vendor/google';
 import { loadScript, createWrapper } from './helper';
+import { getTimeStamp } from '../utils/index';
 
 // 联盟实例的状态
 const STATUS = {
@@ -235,7 +236,10 @@ export default class Union extends Event {
         ...extralData.DATA,
         referer: window.location.href
       },
-      EXT: extralData.EXT
+      EXT: {
+        ...extralData.EXT,
+        time: getTimeStamp()
+      }
     };
 
     const trackingData = this.data.trackingV2Data || this.data.trackingData;

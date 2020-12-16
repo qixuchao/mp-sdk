@@ -16,7 +16,7 @@ export default Union => {
       window.addEventListener('message', e => {
         console.log(e.target.location.href);
       });
-      onLoaded();
+      setTimeout(onLoaded);
     },
     onShow() {
       let extendedFields = {};
