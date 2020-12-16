@@ -27,6 +27,9 @@ export default Union => {
       } else if (slotId === '150004') {
         iframeStyle.iframeCssText =
           'padding: 0;height: 169px;border: none;width: 100%;';
+      } else if (slotId === '900000066') {
+        iframeStyle.iframeCssText =
+          'padding: 0;height: 100%;border: none;width: 100%;';
       }
 
       withIframeRenderAd(
