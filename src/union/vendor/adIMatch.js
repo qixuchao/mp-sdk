@@ -71,8 +71,6 @@ export default Union => {
               );
             });
 
-            window.postMessage(clickUrl, '*');
-
             each(imgList, img => {
               if (img && img.getAttribute) {
                 materials.push(img.getAttribute('src'));
