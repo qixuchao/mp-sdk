@@ -44,10 +44,6 @@ export default Union => {
         const iframe = context.querySelector(`iframe`);
         const iframeDocument = iframe.contentWindow.document;
 
-        addEventListener(iframeDocument, 'click', () => {
-          this.onClick();
-        });
-
         const imgList = iframeDocument.querySelectorAll('img');
         if (imgList.length) {
           clearInterval(timer);
@@ -58,6 +54,22 @@ export default Union => {
             const clickUrl = iframeDocument
               .querySelector('a')
               .getAttribute('href');
+
+            addEventListener(iframeDocument, 'click', e => {
+              this.onClick();
+
+              window.postMessage(
+                JSON.stringify({
+                  type: 'adClick',
+                  data: {
+                    clickUrl,
+                    isDestroyPage: !0,
+                    timestamp: +new Date()
+                  }
+                }),
+                '*'
+              );
+            });
 
             each(imgList, img => {
               if (img && img.getAttribute) {
