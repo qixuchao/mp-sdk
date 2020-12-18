@@ -56,17 +56,19 @@ export default Union => {
               .getAttribute('href');
 
             addEventListener(iframeDocument, 'click', e => {
-              e.preventDefault();
-
               this.onClick();
 
-              document.title = JSON.stringify({
-                type: 'adClick',
-                data: {
-                  clickUrl,
-                  timestamp: +new Date()
-                }
-              });
+              window.postMessage(
+                JSON.stringify({
+                  type: 'adClick',
+                  data: {
+                    clickUrl,
+                    isDestroyPage: !0,
+                    timestamp: +new Date()
+                  }
+                }),
+                '*'
+              );
             });
 
             window.postMessage(clickUrl, '*');
