@@ -201,7 +201,7 @@ class Mp {
                       } catch (e) {}
                     }
                   },
-                  data: slot.data // 媒体传的一些额外的信息
+                  data: JSON.stringify(slot.data) // 媒体传的一些额外的信息
                 }
               );
             } else {
