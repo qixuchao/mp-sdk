@@ -58,12 +58,13 @@ export default Union => {
             addEventListener(iframeDocument, 'click', e => {
               this.onClick();
 
+              // 点击广告时将点击链接上报，外部如果需要可以通过window.addEventListener('message', () => {})获取
               window.postMessage(
                 JSON.stringify({
                   type: 'adClick',
                   data: {
                     clickUrl,
-                    isDestroyPage: !0,
+                    isDestroyPage: !0, // 是否在跳转后销毁之前的页面
                     timestamp: +new Date()
                   }
                 }),
