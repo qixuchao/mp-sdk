@@ -88,8 +88,7 @@ export default Union => {
               mediaId: this.requestData.mediaId,
               imgList: materials
             };
-
-            this.log('imp', { EXT: JSON.stringify(materialData) });
+            this.log('imp', { EXT: materialData });
           };
 
           if (!window[MODEL_NAME].config.isCheckVisible) {

@@ -200,7 +200,8 @@ class Mp {
                           .appendChild(iframe);
                       } catch (e) {}
                     }
-                  }
+                  },
+                  data: slot.data // 媒体传的一些额外的信息
                 }
               );
             } else {
