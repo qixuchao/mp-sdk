@@ -22,9 +22,6 @@ export default Union => {
       try {
         adStyle = JSON.parse(data.style) || {};
         const containerWidth = this.slotSize.width || screen.width;
-
-        console.log('width', containerWidth);
-
         calcHeight = containerWidth * (adStyle.height / adStyle.width);
       } catch (e) {}
 
