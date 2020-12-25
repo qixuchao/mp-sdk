@@ -16,6 +16,18 @@ export default Union => {
         timeout = null;
       }, UNION_TIMEOUT);
 
+      let adStyle = null;
+      let calcHeight = this.slotSize.height || 54;
+
+      try {
+        adStyle = JSON.parse(data.style) || {};
+        const containerWidth = this.slotSize.width || screen.width;
+
+        console.log('width', containerWidth);
+
+        calcHeight = containerWidth * (adStyle.height / adStyle.width);
+      } catch (e) {}
+
       const params = {
         ip: 'client',
         mid: data.appId || 209,
@@ -25,7 +37,7 @@ export default Union => {
         reqid: this.requestId,
         device_type: 1, //移动端
         mimes: 'img,c',
-        rsize: `${this.slotSize.width}*${this.slotSize.height || 54}`, // 广告位容器的尺寸
+        rsize: `${this.slotSize.width}*${calcHeight}`, // 广告位容器的尺寸
         device: JSON.stringify({
           height: screen.height,
           width: screen.width,
