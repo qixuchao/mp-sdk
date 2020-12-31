@@ -3,6 +3,7 @@ import { withIframeRenderAd, addEventListener } from '../helper';
 import { each } from '../../utils/index';
 import checkVisible from '../../utils/checkVisible';
 import { MODEL_NAME } from '../../config';
+import { getFreqControl, setFreqControl } from '../../utils/storage';
 
 export default Union => {
   Union.register('custom', {
@@ -14,11 +15,19 @@ export default Union => {
     onBeforeMount() {
       const slotId = this.requestData.slotId;
 
+      let adStyle = null;
+      let calcHeight = this.slotSize.height || 240;
+
+      try {
+        adStyle = JSON.parse(data.style) || {};
+        const containerWidth = this.slotSize.width || screen.width;
+        calcHeight = containerWidth * (adStyle.height / adStyle.width);
+      } catch (e) {}
+
       let iframeStyle = {
         iframeBodyCssText:
           'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-        iframeCssText:
-          'height: 240px; padding: 0px 15px;border: none; width: 100%'
+        iframeCssText: `height: ${calcHeight}px; padding: 0px 15px;border: none; width: 100%`
       };
 
       if (slotId === '150001') {
@@ -55,8 +64,23 @@ export default Union => {
               .querySelector('a')
               .getAttribute('href');
 
-            addEventListener(iframeDocument, 'click', e => {
+            addEventListener(iframeDocument, 'click', () => {
               this.onClick();
+
+              let fcData = getFreqControl();
+              let fcSlots = [];
+              const slotId = this.requestData.slotId;
+              if (fcData[slotId]) {
+                fcSlots = fcData[slotId];
+                if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
+                  fcSlots.push(this.requestData.consumerSlotId);
+                }
+              } else {
+                fcSlots = [this.requestData.consumerSlotId];
+              }
+
+              window[MODEL_NAME].config.isOpenClickFreq &&
+                setFreqControl(slotId, fcSlots);
 
               // 点击广告时将点击链接上报，外部如果需要可以通过window.addEventListener('message', () => {})获取
               window.postMessage(

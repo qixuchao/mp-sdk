@@ -46,6 +46,20 @@ const reCalcConsumerWeight = slotConfig => {
   return slotConfig;
 };
 
+// 点击频控
+const clickFreq = slotConfig => {
+  const fcData = getFreqControl();
+
+  const slotId = slotConfig.slotId;
+  const clickedConsumerList = fcData[slotId] || [];
+
+  slotConfig.slotBidding = slotConfig.slotBidding.filter(consumer => {
+    return !clickedConsumerList.includes(consumer.consumer.consumerSlotId);
+  });
+
+  return slotConfig;
+};
+
 // 去除同一广告位下相同的消耗方id
 const uniqueConsumer = slotBidding => {
   let slotBidConsumers = {};
@@ -116,6 +130,13 @@ class Mp {
         // 是否开启动态计算消耗方的权重
         if (this.config.isDynamicWeight) {
           this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
+            this.MEDIA_CONFIG[slotBidding.slotId]
+          );
+        }
+
+        // 是否打开点击频控
+        if (this.config.isOpenClickFreq) {
+          this.MEDIA_CONFIG[slotBidding.slotId] = clickFreq(
             this.MEDIA_CONFIG[slotBidding.slotId]
           );
         }
