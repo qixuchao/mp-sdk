@@ -126,7 +126,7 @@ export default class Union extends Event {
     this.adInfo = adInfo;
 
     this.trigger('loaded');
-    this.trigger('complete');
+    this.trigger('complete', true);
   };
 
   onError = (errorCode = '10002', errorMessage = '') => {
@@ -142,7 +142,7 @@ export default class Union extends Event {
     if (this.status === '1') {
       this.status = '10';
       this.logError(errorCode, errorMessage);
-      this.trigger('complete');
+      this.trigger('complete', false);
       this.destroy();
     }
   };

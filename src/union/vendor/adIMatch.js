@@ -27,18 +27,18 @@ export default Union => {
       let iframeStyle = {
         iframeBodyCssText:
           'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-        iframeCssText: `height: ${calcHeight}px; padding: 0px 15px;border: none; width: 100%`
+        iframeCssText: `height: ${calcHeight}px;border: none; width: 100%`
       };
 
       if (slotId === '150001') {
         iframeStyle.iframeCssText =
-          'width: 100%;padding: 0;height: 59px; border: none;';
+          'width: 100%;padding: 0;height: 59px; padding: 0px 15px; border: none;';
       } else if (slotId === '150004') {
         iframeStyle.iframeCssText =
-          'padding: 0;height: 169px;border: none;width: 100%;';
+          'padding: 0;height: 169px;padding: 0px 15px; border: none;width: 100%;';
       } else if (slotId === '900000066') {
         iframeStyle.iframeCssText =
-          'padding: 0;height: 100%;border: none;width: 100%;';
+          'padding: 0;height: 100%;padding: 0px 15px; border: none;width: 100%;';
       }
 
       withIframeRenderAd(

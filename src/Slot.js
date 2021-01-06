@@ -36,7 +36,7 @@ const PRIORITY_POLICY_TYPE = {
  * @returns [Array]
  */
 
-const getHighestPriorityComsuner = consumers => {
+const getHighestPriorityComsumer = consumers => {
   let highest = 10;
   each(consumers, ({ weight = 10 }) => {
     if (weight && weight < highest) {
@@ -130,9 +130,10 @@ export default class Slot {
 
     this.consumers = slotConfig.slotBidding;
 
-    this.highestPriority = getHighestPriorityComsuner(this.consumers);
+    this.highestPriority = getHighestPriorityComsumer(this.consumers);
 
     this.loadedConsumers = [];
+    this.loadedConsumerWeight = [];
 
     this.consumerLength = this.consumers && this.consumers.length;
     this.completeNumber = 0;
@@ -183,13 +184,31 @@ export default class Slot {
             .on('loaded', () => {
               console.log('loaded');
               this.loadedConsumers.push(union);
-              if (this.status !== '5') {
-                this.status = '4';
-                this.pickConsumer(union);
-                // this.race(union);
+            })
+            .on('complete', status => {
+              this.handleComplete();
+
+              // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
+              if (
+                this.completeNumber === this.consumerLength &&
+                this.priorityPolicy === 3
+              ) {
+                if (this.status !== '5') {
+                  this.status = '4';
+                  this.race(getConsumerByWeight(this.loadedConsumers));
+                }
+
+                return null;
+              }
+
+              if (status) {
+                if (this.status !== '5') {
+                  this.status = '4';
+                  this.pickConsumer(union);
+                  // this.race(union);
+                }
               }
             })
-            .on('complete', this.handleComplete.bind(this))
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             });
@@ -232,7 +251,7 @@ export default class Slot {
       this.race(union);
     } else if (
       priorityPolicy === 1 &&
-      this.loadedConsumers.length === this.consumerLength
+      this.completeNumber === this.consumerLength
     ) {
       this.race(getConsumerByWeightForRandom(this.loadedConsumers));
     }
