@@ -6,7 +6,11 @@ export default class Event {
     this._events = {};
   }
   on(type, handler) {
-    (this._events[type] = this._events[type] || []).push(handler);
+    const types = type.split(',');
+    each(types, type => {
+      (this._events[type] = this._events[type] || []).push(handler);
+    });
+
     return this;
   }
   off(type, handler) {}

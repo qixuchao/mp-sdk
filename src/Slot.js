@@ -218,7 +218,7 @@ export default class Slot {
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             })
-            .on('setFrequencyLabel', ({ slotId, consumerSlotId, type }) => {
+            .on('click,imp', ({ slotId, consumerSlotId, type }) => {
               let fcData = getFreqControl(type);
               let fcSlots = [];
 

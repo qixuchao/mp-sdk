@@ -281,7 +281,7 @@ export default class Union extends Event {
     console.log('click');
     const { slotId, consumerSlotId } = this.requestData;
 
-    this.trigger('setFrequencyLabel', {
+    this.trigger('click', {
       slotId,
       consumerSlotId,
       type: 'click'
@@ -295,7 +295,7 @@ export default class Union extends Event {
 
   onShow() {
     const { slotId, consumerSlotId } = this.requestData;
-    this.trigger('setFrequencyLabel', {
+    this.trigger('imp', {
       slotId,
       consumerSlotId,
       type: 'imp'
