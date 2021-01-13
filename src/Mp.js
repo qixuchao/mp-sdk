@@ -8,11 +8,8 @@ import Slot from './Slot';
 import Event from './internal/Event';
 
 const eventType = {
-  'MP: init': 'MP初始化',
-  'MP: parseConfig': 'MP配置格式化',
-  'Slot: parseConfig': 'slot配置格式化',
-  'Slot: race': 'slot选择消耗方',
-  'Union: freqCtr': 'union频次控制'
+  init: 'MP初始化',
+  recalculateWeightByFrequency: '根据频次重新计算weight的值'
 };
 
 const reCalcConsumerWeight = (slotConfig, type) => {
@@ -142,7 +139,7 @@ class Mp extends Event {
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
 
-    this.on('Slot: parseConfig', slotConfig => {
+    this.on('recalculateWeightByFrequency', slotConfig => {
       // 格式化配置
       slotConfig = preParseConsumer(slotConfig);
     });
@@ -177,21 +174,6 @@ class Mp extends Event {
     if (config.slotBiddings) {
       each(config.slotBiddings, slotBidding => {
         this.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
-
-        // // 是否开启动态计算消耗方的权重
-        // if (this.config.isDynamicWeight) {
-        //   this.trigger('MP: parseConfig');
-        //   this.MEDIA_CONFIG[slotBidding.slotId] = Mp.reCalcConsumerWeight(
-        //     this.MEDIA_CONFIG[slotBidding.slotId]
-        //   );
-        // }
-        //
-        // // 是否打开点击频控
-        // if (this.config.isOpenClickFreq) {
-        //   this.MEDIA_CONFIG[slotBidding.slotId] = clickFreq(
-        //     this.MEDIA_CONFIG[slotBidding.slotId]
-        //   );
-        // }
       });
     }
   }

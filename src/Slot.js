@@ -103,9 +103,7 @@ export default class Slot {
   constructor(container, slotConfig = {}, slotOptions = {}) {
     this.container = container;
 
-    window[MODEL_NAME].trigger('Slot: parseConfig', slotConfig);
-
-    console.log('slotconfig1', slotConfig);
+    window[MODEL_NAME].trigger('recalculateWeightByFrequency', slotConfig);
 
     // 是否并非请求
     this.isConcurrent = slotConfig.isConcurrent;
@@ -220,7 +218,7 @@ export default class Slot {
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
             })
-            .on('freqCtr', ({ slotId, consumerSlotId, type }) => {
+            .on('setFrequencyLabel', ({ slotId, consumerSlotId, type }) => {
               let fcData = getFreqControl(type);
               let fcSlots = [];
 
