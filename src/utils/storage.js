@@ -6,16 +6,16 @@ const today = (() => {
   return date.getFullYear() + '-' + month + '-' + date.getDate();
 })();
 
-export const getFreqControl = () => {
+export const getFreqControl = type => {
   let data = {};
   try {
     data = JSON.parse(localStorage[KEY]);
   } catch (e) {}
-  return data[today] || {};
+  return data[today] ? data[today][type] || {} : {};
 };
 
-export const setFreqControl = (key, value) => {
-  const data = getFreqControl();
+export const setFreqControl = (key, value, type) => {
+  const data = getFreqControl(type);
   data[key] = value;
 
   try {
@@ -23,7 +23,9 @@ export const setFreqControl = (key, value) => {
     localStorage.setItem(
       KEY,
       JSON.stringify({
-        [today]: data
+        [today]: {
+          [type]: data
+        }
       })
     );
   } catch (e) {

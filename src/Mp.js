@@ -5,59 +5,104 @@ import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import { getFreqControl, setFreqControl } from './utils/storage';
 import Union from './union/index';
 import Slot from './Slot';
+import Event from './internal/Event';
 
-const reCalcConsumerWeight = slotConfig => {
-  const fcData = getFreqControl();
+const eventType = {
+  'MP: init': 'MP初始化',
+  'MP: parseConfig': 'MP配置格式化',
+  'Slot: parseConfig': 'slot配置格式化',
+  'Slot: race': 'slot选择消耗方',
+  'Union: freqCtr': 'union频次控制'
+};
 
+const reCalcConsumerWeight = (slotConfig, type) => {
+  const fcData = getFreqControl(type);
   const slotId = slotConfig.slotId;
-  const gdtList = [];
-  each(slotConfig.slotBidding, consumer => {
-    if (consumer.consumer.consumerType === 'gdt') {
-      gdtList.push(consumer);
-    }
-  });
-  if (gdtList.length > 1) {
-    if (
-      fcData[slotId] &&
-      fcData[slotId].length &&
-      fcData[slotId].length !== gdtList.length
-    ) {
-      each(gdtList, consumer => {
-        if (fcData[slotId].includes(consumer.consumer.consumerSlotId)) {
-          consumer.weight = 1;
-        } else {
-          consumer.weight = 100 - fcData[slotId].length;
-        }
-      });
-    } else {
-      each(gdtList, (consumer, index) => {
-        if (index === 0) {
-          consumer.weight = 100 - gdtList.length;
-        } else {
-          consumer.weight = 1;
-        }
-      });
+  const slotBidding = slotConfig.slotBidding;
+
+  if (fcData[slotId] && fcData[slotId].length >= slotBidding.length) {
+    setFreqControl(slotId, [], type);
+  }
+
+  // 对广告位下的消耗按照优先级进行排序
+  for (let j = 0; j < slotBidding.length - 1; j++) {
+    for (let i = 0; i < slotBidding.length - 1; i++) {
+      if (slotBidding[i].weight < slotBidding[i + 1].weight) {
+        let temp = slotBidding[i];
+        slotBidding[i] = slotBidding[i + 1];
+        slotBidding[i + 1] = temp;
+      }
     }
   }
 
-  if (fcData[slotId] && fcData[slotId].length >= gdtList.length) {
-    setFreqControl(slotId, []);
+  if (slotBidding.length > 1) {
+    each(slotBidding, (consumer, i) => {
+      if (
+        fcData[slotId] &&
+        fcData[slotId].includes(consumer.consumer.consumerSlotId)
+      ) {
+        consumer.weight = fcData[slotId].length - i;
+      } else {
+        consumer.weight = 100 - slotBidding.length;
+      }
+    });
+  }
+
+  return slotConfig;
+};
+
+const reCalcConsumerPriority = (slotConfig, type) => {
+  const fcData = getFreqControl(type);
+  const slotId = slotConfig.slotId;
+  let slotBidding = slotConfig.slotBidding;
+
+  if (fcData[slotId] && fcData[slotId].length >= slotConfig.slotBidding) {
+    setFreqControl(slotId, [], type);
+  }
+
+  // 对广告位下的消耗按照优先级进行排序
+  for (let j = 0; j < slotBidding.length - 1; j++) {
+    for (let i = 0; i < slotBidding.length - 1; i++) {
+      if (slotBidding[i].weight > slotBidding[i + 1].weight) {
+        let temp = slotBidding[i];
+        slotBidding[i] = slotBidding[i + 1];
+        slotBidding[i + 1] = temp;
+      }
+    }
+  }
+
+  if (slotBidding.length > 1) {
+    each(slotBidding, (consumer, i) => {
+      consumer.weight = i + 1;
+      if (
+        fcData[slotId] &&
+        fcData[slotId].includes(consumer.consumer.consumerSlotId)
+      ) {
+        consumer.weight = slotBidding.length + consumer.weight;
+      }
+    });
   }
   return slotConfig;
 };
 
-// 点击频控
-const clickFreq = slotConfig => {
-  const fcData = getFreqControl();
+// 根据频次干预消耗方对应的权重和优先级
+const preParseConsumer = slotConfig => {
+  let freqType = null;
 
-  const slotId = slotConfig.slotId;
-  const clickedConsumerList = fcData[slotId] || [];
+  if (slotConfig.clickFreq) {
+    freqType = 'click';
+  } else if (slotConfig.impFreq) {
+    freqType = 'imp';
+  }
 
-  slotConfig.slotBidding = slotConfig.slotBidding.filter(consumer => {
-    return !clickedConsumerList.includes(consumer.consumer.consumerSlotId);
-  });
-
-  return slotConfig;
+  const priorityPolicy = slotConfig.priorityPolicy;
+  if (freqType) {
+    if (priorityPolicy === 1) {
+      slotConfig = reCalcConsumerWeight(slotConfig, freqType);
+    } else if (priorityPolicy === 3) {
+      slotConfig = reCalcConsumerPriority(slotConfig, freqType);
+    }
+  }
 };
 
 // 去除同一广告位下相同的消耗方id
@@ -73,10 +118,11 @@ const uniqueConsumer = slotBidding => {
   return slotBidding;
 };
 
-class Mp {
+class Mp extends Event {
   Ver = '__VERSION__';
 
   constructor(slots) {
+    super();
     // 广告位实例对象
     this.slots = {};
     this.init(slots);
@@ -95,6 +141,11 @@ class Mp {
     this.mediaId = window[MEDIA_CONFIG_NAME].mediaId;
 
     this.parseMediaConfig(window[MEDIA_CONFIG_NAME]);
+
+    this.on('Slot: parseConfig', slotConfig => {
+      // 格式化配置
+      slotConfig = preParseConsumer(slotConfig);
+    });
 
     getImei(() => {
       this.handler(this._originalList);
@@ -127,19 +178,20 @@ class Mp {
       each(config.slotBiddings, slotBidding => {
         this.MEDIA_CONFIG[slotBidding.slotId] = uniqueConsumer(slotBidding);
 
-        // 是否开启动态计算消耗方的权重
-        if (this.config.isDynamicWeight) {
-          this.MEDIA_CONFIG[slotBidding.slotId] = reCalcConsumerWeight(
-            this.MEDIA_CONFIG[slotBidding.slotId]
-          );
-        }
-
-        // 是否打开点击频控
-        if (this.config.isOpenClickFreq) {
-          this.MEDIA_CONFIG[slotBidding.slotId] = clickFreq(
-            this.MEDIA_CONFIG[slotBidding.slotId]
-          );
-        }
+        // // 是否开启动态计算消耗方的权重
+        // if (this.config.isDynamicWeight) {
+        //   this.trigger('MP: parseConfig');
+        //   this.MEDIA_CONFIG[slotBidding.slotId] = Mp.reCalcConsumerWeight(
+        //     this.MEDIA_CONFIG[slotBidding.slotId]
+        //   );
+        // }
+        //
+        // // 是否打开点击频控
+        // if (this.config.isOpenClickFreq) {
+        //   this.MEDIA_CONFIG[slotBidding.slotId] = clickFreq(
+        //     this.MEDIA_CONFIG[slotBidding.slotId]
+        //   );
+        // }
       });
     }
   }

@@ -38,6 +38,7 @@ export default Union => {
             }
           });
         }, 1000);
+        this.onShow();
         this.log('imp');
       } catch (e) {
         console.error(e);

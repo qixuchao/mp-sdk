@@ -279,11 +279,27 @@ export default class Union extends Event {
   }
   onClick(extralData) {
     console.log('click');
+    const { slotId, consumerSlotId } = this.requestData;
+
+    this.trigger('freqCtr', {
+      slotId,
+      consumerSlotId,
+      type: 'click'
+    });
     this.log('click', extralData);
   }
 
   onClose() {
     this.trigger('close');
+  }
+
+  onShow() {
+    const { slotId, consumerSlotId } = this.requestData;
+    this.trigger('freqCtr', {
+      slotId,
+      consumerSlotId,
+      type: 'imp'
+    });
   }
 
   destroy = () => {

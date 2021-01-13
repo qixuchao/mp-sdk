@@ -11,6 +11,8 @@ export default Union => {
     src: '',
     sandbox: false,
     onInit(data, { onLoaded, onError }) {
+      console.log('this', this);
+
       let timeout = setTimeout(() => {
         onError('10002');
         clearTimeout(timeout);
@@ -94,6 +96,7 @@ export default Union => {
     },
     onMounted() {},
     onShow() {
+      this.onShow();
       this.log('imp');
     }
   });

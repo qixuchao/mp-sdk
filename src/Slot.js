@@ -1,6 +1,7 @@
 import { each, getRandom } from './utils/index';
 import Union from './union/index';
 import { MODEL_NAME } from './config';
+import { getFreqControl, setFreqControl } from './utils/storage';
 
 const callFunction = function () {
   return (
@@ -36,9 +37,9 @@ const PRIORITY_POLICY_TYPE = {
  * @returns [Array]
  */
 
-const getHighestPriorityComsumer = consumers => {
-  let highest = 10;
-  each(consumers, ({ weight = 10 }) => {
+const getHighestPriorityConsumer = consumers => {
+  let highest = 100;
+  each(consumers, ({ weight = 100 }) => {
     if (weight && weight < highest) {
       highest = weight;
     }
@@ -48,7 +49,7 @@ const getHighestPriorityComsumer = consumers => {
 
 const getConsumerByWeight = loadedConsumers => {
   let union = null;
-  let max = 10;
+  let max = 100;
 
   each(loadedConsumers, (con, index) => {
     if (con.data.weight && con.data.weight < max) {
@@ -102,6 +103,10 @@ export default class Slot {
   constructor(container, slotConfig = {}, slotOptions = {}) {
     this.container = container;
 
+    window[MODEL_NAME].trigger('Slot: parseConfig', slotConfig);
+
+    console.log('slotconfig1', slotConfig);
+
     // 是否并非请求
     this.isConcurrent = slotConfig.isConcurrent;
     this.priorityPolicy = slotConfig.priorityPolicy;
@@ -130,7 +135,7 @@ export default class Slot {
 
     this.consumers = slotConfig.slotBidding;
 
-    this.highestPriority = getHighestPriorityComsumer(this.consumers);
+    this.highestPriority = getHighestPriorityConsumer(this.consumers);
 
     this.loadedConsumers = [];
     this.loadedConsumerWeight = [];
@@ -189,15 +194,18 @@ export default class Slot {
               this.handleComplete();
 
               // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
-              if (
-                this.completeNumber === this.consumerLength &&
-                this.priorityPolicy === 3
-              ) {
+              if (this.completeNumber === this.consumerLength) {
                 if (this.status !== '5') {
                   this.status = '4';
-                  this.race(getConsumerByWeight(this.loadedConsumers));
-                }
 
+                  if (this.slotConfig.priorityPolicy === 1) {
+                    this.race(
+                      getConsumerByWeightForRandom(this.loadedConsumers)
+                    );
+                  } else if (this.slotConfig.priorityPolicy === 3) {
+                    this.race(getConsumerByWeight(this.loadedConsumers));
+                  }
+                }
                 return null;
               }
 
@@ -211,8 +219,30 @@ export default class Slot {
             })
             .on('close', () => {
               callFunction(this.slotConfig.onClose);
-            });
+            })
+            .on('freqCtr', ({ slotId, consumerSlotId, type }) => {
+              let fcData = getFreqControl(type);
+              let fcSlots = [];
 
+              let freqType = null;
+
+              if (this.slotConfig.clickFreq) {
+                freqType = 'click';
+              } else if (this.slotConfig.impFreq) {
+                freqType = 'imp';
+              }
+
+              if (fcData[slotId]) {
+                fcSlots = fcData[slotId];
+                if (!fcData[slotId].includes(consumerSlotId)) {
+                  fcSlots.push(consumerSlotId);
+                }
+              } else {
+                fcSlots = [consumerSlotId];
+              }
+
+              freqType === type && setFreqControl(slotId, fcSlots, freqType);
+            });
           union.run(con, $container);
         } else {
           console.error(

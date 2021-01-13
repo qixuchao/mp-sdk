@@ -17,11 +17,16 @@ export default Union => {
 
       let adStyle = null;
       let calcHeight = this.slotSize.height || 240;
+      let extended_fields = {};
 
       try {
-        adStyle = JSON.parse(data.style) || {};
+        adStyle = JSON.parse(this.data.consumer.style) || {};
         const containerWidth = this.slotSize.width || screen.width;
         calcHeight = containerWidth * (adStyle.height / adStyle.width);
+      } catch (e) {}
+
+      try {
+        extended_fields = JSON.parse(this.data.consumer.extended_fields) || {};
       } catch (e) {}
 
       let iframeStyle = {
@@ -42,13 +47,21 @@ export default Union => {
       }
 
       withIframeRenderAd(
-        this.data.consumer.consumerSlotId,
+        extended_fields.src || this.data.consumer.consumerSlotId, // 兼容之前取consumerSlotId作为js地址的逻辑
         `#${this.id}`,
         iframeStyle
       );
     },
     onShow() {
       const context = document.querySelector(`#${this.id}`);
+
+      const {
+        slotId,
+        consumerSlotId,
+        consumerType,
+        mediaId
+      } = this.requestData;
+
       const timer = setInterval(() => {
         const iframe = context.querySelector(`iframe`);
         const iframeDocument = iframe.contentWindow.document;
@@ -66,21 +79,6 @@ export default Union => {
 
             addEventListener(iframeDocument, 'click', () => {
               this.onClick();
-
-              let fcData = getFreqControl();
-              let fcSlots = [];
-              const slotId = this.requestData.slotId;
-              if (fcData[slotId]) {
-                fcSlots = fcData[slotId];
-                if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
-                  fcSlots.push(this.requestData.consumerSlotId);
-                }
-              } else {
-                fcSlots = [this.requestData.consumerSlotId];
-              }
-
-              window[MODEL_NAME].config.isOpenClickFreq &&
-                setFreqControl(slotId, fcSlots);
 
               // 点击广告时将点击链接上报，外部如果需要可以通过window.addEventListener('message', () => {})获取
               window.postMessage(
@@ -105,13 +103,16 @@ export default Union => {
             const materialData = {
               title: '',
               desc: '',
-              slotId: this.requestData.slotId,
-              consumerSlotId: this.requestData.consumerSlotId,
+              slotId,
+              consumerSlotId,
               landingPageUrl: clickUrl,
-              consumerType: this.requestData.consumerType,
-              mediaId: this.requestData.mediaId,
+              consumerType,
+              mediaId,
               imgList: materials
             };
+
+            this.onShow();
+
             this.log('imp', { EXT: materialData });
           };
 

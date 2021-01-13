@@ -52,31 +52,25 @@ export default Union => {
             ? this.adInfo.img_list
             : [this.adInfo.img, this.adInfo.img2];
 
+          const {
+            slotId,
+            consumerSlotId,
+            consumerType,
+            mediaId
+          } = this.requestData;
+
           const materialReportData = {
             title: this.adInfo.txt,
             desc: this.adInfo.desc,
             imgList,
-            slotId: this.requestData.slotId,
-            consumerSlotId: this.requestData.consumerSlotId,
+            slotId,
+            consumerSlotId,
             landingPageUrl: this.adInfo.rl,
-            consumerType: this.requestData.consumerType,
-            mediaId: this.requestData.mediaId
+            consumerType,
+            mediaId
           };
 
-          let fcData = getFreqControl();
-          let fcSlots = [];
-          const slotId = this.requestData.slotId;
-          if (fcData[slotId]) {
-            fcSlots = fcData[slotId];
-            if (!fcData[slotId].includes(this.requestData.consumerSlotId)) {
-              fcSlots.push(this.requestData.consumerSlotId);
-            }
-          } else {
-            fcSlots = [this.requestData.consumerSlotId];
-          }
-
-          window[MODEL_NAME].config.isDynamicWeight &&
-            setFreqControl(slotId, fcSlots);
+          this.onShow();
 
           new Image().src = addParam(this.adInfo.apurl, {
             callback: '_cb_gdtjson' + exposeCount++,
