@@ -3,7 +3,6 @@ import { withIframeRenderAd, addEventListener } from '../helper';
 import { each } from '../../utils/index';
 import checkVisible from '../../utils/checkVisible';
 import { MODEL_NAME } from '../../config';
-import { getFreqControl, setFreqControl } from '../../utils/storage';
 
 export default Union => {
   Union.register('custom', {

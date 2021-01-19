@@ -2,7 +2,6 @@
 import { addParam, macroReplace, jsonp, each } from '../../utils/index';
 import { MODEL_NAME, UNION_TIMEOUT } from '../../config';
 import { addEventListener } from '../helper';
-import { getFreqControl, setFreqControl } from '../../utils/storage';
 
 const url = 'https://g.fancyapi.com/s2s';
 
@@ -11,21 +10,20 @@ export default Union => {
     src: '',
     sandbox: false,
     onInit(data, { onLoaded, onError }) {
-      console.log('this', this);
-
       let timeout = setTimeout(() => {
         onError('10002');
         clearTimeout(timeout);
         timeout = null;
       }, UNION_TIMEOUT);
 
+      let { width = screen.width } = this.slotSize;
+
       let adStyle = null;
-      let calcHeight = this.slotSize.height || 54;
 
       try {
         adStyle = JSON.parse(data.style) || {};
-        const containerWidth = this.slotSize.width || screen.width;
-        calcHeight = containerWidth * (adStyle.height / adStyle.width);
+        this.slotSize.width = width;
+        this.slotSize.height = width * (adStyle.height / adStyle.width) || 54;
       } catch (e) {}
 
       const params = {
@@ -37,7 +35,7 @@ export default Union => {
         reqid: this.requestId,
         device_type: 1, //移动端
         mimes: 'img,c',
-        rsize: `${this.slotSize.width}*${calcHeight}`, // 广告位容器的尺寸
+        rsize: `${this.slotSize.width}*${this.slotSize.height}`, // 广告位容器的尺寸
         device: JSON.stringify({
           height: screen.height,
           width: screen.width,
@@ -66,10 +64,13 @@ export default Union => {
         callback: data => {
           clearTimeout(timeout);
           if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
-            const htmlStr = macroReplace(data.ad[0].src, {
-              M_PRECLICK: trackingClickUrls
-            });
-            onLoaded(htmlStr);
+            const htmlStr = macroReplace(
+              data.ad[0].src,
+              {
+                M_PRECLICK: trackingClickUrls
+              },
+              false
+            );
           } else {
             onError('10000');
           }
@@ -86,10 +87,22 @@ export default Union => {
         this.adInfo +
         '</div>';
 
-      this.$container.innerHTML = contentStr;
+      const iframe = document.createElement('iframe');
+      iframe.width = this.slotSize.width;
+      iframe.height = this.slotSize.height;
+      iframe.style.cssText = 'border: none';
+
+      this.$container.appendChild(iframe);
+
+      const contentDoc = iframe.contentWindow.document;
+      contentDoc.body.innerHTML = contentStr;
+
+      addEventListener(iframe.contentWindow, 'message', () => {
+        this.onClick();
+      });
 
       addEventListener(
-        this.$container.querySelector('.close-icon'),
+        contentDoc.querySelector('.close-icon'),
         'click',
         this.destroy
       );
