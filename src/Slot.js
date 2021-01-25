@@ -168,7 +168,8 @@ export default class Slot extends Event {
 
       this.swiperPlugin = new Swiper(swiperOptions);
 
-      this.on('race', union => {
+      this.on('race', (union, { stopPropagation }) => {
+        stopPropagation();
         clearTimeout(this.timeouter);
         if (union instanceof Union) {
           if (this.status === '4') {
@@ -182,7 +183,8 @@ export default class Slot extends Event {
           }
         }
       })
-        .on('complete', ({ union, status }) => {
+        .on('complete', ({ union, status }, { stopPropagation }) => {
+          stopPropagation();
           this.handleComplete();
           // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
           if (this.completeNumber === this.consumerLength) {
@@ -196,9 +198,9 @@ export default class Slot extends Event {
             }
           }
         })
-        .on('getContainer', () => {
+        .on('getContainer', ({}, { stopPropagation }) => {
+          stopPropagation();
           this.$container = this.swiperPlugin.createItemContainer();
-          console.log($container);
         });
     }
 
@@ -284,7 +286,7 @@ export default class Slot extends Event {
               this.loadedConsumers.push(union);
             })
             .on('complete', status => {
-              this.once('complete', { status, union });
+              this.trigger('complete', { status, union });
             })
             .on('close', () => {
               this.swiperPlugin && this.swiperPlugin.reRender();
@@ -313,13 +315,12 @@ export default class Slot extends Event {
 
               freqType === type && setFreqControl(slotId, fcSlots, freqType);
             })
-            .on('pushItem', () => {
-              console.log('push');
+            .on('render', () => {
               this.swiperPlugin && this.swiperPlugin.push();
             });
 
           // 单页情况会将原来的广告位给移出，不能缓存
-          this.once('getContainer');
+          this.trigger('getContainer', {});
 
           union.run(con, this.$container);
         } else {
@@ -372,6 +373,6 @@ export default class Slot extends Event {
    * @param {Union} union
    */
   race(union) {
-    this.once('race', union);
+    this.trigger('race', union);
   }
 }

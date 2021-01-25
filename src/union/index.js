@@ -263,7 +263,7 @@ export default class Union extends Event {
 
       //container.appendChild(this.$container);
 
-      this.trigger('pushItem');
+      this.trigger('render');
 
       this.$container.style.display = 'block';
 
