@@ -2,6 +2,8 @@ import { each, getRandom } from './utils/index';
 import Union from './union/index';
 import { MODEL_NAME } from './config';
 import { getFreqControl, setFreqControl } from './utils/storage';
+import Swiper from './plugins/Swiper';
+import Event from './internal/Event';
 
 const callFunction = function () {
   return (
@@ -28,6 +30,14 @@ const PRIORITY_POLICY_TYPE = {
   1: '权重优先',
   2: '随机', //暂时不考虑
   3: '优先级顺序' // 1-10,值越小优先级越高
+};
+
+// 频次控制的类型
+const FREQUENCY_TYPE = {
+  0: '无频次控制',
+  1: '单价优先',
+  2: '曝光频次优先',
+  3: '点击频次优先'
 };
 
 /**
@@ -90,7 +100,7 @@ const getConsumerByWeightForRandom = loadedConsumers => {
   return union;
 };
 
-export default class Slot {
+export default class Slot extends Event {
   /**
    *
    * @param {String} container
@@ -101,6 +111,7 @@ export default class Slot {
    *                    slotOptions.onClose // 当广告位被关闭回调
    */
   constructor(container, slotConfig = {}, slotOptions = {}) {
+    super();
     this.container = container;
 
     window[MODEL_NAME].trigger('recalculateWeightByFrequency', slotConfig);
@@ -115,7 +126,7 @@ export default class Slot {
     this.slotId = slotConfig.slotId;
     this.status = '0';
 
-    const $container = document.querySelector(container);
+    let $container = document.querySelector(container);
 
     this.slotContainerSize = {
       width:
@@ -142,16 +153,100 @@ export default class Slot {
     this.completeNumber = 0;
 
     // 已经加载消耗方个数
+
     this.loadedConsumerNumber = 0;
+
+    if (
+      this.slotConfig.decorators &&
+      this.slotConfig.decorators.type === 'banner'
+    ) {
+      const swiperOptions = {
+        container,
+        slotId: slotConfig.slotId,
+        ...this.slotConfig.decorators.options
+      };
+
+      this.swiperPlugin = new Swiper(swiperOptions);
+
+      this.on('race', union => {
+        clearTimeout(this.timeouter);
+        if (union instanceof Union) {
+          if (this.status === '4') {
+            callFunction(this.slotOptions.complete, true);
+            console.log('winer ' + union.name);
+            this.winner = union;
+            union.$container._slot_ = this;
+            union.render(this.container);
+          } else if (this.status !== '5') {
+            union.destroy();
+          }
+        }
+      })
+        .on('complete', ({ union, status }) => {
+          this.handleComplete();
+          // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
+          if (this.completeNumber === this.consumerLength) {
+            this.swiperPlugin && this.swiperPlugin.finish();
+          }
+
+          if (status) {
+            if (this.status !== '5') {
+              this.status = '4';
+              this.race(union);
+            }
+          }
+        })
+        .on('getContainer', () => {
+          this.$container = this.swiperPlugin.createItemContainer();
+          console.log($container);
+        });
+    }
+
+    this.on('race', union => {
+      clearTimeout(this.timeouter);
+      if (union instanceof Union) {
+        if (this.status === '4') {
+          callFunction(this.slotOptions.complete, true);
+          this.status = '5';
+          console.log('winer ' + union.name);
+          this.winner = union;
+          union.$container._slot_ = this;
+          union.render(this.container);
+        } else if (this.status !== '5') {
+          union.destroy();
+        }
+      }
+    })
+      .on('complete', ({ union, status }) => {
+        // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
+        if (this.completeNumber === this.consumerLength) {
+          if (this.status !== '5') {
+            this.status = '4';
+            if (this.slotConfig.priorityPolicy === 1) {
+              this.race(getConsumerByWeightForRandom(this.loadedConsumers));
+            } else if (this.slotConfig.priorityPolicy === 3) {
+              this.race(getConsumerByWeight(this.loadedConsumers));
+            }
+            return null;
+          }
+        }
+
+        if (status) {
+          if (this.status !== '5') {
+            this.status = '4';
+            this.pickConsumer(union);
+          }
+        }
+      })
+      .on('getContainer', () => {
+        this.$container = document.querySelector(this.container);
+      });
 
     this.distribute();
   }
 
   distribute() {
     if (this.consumerLength > 0) {
-      // 单页情况会将原来的广告位给移出，不能缓存
-      const $container = document.querySelector(this.container);
-
       // reload时清除上次加载成功的consumer
       this.loadedConsumers = [];
       const requestId = `${this.slotId}-${new Date().getTime()}-${getRandom(
@@ -189,33 +284,10 @@ export default class Slot {
               this.loadedConsumers.push(union);
             })
             .on('complete', status => {
-              this.handleComplete();
-
-              // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
-              if (this.completeNumber === this.consumerLength) {
-                if (this.status !== '5') {
-                  this.status = '4';
-
-                  if (this.slotConfig.priorityPolicy === 1) {
-                    this.race(
-                      getConsumerByWeightForRandom(this.loadedConsumers)
-                    );
-                  } else if (this.slotConfig.priorityPolicy === 3) {
-                    this.race(getConsumerByWeight(this.loadedConsumers));
-                  }
-                }
-                return null;
-              }
-
-              if (status) {
-                if (this.status !== '5') {
-                  this.status = '4';
-                  this.pickConsumer(union);
-                  // this.race(union);
-                }
-              }
+              this.once('complete', { status, union });
             })
             .on('close', () => {
+              this.swiperPlugin && this.swiperPlugin.reRender();
               callFunction(this.slotConfig.onClose);
             })
             .on('click,imp', ({ slotId, consumerSlotId, type }) => {
@@ -224,9 +296,9 @@ export default class Slot {
 
               let freqType = null;
 
-              if (this.slotConfig.clickFreq) {
+              if (this.slotConfig.priorityPolicyPacingTarget === 3) {
                 freqType = 'click';
-              } else if (this.slotConfig.impFreq) {
+              } else if (this.slotConfig.priorityPolicyPacingTarget === 2) {
                 freqType = 'imp';
               }
 
@@ -240,8 +312,16 @@ export default class Slot {
               }
 
               freqType === type && setFreqControl(slotId, fcSlots, freqType);
+            })
+            .on('pushItem', () => {
+              console.log('push');
+              this.swiperPlugin && this.swiperPlugin.push();
             });
-          union.run(con, $container);
+
+          // 单页情况会将原来的广告位给移出，不能缓存
+          this.once('getContainer');
+
+          union.run(con, this.$container);
         } else {
           console.error(
             `Union 【${con.consumer.consumerType}】is not register`
@@ -260,6 +340,7 @@ export default class Slot {
       callFunction(this.slotOptions.complete, false);
     }
   }
+
   handleComplete() {
     if (
       ++this.completeNumber === this.consumerLength &&
@@ -291,18 +372,6 @@ export default class Slot {
    * @param {Union} union
    */
   race(union) {
-    clearTimeout(this.timeouter);
-    if (union instanceof Union) {
-      if (this.status === '4') {
-        callFunction(this.slotOptions.complete, true);
-        this.status = '5';
-        console.log('winer ' + union.name);
-        this.winner = union;
-        union.$container._slot_ = this;
-        union.render(this.container);
-      } else if (this.status !== '5') {
-        union.destroy();
-      }
-    }
+    this.once('race', union);
   }
 }

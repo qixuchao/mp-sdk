@@ -64,13 +64,10 @@ export default Union => {
         callback: data => {
           clearTimeout(timeout);
           if (Array.isArray(data.ad) && data.ad.length && data.ad[0].src) {
-            const htmlStr = macroReplace(
-              data.ad[0].src,
-              {
-                M_PRECLICK: trackingClickUrls
-              },
-              false
-            );
+            const htmlStr = macroReplace(data.ad[0].src, {
+              M_PRECLICK: trackingClickUrls
+            });
+            onLoaded(htmlStr);
           } else {
             onError('10000');
           }
@@ -101,11 +98,10 @@ export default Union => {
         this.onClick();
       });
 
-      addEventListener(
-        contentDoc.querySelector('.close-icon'),
-        'click',
-        this.destroy
-      );
+      addEventListener(contentDoc.querySelector('.close-icon'), 'click', () => {
+        this.destroy();
+        this.onClose();
+      });
     },
     onMounted() {},
     onShow() {

@@ -14,8 +14,12 @@ export default class Event {
     return this;
   }
   off(type, handler) {}
-  once(type, handler) {
-    this.on(type, () => {});
+  once(type, data) {
+    if (this._events[type]) {
+      this._events[type] = this._events[type].slice(0, 1);
+      this.trigger(type, data);
+    }
+    return this;
   }
   trigger(type, data) {
     each(this._events[type], fn => {

@@ -263,6 +263,8 @@ export default class Union extends Event {
 
       //container.appendChild(this.$container);
 
+      this.trigger('pushItem');
+
       this.$container.style.display = 'block';
 
       // 处理不同联盟渲染在填充前预处理，保证显示正常

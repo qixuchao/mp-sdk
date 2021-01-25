@@ -86,9 +86,9 @@ const reCalcConsumerPriority = (slotConfig, type) => {
 const preParseConsumer = slotConfig => {
   let freqType = null;
 
-  if (slotConfig.clickFreq) {
+  if (slotConfig.priorityPolicyPacingTarget === 3) {
     freqType = 'click';
-  } else if (slotConfig.impFreq) {
+  } else if (slotConfig.priorityPolicyPacingTarget === 2) {
     freqType = 'imp';
   }
 

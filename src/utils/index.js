@@ -87,7 +87,7 @@ export const macroReplace = (
     }
     return needEncode ? encodeURIComponent(value) : value;
   };
-  return str.replace(/(?<==)__(.*?)__/g, function (fragment) {
+  return str.replace(/=__(.*?)__/g, function (fragment) {
     let variable = fragment.match(/__(.*)__/);
     const value = builtData[variable[1]] || data[variable[1]];
     return value === undefined ? '' : encode(value);
