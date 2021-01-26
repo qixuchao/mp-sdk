@@ -11,11 +11,20 @@ export const getFreqControl = type => {
   try {
     data = JSON.parse(localStorage[KEY]);
   } catch (e) {}
-  return data[today] ? data[today][type] || {} : {};
+
+  let currentData = data[today] || {};
+
+  if (type) {
+    return currentData[type] || {};
+  }
+
+  return currentData;
 };
 
 export const setFreqControl = (key, value, type) => {
   const data = getFreqControl(type);
+  const allData = getFreqControl();
+
   data[key] = value;
 
   try {
@@ -24,6 +33,7 @@ export const setFreqControl = (key, value, type) => {
       KEY,
       JSON.stringify({
         [today]: {
+          ...allData,
           [type]: data
         }
       })

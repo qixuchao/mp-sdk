@@ -16,7 +16,7 @@ export default Union => {
       window.addEventListener('message', e => {
         console.log(e.target.location.href);
       });
-      setTimeout(onLoaded);
+      onLoaded();
     },
     onShow() {
       let extendedFields = {};
@@ -33,8 +33,8 @@ export default Union => {
               // google_ad-format:"auto" ,
               // google_full_width_responsive:"true",
               //  google_ad_channel: '',
-              // google_ad_width:'',
-              // google_ad_height:''
+              // google_ad_width: '',
+              // google_ad_height: ''
             }
           });
         }, 1000);

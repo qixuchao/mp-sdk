@@ -34,17 +34,6 @@ export default Union => {
         iframeCssText: `height: ${calcHeight}px;border: none; width: 100%`
       };
 
-      if (slotId === '150001') {
-        iframeStyle.iframeCssText =
-          'width: 100%;padding: 0;height: 59px; padding: 0px 15px; border: none;';
-      } else if (slotId === '150004') {
-        iframeStyle.iframeCssText =
-          'padding: 0;height: 169px;padding: 0px 15px; border: none;width: 100%;';
-      } else if (slotId === '900000066') {
-        iframeStyle.iframeCssText =
-          'padding: 0;height: 100%;padding: 0px 15px; border: none;width: 100%;';
-      }
-
       withIframeRenderAd(
         extended_fields.src || this.data.consumer.consumerSlotId, // 兼容之前取consumerSlotId作为js地址的逻辑
         `#${this.id}`,
