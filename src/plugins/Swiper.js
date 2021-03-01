@@ -16,7 +16,7 @@ export default class Swiper {
     this.id = 'mp_swiper_' + options.slotId + '_' + ++Swiper.uuid;
     this.slotContainerWidth = this.$slotContainer.getBoundingClientRect().width;
     this.slotContainerHeight =
-      this.slotContainerWidth / (options.width / options.height);
+      this.slotContainerWidth / (options.width / options.height) || 59;
     this.currentId = 0;
     this.delay = options.delay || 2000;
     this.init();
@@ -26,7 +26,7 @@ export default class Swiper {
 
   init = () => {
     this.$container = createWrapper(this.$slotContainer, 'div', this.id);
-    this.$container.style.cssText = 'position: relative; display: none';
+    this.$container.style.cssText = 'position: relative; display: block';
 
     this.$paginationContainer = createWrapper(
       this.$container,
@@ -47,7 +47,6 @@ export default class Swiper {
 
   push = () => {
     this.currentitems++;
-
     this.$sliderContainer.style.width =
       this.currentitems * this.slotContainerWidth + 'px';
 
@@ -62,7 +61,12 @@ export default class Swiper {
 
   createItemContainer = () => {
     let $item = document.createElement('div');
-    $item.style.cssText = 'width: 100%; display: inline-block;';
+    $item.style.cssText =
+      'width: ' +
+      this.slotContainerWidth +
+      'px;height:' +
+      this.slotContainerHeight +
+      'px; display: inline-block;';
     $item.className = 'slide_item';
     this.$sliderContainer.appendChild($item);
     return $item;
@@ -110,7 +114,6 @@ export default class Swiper {
   };
 
   next = () => {
-    this.currentId++;
     if (this.currentId === this.currentitems) {
       this.currentId = 0;
     }
@@ -124,11 +127,12 @@ export default class Swiper {
   previous = () => {};
 
   finish = () => {
-    this.$container.style.display = 'block';
+    clearInterval(this.timer);
     this.timer = setInterval(() => {
       if (this.currentitems < 2) {
         clearInterval(this.timer);
       }
+      this.currentId++;
       this.next();
     }, this.delay);
   };

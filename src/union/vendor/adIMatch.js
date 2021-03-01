@@ -12,33 +12,20 @@ export default Union => {
       setTimeout(onLoaded);
     },
     onBeforeMount() {
-      const slotId = this.requestData.slotId;
-
-      let adStyle = null;
-      let calcHeight = this.slotSize.height || 240;
       let extended_fields = {};
 
-      try {
-        adStyle = JSON.parse(this.data.consumer.style) || {};
-        const containerWidth = this.slotSize.width || screen.width;
-        calcHeight = containerWidth * (adStyle.height / adStyle.width);
-      } catch (e) {}
+      const { width, height = 240 } = this.slotSize;
 
       try {
         extended_fields = JSON.parse(this.data.consumer.extended_fields) || {};
       } catch (e) {}
 
       let iframeStyle = {
-        iframeBodyCssText:
-          'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-        iframeCssText: `height: ${calcHeight}px;border: none; width: 100%`
+        iframeBodyCssText: 'margin: 0; box-sizing: border-box;',
+        iframeCssText: `height: ${height}px;border: none; width: ${width}px`
       };
 
-      withIframeRenderAd(
-        extended_fields.src || this.data.consumer.consumerSlotId, // 兼容之前取consumerSlotId作为js地址的逻辑
-        `#${this.id}`,
-        iframeStyle
-      );
+      withIframeRenderAd(extended_fields.src, `#${this.id}`, iframeStyle);
     },
     onShow() {
       const context = document.querySelector(`#${this.id}`);

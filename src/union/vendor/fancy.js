@@ -16,15 +16,9 @@ export default Union => {
         timeout = null;
       }, UNION_TIMEOUT);
 
-      let { width = screen.width } = this.slotSize;
+      this.slotSize.height = this.slotSize.height || 54;
 
-      let adStyle = null;
-
-      try {
-        adStyle = JSON.parse(data.style) || {};
-        this.slotSize.width = width;
-        this.slotSize.height = width * (adStyle.height / adStyle.width) || 54;
-      } catch (e) {}
+      let { width = screen.width, height } = this.slotSize;
 
       const params = {
         ip: 'client',
@@ -35,7 +29,7 @@ export default Union => {
         reqid: this.requestId,
         device_type: 1, //移动端
         mimes: 'img,c',
-        rsize: `${this.slotSize.width}*${this.slotSize.height}`, // 广告位容器的尺寸
+        rsize: `${width}*${height}`, // 广告位容器的尺寸
         device: JSON.stringify({
           height: screen.height,
           width: screen.width,
@@ -67,6 +61,7 @@ export default Union => {
             const htmlStr = macroReplace(data.ad[0].src, {
               M_PRECLICK: trackingClickUrls
             });
+
             onLoaded(htmlStr);
           } else {
             onError('10000');
@@ -93,6 +88,10 @@ export default Union => {
 
       const contentDoc = iframe.contentWindow.document;
       contentDoc.body.innerHTML = contentStr;
+
+      setInterval(() => {
+        window.document.body.scrollIntoView();
+      }, 1000);
 
       addEventListener(iframe.contentWindow, 'message', () => {
         this.onClick();

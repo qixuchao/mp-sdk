@@ -128,6 +128,11 @@ export default class Slot extends Event {
 
     let $container = document.querySelector(container);
 
+    // 广告位的宽高比
+    const adSlotRadio =
+      Array.isArray(slotConfig.templateInfo) &&
+      slotConfig.templateInfo[0].widgets.root.wh_ratio;
+
     this.slotContainerSize = {
       width:
         $container.clientWidth ||
@@ -136,7 +141,8 @@ export default class Slot extends Event {
       height:
         $container.clientHeight ||
         $container.scrollHeight ||
-        $container.offsetHeight
+        $container.offsetHeight ||
+        (adSlotRadio && $container.clientWidth / adSlotRadio)
     };
 
     //
@@ -185,11 +191,6 @@ export default class Slot extends Event {
       })
         .on('complete', ({ union, status }, { stopPropagation }) => {
           stopPropagation();
-          this.handleComplete();
-          // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
-          if (this.completeNumber === this.consumerLength) {
-            this.swiperPlugin && this.swiperPlugin.finish();
-          }
 
           if (status) {
             if (this.status !== '5') {
@@ -221,6 +222,7 @@ export default class Slot extends Event {
     })
       .on('complete', ({ union, status }) => {
         // 当竞选模式是优先级，并且未找到最高优先级的union时,走getConsumerByWeight获取优先级最高的union
+        this.handleComplete();
         if (this.completeNumber === this.consumerLength) {
           if (this.status !== '5') {
             this.status = '4';
@@ -271,6 +273,8 @@ export default class Slot extends Event {
             policyVersion: window[MODEL_NAME].config.policyVersion,
             slotId: this.slotId,
             err: 0,
+            slotType:
+              this.slotConfig.decorators && this.slotConfig.decorators.type,
             data: this.slotOptions.data,
             mediaId: window[MODEL_NAME].mediaId,
             consumerType: con.consumer.consumerType,
@@ -317,6 +321,7 @@ export default class Slot extends Event {
             })
             .on('render', () => {
               this.swiperPlugin && this.swiperPlugin.push();
+              this.swiperPlugin && this.swiperPlugin.finish();
             });
 
           // 单页情况会将原来的广告位给移出，不能缓存
