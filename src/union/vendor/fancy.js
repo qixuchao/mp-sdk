@@ -89,10 +89,6 @@ export default Union => {
       const contentDoc = iframe.contentWindow.document;
       contentDoc.body.innerHTML = contentStr;
 
-      setInterval(() => {
-        window.document.body.scrollIntoView();
-      }, 1000);
-
       addEventListener(iframe.contentWindow, 'message', () => {
         this.onClick();
       });
