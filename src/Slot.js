@@ -378,6 +378,8 @@ export default class Slot extends Event {
    * @param {Union} union
    */
   race(union) {
+    setFreqControl(this.slotId, this.loadedConsumers.length, 'loadedConsumer');
+
     this.trigger('race', union);
   }
 }

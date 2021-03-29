@@ -1,6 +1,7 @@
 /* gloabl window */
 import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
 import { each, getImei } from './utils/index';
+import env from './utils/browser.js';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import { getFreqControl, setFreqControl } from './utils/storage';
 import Union from './union/index';
@@ -13,12 +14,19 @@ const eventType = {
 };
 
 const reCalcConsumerWeight = (slotConfig, type) => {
-  const fcData = getFreqControl(type);
+  let fcData = getFreqControl(type);
   const slotId = slotConfig.slotId;
   const slotBidding = slotConfig.slotBidding;
 
-  if (fcData[slotId] && fcData[slotId].length >= slotBidding.length) {
+  const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
+
+  if (
+    fcData[slotId] &&
+    (fcData[slotId].length >= slotBidding.length ||
+      fcData[slotId].length === loadedConsumerLength)
+  ) {
     setFreqControl(slotId, [], type);
+    fcData = [];
   }
 
   // 对广告位下的消耗按照优先级进行排序
@@ -49,12 +57,20 @@ const reCalcConsumerWeight = (slotConfig, type) => {
 };
 
 const reCalcConsumerPriority = (slotConfig, type) => {
-  const fcData = getFreqControl(type);
+  let fcData = getFreqControl(type);
   const slotId = slotConfig.slotId;
-  let slotBidding = slotConfig.slotBidding;
+  const slotBidding = slotConfig.slotBidding;
 
-  if (fcData[slotId] && fcData[slotId].length >= slotConfig.slotBidding) {
+  const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
+
+  if (
+    fcData[slotId] &&
+    fcData[slotId].length &&
+    (fcData[slotId].length >= slotBidding.length ||
+      fcData[slotId].length === loadedConsumerLength)
+  ) {
     setFreqControl(slotId, [], type);
+    fcData = [];
   }
 
   // 对广告位下的消耗按照优先级进行排序
@@ -85,7 +101,6 @@ const reCalcConsumerPriority = (slotConfig, type) => {
 // 根据频次干预消耗方对应的权重和优先级
 const preParseConsumer = slotConfig => {
   let freqType = null;
-
   if (slotConfig.priorityPolicyPacingTarget === 3) {
     freqType = 'click';
   } else if (slotConfig.priorityPolicyPacingTarget === 2) {

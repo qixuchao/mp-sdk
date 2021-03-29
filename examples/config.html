@@ -22,53 +22,29 @@
             padding: 24px;
         }
     </style>
+    <script src="../media/45235.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <div class="container">
-            <div style="margin-bottom:10px;">
-                <div>
-                    <a-input-search placeholder="请输入媒体id" style="width: 100%" @search="onLoadConfig"
-                        v-model="mediaId" />
-                </div>
-                <div v-if="config">
-                    <a-tabs default-active-key="1">
-                        <a-tab-pane key="1" :tab="'配置('+slotBiddings.length+')'">
-                            <a-collapse v-model="activeKey">
-                                <a-collapse-panel :key="index+''"
-                                    :header="item.slotId + '('+item.slotBidding.length+')'"
-                                    v-for="(item,index) in slotBiddings">
-                                    <ul class="config-list">
-                                        <li v-for="(c,cindex) in item.slotBidding" :key="cindex">
-                                            {{consumerType[c.consumer.consumerType]}}：{{c.consumer.consumerSlotId}}
-                                            <span @click="handleRemove(index,cindex)">删除</spa>
-                                        </li>
-                                    </ul>
-                                    <div slot="extra"><span @click="handleClick($event,item,index)">添加消耗方</span></div>
-                                </a-collapse-panel>
-                            </a-collapse>
-                        </a-tab-pane>
-                        <a-tab-pane key="2" tab="Raw">
-                            <a-textarea readOnly :rows="20" v-model="rawConfig" />
-                        </a-tab-pane>
-                    </a-tabs>
-                    <br />
-                    <a-button @click="exportConfig">导出配置</a-button>
-                    <p>导出默认使用dist目录中mp文件，请确保你导出的版本正确</p>
-                </div>
-                <!-- <div v-else>配置未加载</div> -->
+<div id="app">
+    <div class="container">
+        <div style="margin-bottom:10px;">
+            <div>
+                <a-input-search placeholder="请输入媒体id" style="width: 100%" @search="onLoadConfig"
+                                v-model="mediaId"/>
             </div>
             <div v-if="config">
                 <a-tabs default-active-key="1">
                     <a-tab-pane key="1" :tab="'配置('+slotBiddings.length+')'">
                         <a-collapse v-model="activeKey">
-                            <a-collapse-panel :key="index+''" :header="item.slotId + '('+item.slotBidding.length+')'"
+                            <a-collapse-panel :key="index+''"
+                                              :header="item.slotId + '('+item.slotBidding.length+')'"
                                               v-for="(item,index) in slotBiddings">
                                 <ul class="config-list">
                                     <li v-for="(c,cindex) in item.slotBidding" :key="cindex">
-                                        {{consumerType[c.consumer.consumerType]}}：{{c.consumer.consumerSlotId}} <span
-                                            @click="handleRemove(index,cindex)">删除</spa>
+                                        {{consumerType[c.consumer.consumerType]}}：{{c.consumer.consumerSlotId}}
+                                        <span @click="handleRemove(index,cindex)">删除</span>
+                                        <span @click="handleEdit(index,cindex)">编辑</span>
                                     </li>
                                 </ul>
                                 <div slot="extra"><span @click="handleClick($event,item,index)">添加消耗方</span></div>
@@ -81,56 +57,75 @@
                 </a-tabs>
                 <br/>
                 <a-button @click="exportConfig">导出配置</a-button>
+                <a-button @click="exportSlotInfo">导出消耗方方信息</a-button>
                 <p>导出默认使用dist目录中mp文件，请确保你导出的版本正确</p>
             </div>
             <!-- <div v-else>配置未加载</div> -->
         </div>
-
-        <a-modal v-model="visible" title="新建消耗方" ok-text="确认" cancel-text="取消" @ok="handleOk" type="primary">
-            <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-                <a-form-item label="消耗方类型">
-                    <a-select v-decorator="['type',{initialValue:'gdt'}]">
-                        <a-select-option value="gdt">
-                            优量汇
-                        </a-select-option>
-                        <a-select-option value="bd">
-                            百度
-                        </a-select-option>
-                        <a-select-option value="fancyapi">
-                            百度
-                        </a-select-option>
-                        <a-select-option value="custom">
-                            艾卖驰
-                        </a-select-option>
-                        <a-select-option value="google">
-                            艾卖驰
-                        </a-select-option>
-                    </a-select>
-                </a-form-item>
-                <a-form-item label="消耗方id">
-                    <a-input placeholder="请输入消耗方id"
-                        v-decorator="['id', { rules: [{ required: true, message: '请输入消耗方id' }] }]" />
-                </a-form-item>
-                <a-form-item label="消耗方id">
-                    <a-input placeholder="请输入消耗方扩展字段" v-decorator="['fields']" />
-                </a-form-item>
-                <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-              <a-button type="primary" html-type="submit">
-                保存
-              </a-button>
-            </a-form-item> -->
-            </a-form>
-        </a-modal>
     </div>
-    <script>
-        function saveAs(blob, filename) {
-            var type = blob.type;
-            var force_saveable_type = "application/octet-stream";
-            if (type && type != force_saveable_type) {
-                // 强制下载，而非在浏览器中打开
-                var slice = blob.slice || blob.webkitSlice;
-                blob = slice.call(blob, 0, blob.size, force_saveable_type);
-            }
+
+    <a-modal v-model="visible" title="新建消耗方" ok-text="确认" cancel-text="取消" @ok="handleOk" type="primary">
+        <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+            <a-form-item label="消耗方类型">
+                <a-select v-decorator="['type',{initialValue:'gdt'}]">
+                    <a-select-option value="gdt">
+                        优量汇
+                    </a-select-option>
+                    <a-select-option value="bd">
+                        百度
+                    </a-select-option>
+                    <a-select-option value="ptgapi">
+                        泛为
+                    </a-select-option>
+                    <a-select-option value="custom">
+                        艾卖驰
+                    </a-select-option>
+                    <a-select-option value="google">
+                        谷歌
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="消耗方id">
+                <a-input placeholder="请输入消耗方id"
+                         v-decorator="['id', { rules: [{ required: true, message: '请输入消耗方id' }] }]"/>
+            </a-form-item>
+            <a-form-item label="消耗方id">
+                <a-input placeholder="请输入消耗方扩展字段" v-decorator="['fields']"/>
+            </a-form-item>
+            <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+          <a-button type="primary" html-type="submit">
+            保存
+          </a-button>
+        </a-form-item> -->
+        </a-form>
+    </a-modal>
+    <a-modal v-model="editModalVisible" title="编辑消耗方" ok-text="确认" cancel-text="取消" @ok="handleEdit" type="primary">
+        <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+            <a-form-item label="消耗方id">
+                <a-input placeholder="请输入消耗方id"
+                         v-decorator="['consumerSlotId', { initialValue: '',rules: [{ required: true, message: '请输入消耗方id' }] }]"/>
+            </a-form-item>
+            <a-form-item label="消耗方权重">
+                <a-input placeholder="请输入消耗方id"
+                         v-decorator="['consumerSlotId', { initialValue: '', rules: [{ required: true, message: '请输入消耗方id' }] }]"/>
+            </a-form-item>
+            <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+          <a-button type="primary" html-type="submit">
+            保存
+          </a-button>
+        </a-form-item> -->
+        </a-form>
+    </a-modal>
+</div>
+<script>
+    function saveAs(blob, filename) {
+        var type = blob.type;
+        var force_saveable_type = "application/octet-stream";
+        if (type && type != force_saveable_type) {
+            // 强制下载，而非在浏览器中打开
+            var slice = blob.slice || blob.webkitSlice;
+            blob = slice.call(blob, 0, blob.size, force_saveable_type);
+        }
 
         var url = URL.createObjectURL(blob);
         var save_link = document.createElementNS(
@@ -162,86 +157,85 @@
         URL.revokeObjectURL(url);
     }
 
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    mediaId: "",
-                    slotBiddings: [],
-                    activeKey: 1,
-                    rawConfig: '',
-                    config: null,
-                    consumerType: {
-                        gdt: '优量汇',
-                        bd: '百度',
-                        custom: '艾卖驰',
-                        ptgapi: 'fancyapi',
-                    },
-                    visible: false,
-                    exportLoading: false,
-                    form: this.$form.createForm(this, { name: 'coordinated' })
-                }
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                mediaId: "",
+                slotBiddings: [],
+                activeKey: 1,
+                rawConfig: '',
+                config: null,
+                slotList: [],
+                consumerType: {
+                    gdt: '优量汇',
+                    bd: '百度',
+                    custom: '艾卖驰',
+                    ptgapi: 'fancyapi',
+                },
+                visible: false,
+                editModalVisible: false,
+                consumerInfo: null,
+                exportLoading: false,
+                form: this.$form.createForm(this, {name: 'coordinated'})
+            }
+        },
+        methods: {
+            handleRemove(index, cindex) {
+                this.slotBiddings[index].slotBidding.splice(cindex, 1);
             },
-            methods: {
-                handleRemove(index, cindex) {
-                    this.slotBiddings[index].slotBidding.splice(cindex, 1);
-                },
-                exportConfig() {
-                    this.exportLoading = true;
-                    fetch('/dist/mp.js').then(response => response.text())
-                        .then(data => {
-                            this.exportLoading = false
-                            var bb = new Blob(['/* Created: ' + new Date().toLocaleDateString()
-                                + ' */\nwindow.M$P_M_C=' + JSON.stringify(this.config, null) + ';\n' + data], {
-                                type: "application/javascript"
-                            });
-                            saveAs(bb, '' + this.mediaId + '.js');
-                        }).catch((e) => {
-                            this.$message.error(e)
-                            this.exportLoading = false
-                        })
-                },
-                handleOk() {
-                    this.form.validateFields((err, values) => {
-                        if (!err) {
-                            console.log('Received values of form: ', values);
-                            console.log(this.slotInfo)
-                            let consumer = JSON.parse(JSON.stringify(this.slotInfo.slotBidding[0]))
-                            consumer.consumer.consumerSlotId = values.id
-                            consumer.consumer.consumerType = values.type
-                            // this.slotInfo.slotBidding.push(consumer)
+            handleEdit(index, cindex) {
+                console.log(123)
+                this.editModalVisible = true
+                this.index = index
+                this.cindex = cindex
+                this.consumerInfo = this.slotBiddings[index].slotBidding[cindex]
+            },
+            exportConfig() {
+                this.exportLoading = true;
+                fetch('/dist/mp.js').then(response => response.text())
+                    .then(data => {
+                        this.exportLoading = false
+                        var bb = new Blob(['/* Created: ' + new Date().toLocaleDateString()
+                        + ' */\nwindow.M$P_M_C=' + JSON.stringify(this.config, null) + ';\n' + data], {
+                            type: "application/javascript"
+                        });
+                        saveAs(bb, '' + this.mediaId + '.js');
+                    }).catch((e) => {
+                    this.$message.error(e)
+                    this.exportLoading = false
+                })
+            },
+            handleOk() {
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                        console.log(this.slotInfo)
+                        let consumer = JSON.parse(JSON.stringify(this.slotInfo.slotBidding[0]))
+                        consumer.consumer.consumerSlotId = values.id
+                        consumer.consumer.consumerType = values.type
+                        // this.slotInfo.slotBidding.push(consumer)
 
-                            this.slotBiddings[this.index].slotBidding.push(consumer);
-                            console.log(this.slotInfo)
+                        this.slotBiddings[this.index].slotBidding.push(consumer);
+                        console.log(this.slotInfo)
 
-                            this.visible = false
-                        }
-                    });
-                },
-                handleClick(event, item, index) {
-                    // If you don't want click extra trigger collapse, you can prevent this:
-                    event.stopPropagation();
-                    this.slotInfo = item;
-                    this.index = index;
-                    this.visible = true;
-                },
-                onLoadConfig(val) {
-                    if (val) {
-                        fetch('/media/' + val + '.js?raw').then(response => response.text())
-                            .then(data => {
-                                this.rawConfig = data
-                                const temp = data.split('!function(){');
-                                try {
-                                    this.config = new Function('return ' + temp[0].match(/{[\s\S]*}/)[0])()
-                                    this.slotBiddings = this.config.slotBiddings;
-                                    this.sdkVersion = this.config.sdkVersion;
-                                } catch (e) {
-                                    console.log(e)
-                                    this.$message.error('配置格式错误')
-                                }
-                                this.visible = false
-                            });
+                        this.visible = false
                     }
+                });
+            },
+            handleEdit() {
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                        console.log(this.slotInfo)
+                        this.consumerInfo.weight = values.weight
+
+                        this.slotBiddings[this.index].slotBidding[this.cindex] = this.consumerInfo;
+                        console.log(this.slotInfo)
+
+                        this.visible = false
+                    }
+                });
             },
             handleClick(event, item, index) {
                 // If you don't want click extra trigger collapse, you can prevent this:
@@ -252,15 +246,89 @@
             },
             onLoadConfig(val) {
                 if (val) {
-                    fetch('/media/' + val + '.js').then(response => response.text())
+                    fetch('/media/' + val + '.js?raw').then(response => response.text())
                         .then(data => {
                             this.rawConfig = data
                             const temp = data.split('!function(){');
                             try {
+                                this.config = new Function('return ' + temp[0].match(/{[\s\S]*}/)[0])()
+                                this.slotBiddings = this.config.slotBiddings;
+                                this.sdkVersion = this.config.sdkVersion;
+                            } catch (e) {
+                                console.log(e)
+                                this.$message.error('配置格式错误')
+                            }
+                            this.visible = false
+                        });
+                }
+            },
+            handleClick(event, item, index) {
+                // If you don't want click extra trigger collapse, you can prevent this:
+                event.stopPropagation();
+                this.slotInfo = item;
+                this.index = index;
+                this.visible = true;
+            },
+
+            getSlotList(slotBindings) {
+                console.log('slotBindings', slotBindings)
+                let slotList = [{
+                    slotId: '广告位id',
+                    consumerType: '消耗方类型',
+                    consumerSlotId: '消耗方广告位id',
+                    priorityPolicy: '竞选模式',
+                    weight: '权重',
+
+                }]
+                slotBindings.forEach(function (slot) {
+                    slot.slotBidding.forEach(function (consumer) {
+                        slotList.push({
+                            slotId: slot.slotId,
+                            consumerType: consumer.consumer.consumerType,
+                            consumerSlotId: consumer.consumer.consumerSlotId + '\t',
+                            priorityPolicy: slot.priorityPolicy,
+                            weight: consumer.weight,
+                        })
+                    })
+                })
+                this.slotList = slotList
+            },
+
+            exportSlotInfo(){
+                var str = '';
+                let array = this.slotList
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+
+                    for (var index in array[i]) {
+                        line += '"' + array[i][index] + '",';
+                    }
+
+                    line.slice(0,line.length-1);
+
+                    str += line + '\r';
+                }
+
+                let downloadLink = document.createElement('a')
+                downloadLink.href = "data:text/csv;charset=utf-8,\uFEFF" + str
+                downloadLink.download = this.config.mediaId + '.csv'
+                document.body.appendChild(downloadLink)
+                downloadLink.click()
+            },
+
+            onLoadConfig(val) {
+                if (val) {
+                    fetch('/media/' + val + '.js').then(response => response.text())
+                        .then(data => {
+                            this.rawConfig = data
+                            const temp = data.split(/\!|\(function\(\)\{/);
+                            try {
                                 const config = temp[0].match(/{[\s\S]*}/)[0] || temp[0]
-                                console.log(temp[0].match(/{[\s\S]*}/)[0])
+                                // console.log('this.config', config)
+
                                 this.config = new Function('return ' + config)()
                                 this.slotBiddings = this.config.slotBiddings;
+                                this.getSlotList(this.slotBiddings)
                                 this.sdkVersion = this.config.sdkVersion;
                             } catch (e) {
                                 console.log(e)

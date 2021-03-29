@@ -1,7 +1,9 @@
 /* global window */
-import { addParam, macroReplace, jsonp, each } from '../../utils/index';
-import { MODEL_NAME, UNION_TIMEOUT } from '../../config';
+import { macroReplace, jsonp, getTimeStamp } from '../../utils/index';
+import { UNION_TIMEOUT } from '../../config';
 import { addEventListener } from '../helper';
+import { getFreqControl, setFreqControl } from '../../utils/storage';
+import env from '../../utils/browser';
 
 const url = 'https://g.fancyapi.com/s2s';
 
@@ -29,6 +31,7 @@ export default Union => {
         reqid: this.requestId,
         device_type: 1, //移动端
         mimes: 'img,c',
+        user_id: getTimeStamp(),
         rsize: `${width}*${height}`, // 广告位容器的尺寸
         device: JSON.stringify({
           height: screen.height,

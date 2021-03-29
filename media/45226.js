@@ -1,3 +1,4 @@
+/* Created: 2021/01/26 */
 window.M$P_M_C = {
   Key: 5000045226,
   mediaId: 45226,
@@ -7,6 +8,8 @@ window.M$P_M_C = {
       slotId: '120005',
       isConcurrent: true,
       priorityPolicy: 3,
+      iosClickFrequency: true,
+      priorityPolicyPacingTarget: 3,
       slotBidding: [
         {
           adKey: 5000000565,
@@ -29,54 +32,244 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YX\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YX\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            51: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000565,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 2,
+          consumer: {
+            Key: 6,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282773',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000565,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 3,
+          consumer: {
+            Key: 6,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282491',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000565,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 4,
+          consumer: {
+            Key: 6,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282767',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
         }
       ]
     },
@@ -106,54 +299,49 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YW\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YW&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YW\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YW&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1Nwb368/NTAwMDAwMDA1NQ33ba/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            51: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 51: { version: 0, template: 0 } }
         }
       ]
     },
@@ -161,77 +349,15 @@ window.M$P_M_C = {
       slotId: '120007',
       isConcurrent: true,
       priorityPolicy: 3,
+      // decorators: {
+      //   type: 'banner',
+      //   options: {
+      //     height: 59,
+      //     width: 375,
+      //     delay: 3000
+      //   }
+      // },
       slotBidding: [
-        {
-          adKey: 5000000178,
-          geoCode: [],
-          hour: [],
-          freqControl: [],
-          weight: 1,
-          consumer: {
-            Key: 6,
-            dspId: 0,
-            status: 1,
-            timeOut: 0,
-            bidUrl: '',
-            consumerType: 'gdt',
-            dspMessageType: 0,
-            blackAppList: null,
-            blackKeywordList: null,
-            consumerSlotId: '9081525739883813',
-            extended_fields: ''
-          },
-          trackingData: {
-            bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-          },
-          trackingV2Data: {
-            bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YV\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
-            ],
-            dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YV\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
-            ],
-            vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ]
-          },
-          templateInfo: {
-            52: {
-              version: 0,
-              template: 0
-            }
-          }
-        },
         {
           adKey: 5000000179,
           geoCode: [],
@@ -253,54 +379,244 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YV\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YV\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            52: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 52: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000179,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 1,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'gdt',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '9081525739883813',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 52: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000179,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 1,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'gdt',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '5011950972752495',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 52: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000179,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 1,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'gdt',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '2081158962650500',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 52: { version: 0, template: 0 } }
         }
       ]
     },
@@ -309,6 +625,71 @@ window.M$P_M_C = {
       isConcurrent: true,
       priorityPolicy: 3,
       slotBidding: [
+        {
+          adKey: 5000000179,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 2,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282522',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YV&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDA4Mwc146/NTAwMDAwMDA4Mg4c2f/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 52: { version: 0, template: 0 } }
+        },
         {
           adKey: 5000000568,
           geoCode: [],
@@ -330,54 +711,49 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YU\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YU&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YU\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YU&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMA48f7/NTAwMDAwMDE5OA3340/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            52: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 52: { version: 0, template: 0 } }
         }
       ]
     },
@@ -407,139 +783,73 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://e.cn.miaozhen.com/r/k=2191677\u0026p=7e8YT\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YT&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-              'https://g.cn.miaozhen.com/x/k=2191677\u0026p=7e8YT\u0026dx=__IPDX__\u0026rt=2\u0026pro=s\u0026ns=__IP__\u0026ni=__IESID__\u0026v=__LOC__\u0026xa=__ADPLATFORM__\u0026tr=__REQUESTID__\u0026vg=__AUTOPLAY__\u0026nh=__AUTOREFRESH__\u0026mo=__OS__\u0026m0=__OPENUDID__\u0026m0a=__DUID__\u0026m1=__ANDROIDID1__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m4=__AAID__\u0026m5=__IDFA__\u0026m6=__MAC1__\u0026m6a=__MAC__\u0026m11=__OAID__\u0026mn=__ANAME__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YT&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDA1NQ33ba/NTAwMDAwMDA1Mw9d19/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            52: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 52: { version: 0, template: 0 } }
         }
       ]
     },
     {
       slotId: '120013',
       isConcurrent: true,
-      priorityPolicy: 1,
+      priorityPolicy: 3,
+      // decorators: {
+      //   type: 'banner',
+      //   options: {
+      //     height: 320,
+      //     width: 650,
+      //     delay: 3000
+      //   }
+      // },
       slotBidding: [
         {
           adKey: 5000000569,
           geoCode: [],
           hour: [],
           freqControl: [],
-          weight: 50,
+          weight: 1,
           consumer: {
             Key: 4,
-            dspId: 0,
-            status: 1,
-            timeOut: 0,
-            bidUrl: '',
-            consumerType: 'google',
-            dspMessageType: 0,
-            blackAppList: null,
-            blackKeywordList: null,
-            consumerSlotId: '5123337151',
-            extended_fields:
-              '{"google_ad_client":"ca-pub-6438262210043494","google_ad_format":"fluid","google_ad_layout_key":"-fb+5w+4e-db+86"}'
-          },
-          trackingData: {
-            bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
-            dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-          },
-          trackingV2Data: {
-            bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ],
-            vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
-            ]
-          },
-          templateInfo: {
-            51: {
-              version: 0,
-              template: 0
-            }
-          }
-        },
-        {
-          adKey: 5000000571,
-          geoCode: [],
-          hour: [],
-          freqControl: [],
-          weight: 50,
-          consumer: {
-            Key: 6,
             dspId: 0,
             status: 1,
             timeOut: 0,
@@ -553,68 +863,56 @@ window.M$P_M_C = {
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            51: {
-              version: 0,
-              template: 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      slotId: '120014',
-      isConcurrent: true,
-      priorityPolicy: 3,
-      slotBidding: [
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
         {
-          adKey: 5000000574,
+          adKey: 5000000569,
           geoCode: [],
           hour: [],
           freqControl: [],
-          weight: 1,
+          weight: 2,
           consumer: {
-            Key: 6,
+            Key: 4,
             dspId: 0,
             status: 1,
             timeOut: 0,
@@ -623,57 +921,380 @@ window.M$P_M_C = {
             dspMessageType: 0,
             blackAppList: null,
             blackKeywordList: null,
-            consumerSlotId: '2051032387067039',
+            consumerSlotId: '4081350912151517',
             extended_fields: ''
           },
           trackingData: {
             bidTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             errorTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             impTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             clickTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSucTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             bidSelectedTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
             dpTracking:
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
           },
           trackingV2Data: {
             bidSelectedTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/bs?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidSucTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/s?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             bidTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/b?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             clickTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/c?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             dpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/dp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             errorTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             impTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/i?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ],
             vpTracking: [
-              'https://t2.fancyapi.com/NTAwMDAwMDIwMg13ba/NTAwMDAwMDIwMA48f7/vp?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o='
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
             ]
           },
-          templateInfo: {
-            51: {
-              version: 0,
-              template: 0
-            }
-          }
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000569,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 3,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'gdt',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '9001251922258671',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000569,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 10,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282054',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        }
+      ]
+    },
+    {
+      slotId: '120014',
+      isConcurrent: true,
+      priorityPolicy: 3,
+      iosClickFrequency: true,
+      priorityPolicyPacingTarget: 3,
+      slotBidding: [
+        {
+          adKey: 5000000569,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 1,
+          consumer: {
+            Key: 4,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'gdt',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '6001955932854313',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDIwMQ0189/NTAwMDAwMDE5OQ1ba9/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000565,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 3,
+          consumer: {
+            Key: 6,
+            dspId: 0,
+            status: 3,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282498',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
+        },
+        {
+          adKey: 5000000565,
+          geoCode: [],
+          hour: [],
+          freqControl: [],
+          weight: 2,
+          consumer: {
+            Key: 6,
+            dspId: 0,
+            status: 1,
+            timeOut: 0,
+            bidUrl: '',
+            consumerType: 'ptgapi',
+            dspMessageType: 0,
+            blackAppList: null,
+            blackKeywordList: null,
+            consumerSlotId: '36282775',
+            extended_fields: ''
+          },
+          trackingData: {
+            bidTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            errorTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            impTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            clickTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSucTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            bidSelectedTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+            dpTracking:
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+          },
+          trackingV2Data: {
+            bidSelectedTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/bs?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidSucTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/s?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            bidTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/b?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            clickTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/c?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://e.cn.miaozhen.com/r/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            dpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/dp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            errorTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ],
+            impTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/i?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
+              'https://g.cn.miaozhen.com/x/k=2191677&p=7e8YX&dx=__IPDX__&rt=2&pro=s&ns=__IP__&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&tr=__REQUESTID__&vg=__AUTOPLAY__&nh=__AUTOREFRESH__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&m11=__OAID__&mn=__ANAME__&o='
+            ],
+            vpTracking: [
+              'https://t2.fancyapi.com/NTAwMDAwMDE5OQ1ba9/NTAwMDAwMDE5Nw656c/vp?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o='
+            ]
+          },
+          templateInfo: { 51: { version: 0, template: 0 } }
         }
       ]
     }
@@ -684,16 +1305,17 @@ window.M$P_M_C = {
     ptgApiUrl: 'http://g.fancyapi.com/s2s?',
     antiSpamUrl: 'http://antispam.fancyapi.com/score',
     errTrackingUrl:
-      'https://t2.fancyapi.com/NTAwMDAwMDAwNQ5f00/NTAwOTA0NTIyNg0aad/e?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+      'https://t2.fancyapi.com/NTAwMDAwMDAwNQ5f00/NTAwOTA0NTIyNg0aad/e?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
     initTrackingUrl:
-      'https://t2.fancyapi.com/NTAwMDAwMDAwNQ5f00/NTAwOTA0NTIyNg0aad/in?ad=__ADID__\u0026ct=__CLIENTTYPE__\u0026dt=__DATA__\u0026ex=__EXT__\u0026it=__INTIME__\u0026l=__LBS__\u0026m1a=__ANDROIDID__\u0026m2=__IMEI__\u0026m5=__IDFA__\u0026m6a=__MAC__\u0026mo=__OS__\u0026nn=__APP__\u0026ns=__IP__\u0026oa=__OAID__\u0026pr=__PRICE__\u0026tr=__REQUESTID__\u0026ts=__TS__\u0026o=',
+      'https://t2.fancyapi.com/NTAwMDAwMDAwNQ5f00/NTAwOTA0NTIyNg0aad/in?ad=__ADID__&ct=__CLIENTTYPE__&dt=__DATA__&ex=__EXT__&it=__INTIME__&l=__LBS__&m1a=__ANDROIDID__&m2=__IMEI__&m5=__IDFA__&m6a=__MAC__&mo=__OS__&nn=__APP__&ns=__IP__&oa=__OAID__&pr=__PRICE__&tr=__REQUESTID__&ts=__TS__&o=',
     ttAppId: '',
     gdtAppId: '1110655203',
     baiduAppId: '275513593',
-    isCheckVisible: false,
-    isDynamicWeight: false,
+    isCheckVisible: false, // 可见性监测开关
+    isDynamicWeight: false, // 动态计算消耗方广告位权重
+    isOpenClickFreq: true, // 点击频控
     freqNum: 0,
-    policyVersion: 5,
+    policyVersion: 39,
     whiteAppList: null,
     whiteKeywordList: null,
     adNet: 1
@@ -702,7 +1324,7 @@ window.M$P_M_C = {
 
 !(function () {
   'use strict';
-  function a(e, t) {
+  function c(e, t) {
     if (!(e instanceof t))
       throw new TypeError('Cannot call a class as a function');
   }
@@ -718,7 +1340,7 @@ window.M$P_M_C = {
   function t(e, t, n) {
     return t && i(e.prototype, t), n && i(e, n), e;
   }
-  function s(e, t, n) {
+  function u(e, t, n) {
     return (
       t in e
         ? Object.defineProperty(e, t, {
@@ -731,7 +1353,7 @@ window.M$P_M_C = {
       e
     );
   }
-  function o(t, e) {
+  function r(t, e) {
     var n,
       i = Object.keys(t);
     return (
@@ -745,23 +1367,31 @@ window.M$P_M_C = {
       i
     );
   }
-  function c(t) {
+  function d(t) {
     for (var e = 1; e < arguments.length; e++) {
       var n = null != arguments[e] ? arguments[e] : {};
       e % 2
-        ? o(Object(n), !0).forEach(function (e) {
-            s(t, e, n[e]);
+        ? r(Object(n), !0).forEach(function (e) {
+            u(t, e, n[e]);
           })
         : Object.getOwnPropertyDescriptors
         ? Object.defineProperties(t, Object.getOwnPropertyDescriptors(n))
-        : o(Object(n)).forEach(function (e) {
+        : r(Object(n)).forEach(function (e) {
             Object.defineProperty(t, e, Object.getOwnPropertyDescriptor(n, e));
           });
     }
     return t;
   }
-  function l(e) {
-    return (l = Object.setPrototypeOf
+  function e(e, t) {
+    if ('function' != typeof t && null !== t)
+      throw new TypeError('Super expression must either be null or a function');
+    (e.prototype = Object.create(t && t.prototype, {
+      constructor: { value: e, writable: !0, configurable: !0 }
+    })),
+      t && n(e, t);
+  }
+  function s(e) {
+    return (s = Object.setPrototypeOf
       ? Object.getPrototypeOf
       : function (e) {
           return e.__proto__ || Object.getPrototypeOf(e);
@@ -774,14 +1404,14 @@ window.M$P_M_C = {
         return (e.__proto__ = t), e;
       })(e, t);
   }
-  function u(e) {
+  function h(e) {
     if (void 0 === e)
       throw new ReferenceError(
         "this hasn't been initialised - super() hasn't been called"
       );
     return e;
   }
-  function e(r) {
+  function a(o) {
     var a = (function () {
       if ('undefined' == typeof Reflect || !Reflect.construct) return !1;
       if (Reflect.construct.sham) return !1;
@@ -802,35 +1432,35 @@ window.M$P_M_C = {
         t,
         n,
         i,
-        o = l(r);
+        r = s(o);
       return (
         (t = a
-          ? ((e = l(this).constructor), Reflect.construct(o, arguments, e))
-          : o.apply(this, arguments)),
+          ? ((e = s(this).constructor), Reflect.construct(r, arguments, e))
+          : r.apply(this, arguments)),
         (n = this),
-        !(i = t) || ('object' != typeof i && 'function' != typeof i) ? u(n) : i
+        !(i = t) || ('object' != typeof i && 'function' != typeof i) ? h(n) : i
       );
     };
   }
-  function d(e) {
+  function l(e) {
     return void 0 === e;
   }
-  function h(e) {
+  function g(e) {
     return 'function' == typeof e;
   }
-  var g = 'M$P',
-    r = 'M$P_M_C',
-    f = 'M$P_BF',
-    p = 'M$P_UID',
-    m = Object.prototype.toString;
-  function v(e) {
+  var f = 'M$P',
+    o = 'M$P_M_C',
+    p = 'M$P_BF',
+    m = 'M$P_UID',
+    v = Object.prototype.toString;
+  function y(e) {
     if (
       '[object Object]' ===
       (null == (t = e)
         ? void 0 === t
           ? '[object Undefined]'
           : '[object Null]'
-        : m.call(t))
+        : v.call(t))
     ) {
       var t;
       if (null === Object.getPrototypeOf(e)) return 1;
@@ -839,38 +1469,38 @@ window.M$P_M_C = {
       return Object.getPrototypeOf(e) === n;
     }
   }
-  function T(e, t, n) {
-    var i = document.getElementsByTagName('script')[0],
-      o = document.createElement('script');
-    (o.onload = function () {
-      (o = o.onload = null), t && t();
-    }),
-      (o.onerror = function () {
-        (o = o.onerror = null), n && n();
-      }),
-      (o.src = e),
-      i.parentNode.insertBefore(o, i);
-  }
   function S(e, t, n) {
+    var i = document.getElementsByTagName('script')[0],
+      r = document.createElement('script');
+    (r.onload = function () {
+      (r = r.onload = null), t && t();
+    }),
+      (r.onerror = function () {
+        (r = r.onerror = null), n && n();
+      }),
+      (r.src = e),
+      i.parentNode.insertBefore(r, i);
+  }
+  function T(e, t, n) {
     var i = 0 < arguments.length && void 0 !== e ? e : document.body,
-      o = 1 < arguments.length && void 0 !== t ? t : 'div',
-      r = 2 < arguments.length ? n : void 0,
-      a = document.createElement(o);
+      r = 1 < arguments.length && void 0 !== t ? t : 'div',
+      o = 2 < arguments.length ? n : void 0,
+      a = document.createElement(r);
     return (
-      (a.id = r),
+      (a.id = o),
       (a.style.display = 'none'),
-      (a.className = r),
+      (a.className = o),
       i.appendChild(a),
       a
     );
   }
-  function y(e, t, n, i) {
+  function w(e, t, n, i) {
     e.addEventListener
       ? e.addEventListener(t, n, !!i)
       : e.attachEvent('on' + t, n);
   }
-  function w(e) {
-    if (!(this instanceof w)) return new w(e);
+  function C(e) {
+    if (!(this instanceof C)) return new C(e);
     (this.options = this.extend(e, {
       swfContainerId: 'fingerprintjs2',
       swfPath: 'flash/compiled/FontList.swf',
@@ -881,10 +1511,10 @@ window.M$P_M_C = {
       (this.nativeForEach = Array.prototype.forEach),
       (this.nativeMap = Array.prototype.map);
   }
-  var x = window.navigator.userAgent,
-    E = (/(iPhone|iPod|Android|ios|mobile)/i.test(x), /Android|Linux/.test(x)),
-    C = /\(i[^;]+;( U;)? CPU.+Mac OS X/gi.test(x);
-  (w.prototype = {
+  var A = window.navigator.userAgent,
+    x = (/(iPhone|iPod|Android|ios|mobile)/i.test(A), /Android|Linux/i.test(A)),
+    E = /\(i[^;]+;( U;)? CPU.+Mac OS X/gi.test(A);
+  (C.prototype = {
     extend: function (e, t) {
       if (null == e) return t;
       for (var n in e) null != e[n] && t[n] !== e[n] && (t[n] = e[n]);
@@ -918,14 +1548,14 @@ window.M$P_M_C = {
         (e = this.hasLiedBrowserKey(e)),
         (e = this.touchSupportKey(e)),
         (e = this.customEntropyFunction(e));
-      var o = this;
+      var r = this;
       this.fontsKey(e, function (e) {
         var n = [];
-        o.each(e, function (e) {
+        r.each(e, function (e) {
           var t = e.value;
           void 0 !== e.value.join && (t = e.value.join(';')), n.push(t);
         });
-        var t = o.x64hash128(n.join('~~~'), 31);
+        var t = r.x64hash128(n.join('~~~'), 31);
         return i(t, e);
       });
     },
@@ -1664,49 +2294,49 @@ window.M$P_M_C = {
           );
         }
         var e = document.getElementsByTagName('body')[0],
-          o = document.createElement('div'),
+          r = document.createElement('div'),
           g = document.createElement('div'),
           i = {},
-          r = {},
+          o = {},
           t = (function () {
             for (var e = [], t = 0, n = u.length; t < n; t++) {
               var i = h();
-              (i.style.fontFamily = u[t]), o.appendChild(i), e.push(i);
+              (i.style.fontFamily = u[t]), r.appendChild(i), e.push(i);
             }
             return e;
           })();
-        e.appendChild(o);
+        e.appendChild(r);
         for (var n = 0, a = u.length; n < a; n++)
-          (i[u[n]] = t[n].offsetWidth), (r[u[n]] = t[n].offsetHeight);
+          (i[u[n]] = t[n].offsetWidth), (o[u[n]] = t[n].offsetHeight);
         var s = (function () {
-          for (var e, t, n, i = {}, o = 0, r = d.length; o < r; o++) {
-            for (var a = [], s = 0, c = u.length; s < c; s++) {
-              var l =
-                ((e = d[o]),
+          for (var e, t, n, i = {}, r = 0, o = d.length; r < o; r++) {
+            for (var a = [], s = 0, l = u.length; s < l; s++) {
+              var c =
+                ((e = d[r]),
                 (t = u[s]),
                 (n = void 0),
                 ((n = h()).style.fontFamily = "'" + e + "'," + t),
                 n);
-              g.appendChild(l), a.push(l);
+              g.appendChild(c), a.push(c);
             }
-            i[d[o]] = a;
+            i[d[r]] = a;
           }
           return i;
         })();
         e.appendChild(g);
-        for (var c = [], l = 0, f = d.length; l < f; l++)
+        for (var l = [], c = 0, f = d.length; c < f; c++)
           !(function (e) {
             for (var t = !1, n = 0; n < u.length; n++)
               if (
                 (t =
-                  e[n].offsetWidth !== i[u[n]] || e[n].offsetHeight !== r[u[n]])
+                  e[n].offsetWidth !== i[u[n]] || e[n].offsetHeight !== o[u[n]])
               )
                 return t;
             return t;
-          })(s[d[l]]) || c.push(d[l]);
+          })(s[d[c]]) || l.push(d[c]);
         e.removeChild(g),
-          e.removeChild(o),
-          p.push({ key: 'js_fonts', value: c }),
+          e.removeChild(r),
+          p.push({ key: 'js_fonts', value: l }),
           m(p);
       }, 1);
     },
@@ -1932,7 +2562,7 @@ window.M$P_M_C = {
       var n = [],
         i = t.createBuffer();
       t.bindBuffer(t.ARRAY_BUFFER, i);
-      var o = new Float32Array([
+      var r = new Float32Array([
         -0.2,
         -0.9,
         0,
@@ -1943,10 +2573,10 @@ window.M$P_M_C = {
         0.732134444,
         0
       ]);
-      t.bufferData(t.ARRAY_BUFFER, o, t.STATIC_DRAW),
+      t.bufferData(t.ARRAY_BUFFER, r, t.STATIC_DRAW),
         (i.itemSize = 3),
         (i.numItems = 3);
-      var r = t.createProgram(),
+      var o = t.createProgram(),
         a = t.createShader(t.VERTEX_SHADER);
       t.shaderSource(
         a,
@@ -1954,23 +2584,23 @@ window.M$P_M_C = {
       ),
         t.compileShader(a);
       var s,
-        c,
         l,
+        c,
         u = t.createShader(t.FRAGMENT_SHADER);
       t.shaderSource(
         u,
         'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}'
       ),
         t.compileShader(u),
-        t.attachShader(r, a),
-        t.attachShader(r, u),
-        t.linkProgram(r),
-        t.useProgram(r),
-        (r.vertexPosAttrib = t.getAttribLocation(r, 'attrVertex')),
-        (r.offsetUniform = t.getUniformLocation(r, 'uniformOffset')),
-        t.enableVertexAttribArray(r.vertexPosArray),
-        t.vertexAttribPointer(r.vertexPosAttrib, i.itemSize, t.FLOAT, !1, 0, 0),
-        t.uniform2f(r.offsetUniform, 1, 1),
+        t.attachShader(o, a),
+        t.attachShader(o, u),
+        t.linkProgram(o),
+        t.useProgram(o),
+        (o.vertexPosAttrib = t.getAttribLocation(o, 'attrVertex')),
+        (o.offsetUniform = t.getUniformLocation(o, 'uniformOffset')),
+        t.enableVertexAttribArray(o.vertexPosArray),
+        t.vertexAttribPointer(o.vertexPosAttrib, i.itemSize, t.FLOAT, !1, 0, 0),
+        t.uniform2f(o.offsetUniform, 1, 1),
         t.drawArrays(t.TRIANGLE_STRIP, 0, i.numItems),
         null != t.canvas && n.push(t.canvas.toDataURL()),
         n.push('extensions:' + t.getSupportedExtensions().join(';')),
@@ -1992,14 +2622,14 @@ window.M$P_M_C = {
         n.push('webgl green bits:' + t.getParameter(t.GREEN_BITS)),
         n.push(
           'webgl max anisotropy:' +
-            ((l =
+            ((c =
               (s = t).getExtension('EXT_texture_filter_anisotropic') ||
               s.getExtension('WEBKIT_EXT_texture_filter_anisotropic') ||
               s.getExtension('MOZ_EXT_texture_filter_anisotropic')),
-            l
-              ? (0 === (c = s.getParameter(l.MAX_TEXTURE_MAX_ANISOTROPY_EXT)) &&
-                  (c = 2),
-                c)
+            c
+              ? (0 === (l = s.getParameter(c.MAX_TEXTURE_MAX_ANISOTROPY_EXT)) &&
+                  (l = 2),
+                l)
               : null)
         ),
         n.push(
@@ -2342,11 +2972,11 @@ window.M$P_M_C = {
       if (('Chrome' == n || 'Safari' == n || 'Opera' == n) && '20030107' !== t)
         return !0;
       var i,
-        o = eval.toString().length;
-      if (37 === o && 'Safari' != n && 'Firefox' != n && 'Other' != n)
+        r = eval.toString().length;
+      if (37 === r && 'Safari' != n && 'Firefox' != n && 'Other' != n)
         return !0;
-      if (39 === o && 'Internet Explorer' != n && 'Other' != n) return !0;
-      if (33 === o && 'Chrome' != n && 'Opera' != n && 'Other' != n) return !0;
+      if (39 === r && 'Internet Explorer' != n && 'Other' != n) return !0;
+      if (33 === r && 'Chrome' != n && 'Opera' != n && 'Other' != n) return !0;
       try {
         throw 'a';
       } catch (e) {
@@ -2428,22 +3058,22 @@ window.M$P_M_C = {
         if (this.nativeForEach && e.forEach === this.nativeForEach)
           e.forEach(t, n);
         else if (e.length === +e.length) {
-          for (var i = 0, o = e.length; i < o; i++)
+          for (var i = 0, r = e.length; i < r; i++)
             if (t.call(n, e[i], i, e) === {}) return;
         } else
-          for (var r in e)
-            if (e.hasOwnProperty(r) && t.call(n, e[r], r, e) === {}) return;
+          for (var o in e)
+            if (e.hasOwnProperty(o) && t.call(n, e[o], o, e) === {}) return;
     },
-    map: function (e, i, o) {
-      var r = [];
+    map: function (e, i, r) {
+      var o = [];
       return null == e
-        ? r
+        ? o
         : this.nativeMap && e.map === this.nativeMap
-        ? e.map(i, o)
+        ? e.map(i, r)
         : (this.each(e, function (e, t, n) {
-            r[r.length] = i.call(o, e, t, n);
+            o[o.length] = i.call(r, e, t, n);
           }),
-          r);
+          o);
     },
     x64Add: function (e, t) {
       (e = [e[0] >>> 16, 65535 & e[0], e[1] >>> 16, 65535 & e[1]]),
@@ -2527,12 +3157,12 @@ window.M$P_M_C = {
       for (
         var n = (e = e || '').length % 16,
           i = e.length - n,
-          o = [0, t],
           r = [0, t],
+          o = [0, t],
           a = [0, 0],
           s = [0, 0],
-          c = [2277735313, 289559509],
-          l = [1291169091, 658871167],
+          l = [2277735313, 289559509],
+          c = [1291169091, 658871167],
           u = 0;
         u < i;
         u += 16
@@ -2557,20 +3187,20 @@ window.M$P_M_C = {
               ((255 & e.charCodeAt(u + 10)) << 16) |
               ((255 & e.charCodeAt(u + 11)) << 24)
           ]),
-          (a = this.x64Multiply(a, c)),
-          (a = this.x64Rotl(a, 31)),
           (a = this.x64Multiply(a, l)),
-          (o = this.x64Xor(o, a)),
-          (o = this.x64Rotl(o, 27)),
-          (o = this.x64Add(o, r)),
-          (o = this.x64Add(this.x64Multiply(o, [0, 5]), [0, 1390208809])),
-          (s = this.x64Multiply(s, l)),
-          (s = this.x64Rotl(s, 33)),
-          (s = this.x64Multiply(s, c)),
-          (r = this.x64Xor(r, s)),
-          (r = this.x64Rotl(r, 31)),
+          (a = this.x64Rotl(a, 31)),
+          (a = this.x64Multiply(a, c)),
+          (r = this.x64Xor(r, a)),
+          (r = this.x64Rotl(r, 27)),
           (r = this.x64Add(r, o)),
-          (r = this.x64Add(this.x64Multiply(r, [0, 5]), [0, 944331445]));
+          (r = this.x64Add(this.x64Multiply(r, [0, 5]), [0, 1390208809])),
+          (s = this.x64Multiply(s, c)),
+          (s = this.x64Rotl(s, 33)),
+          (s = this.x64Multiply(s, l)),
+          (o = this.x64Xor(o, s)),
+          (o = this.x64Rotl(o, 31)),
+          (o = this.x64Add(o, r)),
+          (o = this.x64Add(this.x64Multiply(o, [0, 5]), [0, 944331445]));
       switch (((a = [0, 0]), (s = [0, 0]), n)) {
         case 15:
           s = this.x64Xor(s, this.x64LeftShift([0, e.charCodeAt(u + 14)], 48));
@@ -2586,10 +3216,10 @@ window.M$P_M_C = {
           s = this.x64Xor(s, this.x64LeftShift([0, e.charCodeAt(u + 9)], 8));
         case 9:
           (s = this.x64Xor(s, [0, e.charCodeAt(u + 8)])),
-            (s = this.x64Multiply(s, l)),
-            (s = this.x64Rotl(s, 33)),
             (s = this.x64Multiply(s, c)),
-            (r = this.x64Xor(r, s));
+            (s = this.x64Rotl(s, 33)),
+            (s = this.x64Multiply(s, l)),
+            (o = this.x64Xor(o, s));
         case 8:
           a = this.x64Xor(a, this.x64LeftShift([0, e.charCodeAt(u + 7)], 56));
         case 7:
@@ -2606,187 +3236,234 @@ window.M$P_M_C = {
           a = this.x64Xor(a, this.x64LeftShift([0, e.charCodeAt(u + 1)], 8));
         case 1:
           (a = this.x64Xor(a, [0, e.charCodeAt(u)])),
-            (a = this.x64Multiply(a, c)),
-            (a = this.x64Rotl(a, 31)),
             (a = this.x64Multiply(a, l)),
-            (o = this.x64Xor(o, a));
+            (a = this.x64Rotl(a, 31)),
+            (a = this.x64Multiply(a, c)),
+            (r = this.x64Xor(r, a));
       }
       return (
-        (o = this.x64Xor(o, [0, e.length])),
         (r = this.x64Xor(r, [0, e.length])),
-        (o = this.x64Add(o, r)),
+        (o = this.x64Xor(o, [0, e.length])),
         (r = this.x64Add(r, o)),
-        (o = this.x64Fmix(o)),
+        (o = this.x64Add(o, r)),
         (r = this.x64Fmix(r)),
-        (o = this.x64Add(o, r)),
+        (o = this.x64Fmix(o)),
         (r = this.x64Add(r, o)),
-        ('00000000' + (o[0] >>> 0).toString(16)).slice(-8) +
-          ('00000000' + (o[1] >>> 0).toString(16)).slice(-8) +
-          ('00000000' + (r[0] >>> 0).toString(16)).slice(-8) +
-          ('00000000' + (r[1] >>> 0).toString(16)).slice(-8)
+        (o = this.x64Add(o, r)),
+        ('00000000' + (r[0] >>> 0).toString(16)).slice(-8) +
+          ('00000000' + (r[1] >>> 0).toString(16)).slice(-8) +
+          ('00000000' + (o[0] >>> 0).toString(16)).slice(-8) +
+          ('00000000' + (o[1] >>> 0).toString(16)).slice(-8)
       );
     }
   }),
-    (w.VERSION = '1.5.1');
+    (C.VERSION = '1.5.1');
   function M(e, t) {
     if (e)
-      if (Array.isArray(e) || ((o = e) && void 0 !== o.length))
+      if (Array.isArray(e) || ((r = e) && void 0 !== r.length))
         for (var n = 0; n < e.length && (!t || !1 !== t(e[n], n)); n++);
-      else if (v(e)) for (var i in e) if (t && !1 === t(e[i], i)) break;
-    var o;
+      else if (y(e)) for (var i in e) if (t && !1 === t(e[i], i)) break;
+    var r;
   }
-  function A(e, t) {
+  function b(e, t) {
     return Math.floor(e + Math.random() * t);
   }
-  function b(e, t, n) {
+  function I(e, t, n) {
     var i = 0 < arguments.length && void 0 !== e ? e : '',
-      o = 1 < arguments.length && void 0 !== t ? t : { REQUESTID: '' },
-      r = !(2 < arguments.length && void 0 !== n) || n,
+      r = 1 < arguments.length && void 0 !== t ? t : { REQUESTID: '' },
+      o = !(2 < arguments.length && void 0 !== n) || n,
       a = {
-        OS: E ? 1 : C ? 2 : '0',
+        OS: x ? 1 : E ? 2 : '0',
         APP: window.location.hostname,
         CLIENTTYPE: 3,
         IP: '',
         TS: +new Date(),
-        IMEI: F
+        IMEI: H
       };
     return i.replace(/__(.*?)__/g, function (e) {
       var t,
         n = e.match(/__(.*)__/),
-        i = a[n[1]] || o[n[1]];
+        i = a[n[1]] || r[n[1]];
       return void 0 === i
         ? ''
-        : ((v((t = i)) || Array.isArray(t)) && (t = JSON.stringify(t)),
-          r ? encodeURIComponent(t) : t);
+        : ((y((t = i)) || Array.isArray(t)) && (t = JSON.stringify(t)),
+          o ? encodeURIComponent(t) : t);
     });
   }
-  function I(e) {
+  function _(e) {
     var t,
       n,
       i = [];
-    for (var o in e)
-      !d(e[o]) &&
-        ((t = e), (n = o), Object.prototype.hasOwnProperty.call(t, n)) &&
-        i.push(o + '=' + encodeURIComponent(e[o]));
+    for (var r in e)
+      !l(e[r]) &&
+        ((t = e), (n = r), Object.prototype.hasOwnProperty.call(t, n)) &&
+        i.push(r + '=' + encodeURIComponent(e[r]));
     return i.join('&');
   }
-  function _(e, t) {
+  function P(e, t) {
     var n,
       i = /\?([^#]*)/,
-      o = /#(.*)/,
-      r = {},
+      r = /#(.*)/,
+      o = {},
       a = (e = e || '').match(i);
     return (
       a &&
-        (r = (function (e, t) {
+        (o = (function (e, t) {
           var n,
             i,
-            o = {};
+            r = {};
           if (!(e || '').replace(/^\s+|\s+$/, '')) return {};
           if ((e = e.replace(/\S*\?/, '')))
-            for (var r in (t && (e = e.toLocaleLowerCase()),
+            for (var o in (t && (e = e.toLocaleLowerCase()),
             (n = e.split('&'))))
-              o[(i = n[r].split('='))[0]] = decodeURIComponent(i[1]);
-          return o;
+              r[(i = n[o].split('='))[0]] = decodeURIComponent(i[1]);
+          return r;
         })(a[0])),
-      (r = function () {
+      (o = function () {
         var e,
           t,
           n = arguments,
           i = 1,
-          o = n.length,
-          r = n[0];
-        for (1 === o && ((i = 0), (r = this)); i < o; i++)
-          if ((e = n[i])) for (t in e) r[t] = e[t];
-        return r;
-      }.call(r, r, t)),
-      (n = '?' + I(r)),
+          r = n.length,
+          o = n[0];
+        for (1 === r && ((i = 0), (o = this)); i < r; i++)
+          if ((e = n[i])) for (t in e) o[t] = e[t];
+        return o;
+      }.call(o, o, t)),
+      (n = '?' + _(o)),
       i.test(e)
         ? (e = e.replace(i, n))
-        : o.test(e)
-        ? (e = e.replace(o, n + '#' + e.match(o)[1]))
+        : r.test(e)
+        ? (e = e.replace(r, n + '#' + e.match(r)[1]))
         : (e += n),
       e
     );
   }
-  function P(e, t) {
-    h(t) && (t = { callback: t });
+  function B(e, t) {
+    g(t) && (t = { callback: t });
     var n,
       i,
-      o =
+      r =
         t.callbackFnName ||
         ((n = ''),
         (i = (i = 'jsonp') || ''),
         (n = n || '') + '_' + Math.random().toString(36).slice(-6) + '_' + i);
     (t = t || {}),
-      (window[o] = function (e) {
+      (window[r] = function (e) {
         t.callback && t.callback(e || {});
         try {
-          delete window[o];
+          delete window[r];
         } catch (e) {}
-        window[o] = void 0;
+        window[r] = void 0;
       });
-    var r = t.data || {};
-    (r.v = Math.random().toString(36).slice(-6)), (r.jsonp = o), T(_(e, r));
+    var o = t.data || {};
+    (o.v = Math.random().toString(36).slice(-6)), (o.jsonp = r), S(P(e, o));
   }
-  function B(n, i) {
-    var o = 0;
+  function R(n, i) {
+    var r = 0;
     return function (e) {
       var t = +new Date();
-      i <= t - o && ((o = t), n(e));
+      i <= t - r && ((r = t), n(e));
     };
   }
-  function R() {
-    var e = {};
+  function O() {
+    var e = '';
     try {
-      e = JSON.parse(localStorage[N]);
+      e = window.localStorage.getItem(m);
     } catch (e) {}
-    return e[H] || {};
+    return (
+      e ||
+        ((e = new Date().getTime().toString(32)),
+        window.localStorage.setItem(m, e)),
+      e
+    );
   }
-  function O(e, t) {
-    var n = R();
-    n[e] = t;
+  function k(e) {
+    var t = {};
     try {
-      localStorage.setItem(N, JSON.stringify(s({}, H, n)));
+      t = JSON.parse(localStorage[G]);
+    } catch (e) {}
+    var n = t[U] || {};
+    return e ? n[e] || {} : n;
+  }
+  function L(e, t, n) {
+    var i = k(n),
+      r = k();
+    i[e] = t;
+    try {
+      localStorage.setItem(
+        G,
+        JSON.stringify(u({}, U, d(d({}, r), {}, u({}, n, i))))
+      );
     } catch (e) {}
   }
   var D,
-    L,
-    k =
+    F,
+    N =
       /(localhost|127\.0\.0\.1|([192,10]\.168\.\d{1,3}\.\d{1,3}))/.test(
         window.location.hostname
       ) || /_mp_debug_/.test(window.location.search),
-    F = window.localStorage.getItem(f),
-    N = 'M$P_FC',
-    H =
+    H = window.localStorage.getItem(p),
+    G = 'M$P_FC',
+    U =
       ((D = new Date()),
-      (L = D.getMonth() + 1),
-      D.getFullYear() + '-' + L + '-' + D.getDate()),
-    G = (function () {
+      (F = D.getMonth() + 1),
+      D.getFullYear() + '-' + F + '-' + D.getDate()),
+    X = (function () {
       function e() {
-        a(this, e), (this._events = {});
+        c(this, e), (this._events = {});
       }
       return (
         t(e, [
           {
             key: 'on',
             value: function (e, t) {
-              return (this._events[e] = this._events[e] || []).push(t), this;
+              var n = this,
+                i = e.split(',');
+              return (
+                M(i, function (e) {
+                  (n._events[e] = n._events[e] || []).push(t);
+                }),
+                this
+              );
             }
           },
-          { key: 'off', value: function () {} },
+          {
+            key: 'off',
+            value: function (n, i) {
+              var r = this;
+              return (
+                Array.isArray(this._events[n]) &&
+                  M(this._events[n], function (e, t) {
+                    if (e === i) return r._events[n].splice(t, 1), !1;
+                  }),
+                this
+              );
+            }
+          },
           {
             key: 'once',
-            value: function (e) {
-              this.on(e, function () {});
+            value: function (e, t) {
+              function n() {
+                r.off(e, n), t.apply(r, i);
+              }
+              var i = arguments,
+                r = this;
+              return (n.fn = t), this.on(e, n), this;
             }
           },
           {
             key: 'trigger',
             value: function (e, t) {
-              var n = this;
+              function n() {
+                r = !0;
+              }
+              var i = this,
+                r = !1;
               M(this._events[e], function (e) {
-                h(e) && e.call(n, t);
+                return (
+                  !r && void (g(e) && e.call(i, t, { stopPropagation: n }))
+                );
               });
             }
           }
@@ -2794,90 +3471,90 @@ window.M$P_M_C = {
         e
       );
     })();
-  function U() {
-    return (V = V || new $());
+  function K() {
+    return (q = q || new Q());
   }
-  function X() {
-    J = J.filter(function (e) {
+  function V() {
+    Y = Y.filter(function (e) {
       var t = e.container,
         n = e.callback;
       return !Z(t, n);
     });
   }
-  var K,
-    j,
-    V,
-    W = function (e, o) {
+  var j,
+    W,
+    q,
+    z = function (e, r) {
       'string' == typeof e && (e = [e]),
         M(e, function (e) {
           return (
-            (n = o),
+            (n = r),
             void (
               '' !== (t = e) &&
               (((i = new Image()).onload = function () {
                 i = i.onload = null;
               }),
-              (i.src = b(t, n)))
+              (i.src = I(t, n)))
             )
           );
           var t, n, i;
         });
     },
-    q = function () {
-      if (k)
+    $ = function () {
+      if (N)
         for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++)
           t[n] = arguments[n];
     },
-    z = null,
-    $ = (function () {
+    J = null,
+    Q = (function () {
       function e() {
-        var o = this;
-        a(this, e),
-          s(this, 'proxyComplete', function (i) {
+        var r = this;
+        c(this, e),
+          u(this, 'proxyComplete', function (i) {
             var s = [],
-              c = !1;
+              l = !1;
             return function (e) {
-              o.status = 2;
+              r.status = 2;
               var t,
-                r = o.slotMap[i],
+                o = r.slotMap[i],
                 a = [];
               try {
                 a = window.GDT.getPosData(i).data;
               } catch (e) {}
-              r &&
-                r.fns &&
+              o &&
+                o.fns &&
                 (Array.isArray(e)
                   ? (e.forEach(function (e, t) {
                       var n = e.advertisement_id + e.placement_id;
-                      if (s.includes(n)) c = !0;
+                      if (s.includes(n)) l = !0;
                       else {
-                        var i = r.fns.shift(),
-                          o = a[t] && a[t];
+                        var i = o.fns.shift(),
+                          r = a[t] && a[t];
                         if (!i) return !1;
                         s.push(n),
                           window.TencentGDT.NATIVE.renderAd(e, i.container),
-                          i.complete(!0, o);
+                          i.complete(!0, r);
                       }
                     }),
-                    (t = r.fns.shift()),
-                    c && t.complete(!1, null, '10006'))
-                  : r.fns.shift().complete(!1));
-              var n = o.next.shift();
+                    (t = o.fns.shift()),
+                    l && t.complete(!1, null, '10006'))
+                  : o.fns.shift().complete(!1));
+              var n = r.next.shift();
               n && n();
             };
           }),
-          s(this, 'initSlot', function (e) {
+          u(this, 'initSlot', function (e) {
             var t;
-            o.loadMap[e.consumerSlotId] ||
-              ((o.loadMap[e.consumerSlotId] = !0),
+            r.loadMap[e.consumerSlotId] ||
+              ((r.loadMap[e.consumerSlotId] = !0),
               (t = {
                 placement_id: e.consumerSlotId,
                 app_id: e.appid,
                 type: 'native',
                 count: 3,
-                onComplete: o.proxyComplete(e.consumerSlotId)
+                onComplete: r.proxyComplete(e.consumerSlotId)
               }),
-              window.jsInited ? z(t) : window.TencentGDT.push(t));
+              window.jsInited ? J(t) : window.TencentGDT.push(t));
           }),
           (window.TencentGDT = window.TencentGDT || []),
           (this.slotMap = {}),
@@ -2910,7 +3587,7 @@ window.M$P_M_C = {
           {
             key: 'bindGdtInit',
             value: function () {
-              z = z || GDT.init;
+              J = J || GDT.init;
             }
           },
           {
@@ -2918,25 +3595,25 @@ window.M$P_M_C = {
             value: function (e, t, n) {
               var i = this;
               this.unionInstance = t;
-              var o = this.slotMap[e];
-              o &&
-                (o.fns.push({ container: this.unionInstance.id, complete: n }),
+              var r = this.slotMap[e];
+              r &&
+                (r.fns.push({ container: this.unionInstance.id, complete: n }),
                 window.jsInited
                   ? window.GDT && window.GDT.load
-                    ? (this.initSlot(o), this.loadAd(e))
+                    ? (this.initSlot(r), this.loadAd(e))
                     : this.next.push(function () {
-                        i.initSlot(o), i.loadAd(e);
+                        i.initSlot(r), i.loadAd(e);
                       })
-                  : this.initSlot(o));
+                  : this.initSlot(r));
             }
           },
           {
             key: 'bindEvent',
             value: function (n) {
               var d;
-              K ||
-                ((K = TencentGDT.TN.doClick),
-                (j = TencentGDT.TN.adClose),
+              j ||
+                ((j = TencentGDT.TN.doClick),
+                (W = TencentGDT.TN.adClose),
                 (d = function (e) {
                   var t = document.querySelector('div[id*="' + e + '"]');
                   return n.unionInstances[t.parentNode.id];
@@ -2945,30 +3622,30 @@ window.M$P_M_C = {
                 (TencentGDT.TN.doClick = function (e, t) {
                   var n,
                     i,
-                    o,
                     r,
+                    o,
                     a,
                     s,
-                    c,
                     l,
+                    c,
                     u = d(t);
                   u &&
                     ((i = (n = document
                       .querySelector('div[id*="' + t + '"]')
                       .getBoundingClientRect()).width),
-                    (o = n.height),
-                    (r = e.x),
+                    (r = n.height),
+                    (o = e.x),
                     (a = e.y),
-                    (c = (s = screen).width),
-                    (l = s.height),
+                    (l = (s = screen).width),
+                    (c = s.height),
                     u.onClick({
-                      EXT: { w: i, h: o, x: r, y: a, pw: c, ph: l }
+                      EXT: { w: i, h: r, x: o, y: a, pw: l, ph: c }
                     }),
-                    K.apply(this, arguments));
+                    j.apply(this, arguments));
                 }),
                 (TencentGDT.TN.adClose = function (e, t) {
                   var n = d(e.traceid);
-                  n && (n.onClose(), j.apply(this, arguments));
+                  n && (n.onClose(), W.apply(this, arguments));
                 }));
             }
           },
@@ -2982,7 +3659,7 @@ window.M$P_M_C = {
         e
       );
     })(),
-    J = [],
+    Y = [],
     Z = function (e, t) {
       var n = (function (e) {
         if (e) {
@@ -2993,13 +3670,13 @@ window.M$P_M_C = {
       })(e);
       return n && t && t(), n;
     };
-  function Y(e, t) {
-    Z(e, t) || J.push({ container: e, callback: t });
+  function ee(e, t) {
+    Z(e, t) || Y.push({ container: e, callback: t });
   }
-  y(window.document, 'touchmove', B(X, 150)), y(window, 'scroll', B(X, 150));
-  var Q,
-    ee = 0,
-    te = {
+  w(window.document, 'touchmove', R(V, 150)), w(window, 'scroll', R(V, 150));
+  var te,
+    ne = 0,
+    ie = {
       1e4: '广告数组为空',
       10001: 'js加载失败',
       10002: '获取广告超时',
@@ -3008,7 +3685,7 @@ window.M$P_M_C = {
       2e4: '广点通重复加载广告失败',
       4e4: '消耗方错误'
     },
-    ne = {
+    re = {
       bid: 'bidTracking',
       error: 'errorTracking',
       imp: 'impTracking',
@@ -3016,30 +3693,21 @@ window.M$P_M_C = {
       click: 'clickTracking',
       winner: 'bidSelectedTracking'
     },
-    ie = 0,
-    oe = (function () {
-      !(function (e, t) {
-        if ('function' != typeof t && null !== t)
-          throw new TypeError(
-            'Super expression must either be null or a function'
-          );
-        (e.prototype = Object.create(t && t.prototype, {
-          constructor: { value: e, writable: !0, configurable: !0 }
-        })),
-          t && n(e, t);
-      })(r, G);
-      var i = e(r);
-      function r(e, t) {
+    oe = 0,
+    ae = (function () {
+      e(o, X);
+      var i = a(o);
+      function o(e, t) {
         var n;
         return (
-          a(this, r),
-          s(u((n = i.call(this))), 'onLoaded', function (e) {
+          c(this, o),
+          u(h((n = i.call(this))), 'onLoaded', function (e) {
             n.log('bidSuc', e),
               (n.adInfo = e),
               n.trigger('loaded'),
-              n.trigger('complete');
+              n.trigger('complete', !0);
           }),
-          s(u(n), 'onError', function () {
+          u(h(n), 'onError', function () {
             var e =
                 0 < arguments.length && void 0 !== arguments[0]
                   ? arguments[0]
@@ -3051,10 +3719,10 @@ window.M$P_M_C = {
             '1' === n.status &&
               ((n.status = '10'),
               n.logError(e, t),
-              n.trigger('complete'),
+              n.trigger('complete', !1),
               n.destroy());
           }),
-          s(u(n), 'destroy', function () {
+          u(h(n), 'destroy', function () {
             (n.status = '10'),
               n.$container.parentNode &&
                 n.$container.parentNode.removeChild(n.$container);
@@ -3066,32 +3734,32 @@ window.M$P_M_C = {
         );
       }
       return (
-        t(r, null, [
+        t(o, null, [
           {
             key: 'use',
             value: function (e) {
-              if (!d(r.VENDORS[e]) && r.VENDORS[e] instanceof r) {
-                var t = r.VENDORS[e].fork();
-                return (r.unionInstances[t.id] = t);
+              if (!l(o.VENDORS[e]) && o.VENDORS[e] instanceof o) {
+                var t = o.VENDORS[e].fork();
+                return (o.unionInstances[t.id] = t);
               }
             }
           }
         ]),
-        t(r, [
+        t(o, [
           {
             key: 'getContainer',
             value: function (e) {
               !1 === this.sandbox
-                ? (this.$container = S(e, 'div', this.id))
-                : (this.$container = S(e, 'iframe', this.id));
+                ? (this.$container = T(e, 'div', this.id))
+                : (this.$container = T(e, 'iframe', this.id));
             }
           },
           {
             key: 'fork',
             value: function () {
-              var e = new r(this.name, this.options);
+              var e = new o(this.name, this.options);
               return (
-                (e.index = ie++),
+                (e.index = oe++),
                 (e.id = 'mp_wrapper_'.concat(this.name, '_').concat(e.index)),
                 e
               );
@@ -3102,8 +3770,8 @@ window.M$P_M_C = {
             value: function (e, t) {
               var n = this,
                 i = 0 < arguments.length && void 0 !== e ? e : {},
-                o = 1 < arguments.length ? t : void 0;
-              this.getContainer(o), (this.data = i);
+                r = 1 < arguments.length ? t : void 0;
+              this.getContainer(r), (this.data = i);
               if (
                 ((this.startTime = +new Date()),
                 this.trigger('init'),
@@ -3112,24 +3780,24 @@ window.M$P_M_C = {
                   onError: n.onError,
                   onLoaded: n.onLoaded
                 }),
-                'init' === r.vendorLoaded[this.name])
+                'init' === o.vendorLoaded[this.name])
               ) {
                 if (!this.options.src)
                   return (
                     (this.status = '1'),
-                    (r.vendorLoaded[this.name] = 'loaded'),
+                    (o.vendorLoaded[this.name] = 'loaded'),
                     this
                   );
-                (r.vendorLoaded[this.name] = 'loading'),
-                  T(
+                (o.vendorLoaded[this.name] = 'loading'),
+                  S(
                     this.options.src,
                     function () {
                       (n.status = '1'),
-                        (r.vendorLoaded[n.name] = 'loaded'),
+                        (o.vendorLoaded[n.name] = 'loaded'),
                         n.callHook('onLoaded');
                     },
                     function () {
-                      (r.vendorLoaded[n.name] = 'init'),
+                      (o.vendorLoaded[n.name] = 'init'),
                         n.logError(10001),
                         n.trigger('loadError'),
                         n.trigger('complete');
@@ -3142,7 +3810,7 @@ window.M$P_M_C = {
           {
             key: 'logError',
             value: function (e, t) {
-              var n = { DATA: { err: e, errorMessage: t || te[e] } };
+              var n = { DATA: { err: e, errorMessage: t || ie[e] } };
               this.log('error', n);
             }
           },
@@ -3152,32 +3820,15 @@ window.M$P_M_C = {
               var n = 1 < arguments.length && void 0 !== t ? t : {},
                 i = {
                   REQUESTID: this.requestId,
-                  DATA: c(
-                    c(c({}, this.requestData), n.DATA),
+                  DATA: d(
+                    d(d({}, this.requestData), n.DATA),
                     {},
                     { referer: window.location.href }
                   ),
-                  EXT: c(
-                    c({}, n.EXT),
-                    {},
-                    {
-                      time: (function () {
-                        var e = '';
-                        try {
-                          e = window.localStorage.getItem(p);
-                        } catch (e) {}
-                        return (
-                          e ||
-                            ((e = new Date().getTime().toString(32)),
-                            window.localStorage.setItem(p, e)),
-                          e
-                        );
-                      })()
-                    }
-                  )
+                  EXT: d(d({}, n.EXT), {}, { time: O() })
                 },
-                o = (this.data.trackingV2Data || this.data.trackingData)[ne[e]];
-              W(o, i);
+                r = (this.data.trackingV2Data || this.data.trackingData)[re[e]];
+              z(r, i);
             }
           },
           {
@@ -3186,6 +3837,7 @@ window.M$P_M_C = {
               this.log('winner'),
                 document.querySelector(e) &&
                   (this.callHook('onBeforeMount'),
+                  this.trigger('render'),
                   (this.$container.style.display = 'block'),
                   this.callHook('onMounted'),
                   this.callHook('onShow'));
@@ -3198,18 +3850,26 @@ window.M$P_M_C = {
                 var t = this.options[e],
                   n = arguments.length,
                   i = new Array(1 < n ? n - 1 : 0),
-                  o = 1;
-                o < n;
-                o++
+                  r = 1;
+                r < n;
+                r++
               )
-                i[o - 1] = arguments[o];
-              return h(t) && t.apply(this, i);
+                i[r - 1] = arguments[r];
+              return g(t) && t.apply(this, i);
             }
           },
           {
             key: 'onClick',
             value: function (e) {
-              this.log('click', e);
+              var t = this.requestData,
+                n = t.slotId,
+                i = t.consumerSlotId;
+              this.trigger('click', {
+                slotId: n,
+                consumerSlotId: i,
+                type: 'click'
+              }),
+                this.log('click', e);
             }
           },
           {
@@ -3217,105 +3877,116 @@ window.M$P_M_C = {
             value: function () {
               this.trigger('close');
             }
+          },
+          {
+            key: 'onShow',
+            value: function () {
+              var e = this.requestData,
+                t = e.slotId,
+                n = e.consumerSlotId;
+              this.trigger('imp', {
+                slotId: t,
+                consumerSlotId: n,
+                type: 'imp'
+              });
+            }
           }
         ]),
-        r
+        o
       );
     })();
-  s(oe, 'VENDORS', {}),
-    s(oe, 'unionInstances', {}),
-    s(oe, 'vendorLoaded', {}),
-    s(oe, 'register', function (e, t) {
+  u(ae, 'VENDORS', {}),
+    u(ae, 'unionInstances', {}),
+    u(ae, 'vendorLoaded', {}),
+    u(ae, 'register', function (e, t) {
       var n = 2 < arguments.length && void 0 !== arguments[2] && arguments[2];
-      (d(oe.VENDORS[e]) || n) &&
-        ((oe.VENDORS[e] = new oe(e, t)), (oe.vendorLoaded[e] = 'init'));
+      (l(ae.VENDORS[e]) || n) &&
+        ((ae.VENDORS[e] = new ae(e, t)), (ae.vendorLoaded[e] = 'init'));
     }),
-    (Q = oe).register('gdt', {
+    (te = ae).register('gdt', {
       src: '//qzs.qq.com/qzone/biz/res/i.js',
       sandbox: !1,
       onLoaded: function () {
-        U().bindGdtInit();
+        K().bindGdtInit();
       },
       onInit: function (e, t) {
         var i = t.onLoaded,
-          o = t.onError,
-          r = setTimeout(function () {
-            o('10002'), clearInterval(r), (r = null);
+          r = t.onError,
+          o = setTimeout(function () {
+            r('10002'), clearInterval(o), (o = null);
           }, 1e4);
-        U().bindSlot(e.consumerSlotId, this, function (e, t) {
+        K().bindSlot(e.consumerSlotId, this, function (e, t) {
           var n =
             2 < arguments.length && void 0 !== arguments[2]
               ? arguments[2]
               : '10000';
-          clearInterval(r), e ? i(t) : (q('无广告'), o(n));
+          clearInterval(o), e ? i(t) : ($('无广告'), r(n));
         });
       },
       onBeforeMount: function () {},
       onMounted: function () {
-        U().bindEvent(Q);
+        K().bindEvent(te);
       },
       onShow: function () {
         function e() {
-          var e, t, n, i, o;
-          r.adInfo &&
-            ((e = r.adInfo.img_list
-              ? r.adInfo.img_list
-              : [r.adInfo.img, r.adInfo.img2]),
-            (t = {
-              title: r.adInfo.txt,
-              desc: r.adInfo.desc,
+          var e, t, n, i, r, o, a;
+          s.adInfo &&
+            ((e = s.adInfo.img_list
+              ? s.adInfo.img_list
+              : [s.adInfo.img, s.adInfo.img2]),
+            (n = (t = s.requestData).slotId),
+            (i = t.consumerSlotId),
+            (r = t.consumerType),
+            (o = t.mediaId),
+            (a = {
+              title: s.adInfo.txt,
+              desc: s.adInfo.desc,
               imgList: e,
-              slotId: r.requestData.slotId,
-              consumerSlotId: r.requestData.consumerSlotId,
-              landingPageUrl: r.adInfo.rl,
-              consumerType: r.requestData.consumerType,
-              mediaId: r.requestData.mediaId
+              slotId: n,
+              consumerSlotId: i,
+              landingPageUrl: s.adInfo.rl,
+              consumerType: r,
+              mediaId: o
             }),
-            (i = []),
-            (n = R())[(o = r.requestData.slotId)]
-              ? ((i = n[o]),
-                n[o].includes(r.requestData.consumerSlotId) ||
-                  i.push(r.requestData.consumerSlotId))
-              : (i = [r.requestData.consumerSlotId]),
-            window[g].config.isDynamicWeight && O(o, i),
-            (new Image().src = _(r.adInfo.apurl, {
-              callback: '_cb_gdtjson' + ee++,
+            s.onShow(),
+            (new Image().src = P(s.adInfo.apurl, {
+              callback: '_cb_gdtjson' + ne++,
               datatype: 'jsonp'
             })),
-            r.log('imp', { EXT: t }));
+            s.log('imp', { EXT: a }));
         }
-        var r = this;
-        window[g].config.isCheckVisible
-          ? Y(this.$container, function () {
+        var s = this;
+        window[f].config.isCheckVisible
+          ? ee(this.$container, function () {
               e();
             })
           : e();
       },
       getWeight: function () {},
       reload: function (e) {
-        U().loadAd(e.consumerSlotId);
+        K().loadAd(e.consumerSlotId);
       }
     }),
-    oe.register('bd', {
+    ae.register('bd', {
       src: '//cpro.baidustatic.com/cpro/ui/cm.js',
       sandbox: !1,
       onInit: function (e, t) {
         var n,
           i = this,
-          o = t.onLoaded,
-          r = t.onError;
+          r = t.onLoaded,
+          o = t.onError;
         (window.slotbydup = window.slotbydup || []).push({
           id: e.consumerSlotId,
           container: this.id,
           async: !0
         }),
           (n = setTimeout(function () {
-            r('10002'), clearInterval(a), (a = null);
+            o('10002'), clearInterval(a), (a = null);
           }, 1e4));
         var a = setInterval(function () {
           i.$container &&
             i.$container.querySelector('iframe') &&
-            (o(), clearTimeout(n), (n = null), clearInterval(a), (a = null));
+            (r(), clearTimeout(n), (n = null), clearInterval(a), (a = null));
         }, 350);
       },
       onMounted: function () {},
@@ -3323,16 +3994,28 @@ window.M$P_M_C = {
         this.log('imp');
       }
     }),
-    oe.register('ptgapi', {
+    ae.register('ptgapi', {
       src: '',
       sandbox: !1,
       onInit: function (e, t) {
         var n = t.onLoaded,
           i = t.onError,
-          o = setTimeout(function () {
-            i('10002'), clearTimeout(o), (o = null);
+          r = setTimeout(function () {
+            i('10002'), clearTimeout(r), (r = null);
           }, 1e4),
-          r = {
+          o = k('impCountV2'),
+          a = M$P.MEDIA_CONFIG[this.requestData.slotId],
+          s = a.limitCount,
+          l = void 0 === s ? 7 : s,
+          c = a.limitFrequency;
+        if (o && !x && c && l <= o[this.requestData.slotId])
+          return clearTimeout(r), void i('10002');
+        this.slotSize.height = this.slotSize.height || 54;
+        var u = this.slotSize,
+          d = u.width,
+          h = void 0 === d ? screen.width : d,
+          g = u.height,
+          f = {
             ip: 'client',
             mid: e.appId || 209,
             si: e.consumerSlotId,
@@ -3341,42 +4024,65 @@ window.M$P_M_C = {
             reqid: this.requestId,
             device_type: 1,
             mimes: 'img,c',
-            rsize: ''
-              .concat(this.slotSize.width, '*')
-              .concat(this.slotSize.height || 54),
+            user_id: O(),
+            rsize: ''.concat(h, '*').concat(g),
             device: JSON.stringify({
               height: screen.height,
               width: screen.width,
               density: 2
             }),
-            v: '1.12.1'
+            v: '1.18.0'
           },
-          a = [
-            b(this.data.trackingV2Data.clickTracking[0], {
+          p = [
+            I(this.data.trackingV2Data.clickTracking[0], {
               DATA: this.requestData,
               REQUESTID: this.requestId
             })
           ];
-        P('https://g.fancyapi.com/s2s', {
-          data: r,
+        B('https://g.fancyapi.com/s2s', {
+          data: f,
           callback: function (e) {
             var t;
-            clearTimeout(o),
+            clearTimeout(r),
               Array.isArray(e.ad) && e.ad.length && e.ad[0].src
-                ? ((t = b(e.ad[0].src, { M_PRECLICK: a })), n(t))
+                ? ((t = I(e.ad[0].src, { M_PRECLICK: p })), n(t))
                 : i('10000');
           }
         });
       },
       onBeforeMount: function () {
-        this.$container.innerHTML = this.adInfo;
+        var e = this,
+          t =
+            '<div style="position: relative"><div class="close-icon" style="position: absolute;top: 4px; right: 4px; width: 20px; height: 20px"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQBAMAAAB8P++eAAAAJ1BMVEUAAAAAAAD///+ioqIAAAAAAAAAAAAAAAAAAAAAAAD29vabm5uTk5N7waCGAAAADXRSTlNNAP6JRBYILTgh64R/1AbgqwAAAaRJREFUSMeNl8FOwkAURW/iICBumlCQbf0BwxcMCeKWJibGnSR8ACSauMSVW1i4d82KT/DTRKb22V7b3rud0zOlzLx5g6iYwePr1Lvp+8eiNFACHzyyuJcaMH4GLHdpFTjyKMTtCCSOSdi8xhmZMjjYAJzOgsB7/JvbMjhERdYG0sQ8uYFLVGb2Fxz4atAtDGQhK8FCVubgFWrzloOrerD9C8ZoSJqByyZwloGbJrATwBiNSU9gvxmcnMAtQi73BxTS238hpHsCPUIukusiOE4+EeJ+wBFyMLkBLGdJDmIXwV6xlwSlCZODvSSiuY0EpQntudYRXPEQP9Y+gp7H+CkXIQbNxkIgxRAgJQmBNfpgJQsxwRNYyUKcYw5WshAtbMFKFqKLFVjJQrSxAStZiA48WMlCOBhoyiAkkJUmhIGcsQkpAqhOrf8Y+fPIH1z+C+VFIS8zeeHKW0HeXPJ2VQuAXFLkIiWXPbmQqqVZLvby8SEfSOoRJx+a8jGsHuxyqyA3H2o7IzdIasslN3FqW6g3mnrrqjfDenutN+z6FUC/VMjXlG8mS4Tz3LCUhQAAAABJRU5ErkJggg==" style="width: 100%"/></div>' +
+            this.adInfo +
+            '</div>',
+          n = document.createElement('iframe');
+        (n.width = this.slotSize.width),
+          (n.height = this.slotSize.height),
+          (n.style.cssText = 'border: none'),
+          this.$container.appendChild(n);
+        var i = n.contentWindow.document;
+        (i.body.innerHTML = t),
+          w(n.contentWindow, 'message', function () {
+            e.onClick();
+          }),
+          w(i.querySelector('.close-icon'), 'click', function () {
+            e.destroy(), e.onClose();
+          });
       },
       onMounted: function () {},
       onShow: function () {
-        this.log('imp');
+        var e = this.requestData.slotId,
+          t = M$P.MEDIA_CONFIG[e].limitFrequency,
+          n = k('impCountV2'),
+          i = 1;
+        n[e] && ((i = n[e]) ? (i += 1) : (i = 1)),
+          t && L(e, i, 'impCountV2'),
+          this.onShow(),
+          this.log('imp');
       }
     }),
-    oe.register('custom', {
+    ae.register('custom', {
       src: '',
       sandbox: !1,
       onInit: function (e, t) {
@@ -3385,68 +4091,85 @@ window.M$P_M_C = {
         setTimeout(n);
       },
       onBeforeMount: function () {
-        var e = this.requestData.slotId,
-          t = {
-            iframeBodyCssText:
-              'margin: 0; box-sizing: border-box; border-bottom: 1px solid #f5f5f5;',
-            iframeCssText:
-              'height: 240px; padding: 0px 15px;border: none; width: 100%'
-          };
-        '150001' === e
-          ? (t.iframeCssText =
-              'width: 100%;padding: 0;height: 59px; border: none;')
-          : '150004' === e &&
-            (t.iframeCssText =
-              'padding: 0;height: 169px;border: none;width: 100%;'),
-          (function (e, t, n) {
-            var i = document.createElement('iframe');
-            (i.style.cssText = n.iframeCssText),
-              document.querySelector(t).appendChild(i);
-            var o = i.contentDocument;
-            o.body.style.cssText = n.iframeBodyCssText;
-            var r = o.createElement('script');
-            (r.src = e), o.body.appendChild(r);
-          })(this.data.consumer.consumerSlotId, '#'.concat(this.id), t);
+        var e = {},
+          t = this.slotSize,
+          n = t.width,
+          i = t.height,
+          r = void 0 === i ? 240 : i;
+        try {
+          e = JSON.parse(this.data.consumer.extended_fields) || {};
+        } catch (e) {}
+        var o = {
+          iframeBodyCssText: 'margin: 0; box-sizing: border-box;',
+          iframeCssText: 'height: '
+            .concat(r, 'px;border: none; width: ')
+            .concat(n, 'px')
+        };
+        !(function (e, t, n) {
+          var i = document.createElement('iframe');
+          (i.style.cssText = n.iframeCssText),
+            document.querySelector(t).appendChild(i);
+          var r = i.contentDocument;
+          r.body.style.cssText = n.iframeBodyCssText;
+          var o = r.createElement('script');
+          (o.src = e), r.body.appendChild(o);
+        })(e.src, '#'.concat(this.id), o);
       },
       onShow: function () {
-        var r = this,
+        var o = this,
           t = document.querySelector('#'.concat(this.id)),
+          e = this.requestData,
+          a = e.slotId,
+          s = e.consumerSlotId,
+          l = e.consumerType,
+          c = e.mediaId,
           n = setInterval(function () {
-            var i = t.querySelector('iframe').contentWindow.document;
-            y(i, 'click', function () {
-              r.onClick();
-            });
             var e,
-              o = i.querySelectorAll('img');
-            o.length &&
+              i = t.querySelector('iframe').contentWindow.document,
+              r = i.querySelectorAll('img');
+            r.length &&
               (clearInterval(n),
               (e = function () {
                 var t = [],
                   e = i.querySelector('a').getAttribute('href');
-                M(o, function (e) {
-                  e && e.getAttribute && t.push(e.getAttribute('src'));
-                });
+                w(i, 'click', function () {
+                  o.onClick(),
+                    window.postMessage(
+                      JSON.stringify({
+                        type: 'adClick',
+                        data: {
+                          clickUrl: e,
+                          isDestroyPage: !0,
+                          timestamp: +new Date()
+                        }
+                      }),
+                      '*'
+                    );
+                }),
+                  M(r, function (e) {
+                    e && e.getAttribute && t.push(e.getAttribute('src'));
+                  });
                 var n = {
                   title: '',
                   desc: '',
-                  slotId: r.requestData.slotId,
-                  consumerSlotId: r.requestData.consumerSlotId,
+                  slotId: a,
+                  consumerSlotId: s,
                   landingPageUrl: e,
-                  consumerType: r.requestData.consumerType,
-                  mediaId: r.requestData.mediaId,
+                  consumerType: l,
+                  mediaId: c,
                   imgList: t
                 };
-                r.log('imp', { EXT: JSON.stringify(n) });
+                o.onShow(), o.log('imp', { EXT: n });
               }),
-              window[g].config.isCheckVisible
-                ? Y(r.$container, function () {
+              window[f].config.isCheckVisible
+                ? ee(o.$container, function () {
                     e();
                   })
                 : e());
           }, 300);
       }
     }),
-    oe.register('google', {
+    ae.register('google', {
       src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
       sandbox: !1,
       onInit: function (e, t) {
@@ -3456,7 +4179,7 @@ window.M$P_M_C = {
           (i.style.cssText = 'display:block'),
           this.$container.appendChild(i),
           window.addEventListener('message', function (e) {}),
-          setTimeout(n);
+          n();
       },
       onShow: function () {
         var e,
@@ -3465,8 +4188,8 @@ window.M$P_M_C = {
           (e = JSON.parse(this.data.consumer.extended_fields)),
             setTimeout(function () {
               (adsbygoogle = window.adsbygoogle || []).push({
-                params: c(
-                  c({ google_full_width_responsive: !0 }, e),
+                params: d(
+                  d({ google_full_width_responsive: !0 }, e),
                   {},
                   {
                     google_ad_slot:
@@ -3475,31 +4198,202 @@ window.M$P_M_C = {
                 )
               });
             }, 1e3),
+            this.onShow(),
             this.log('imp');
         } catch (e) {}
       }
     });
-  function re(e) {
-    return e && e.apply(this, Array.prototype.slice.call(arguments, 1));
+  var se = function e(t) {
+    var i = this;
+    c(this, e),
+      u(this, 'init', function () {
+        (i.$container = T(i.$slotContainer, 'div', i.id)),
+          (i.$container.style.cssText = 'position: relative; display: block'),
+          (i.$paginationContainer = T(
+            i.$container,
+            'div',
+            i.id + '_pagination'
+          )),
+          (i.$paginationContainer.style.cssText =
+            'position: absolute; display: flex; width: 100%; height: 10px; bottom: 0; justify-content: center; z-index: 1; align-item: center'),
+          (i.$sliderContainer = T(
+            i.$container,
+            'div',
+            'mp_swiper_' + e.uuid + '_' + i.currentitems
+          )),
+          (i.$sliderContainer.style.cssText =
+            'display: flex; height: ' +
+            i.slotContainerHeight +
+            ' width: 100%;');
+      }),
+      u(this, 'push', function () {
+        i.currentitems++,
+          (i.$sliderContainer.style.width =
+            i.currentitems * i.slotContainerWidth + 'px');
+        var e = document.createElement('div');
+        (e.className = 'pagination_item'),
+          (e.style.cssText =
+            'display: inline-block; width: 5px; height: 5px;border-radius: 50%; background-color: gray;margin: 0 3px;'),
+          i.$paginationContainer.appendChild(e),
+          i.changeItemStyle(0);
+      }),
+      u(this, 'createItemContainer', function () {
+        var e = document.createElement('div');
+        return (
+          (e.style.cssText =
+            'width: ' +
+            i.slotContainerWidth +
+            'px;height:' +
+            i.slotContainerHeight +
+            'px; display: inline-block;'),
+          (e.className = 'slide_item'),
+          i.$sliderContainer.appendChild(e),
+          e
+        );
+      }),
+      u(this, 'changeItemStyle', function (n) {
+        M(
+          i.$paginationContainer.querySelectorAll('.pagination_item'),
+          function (e, t) {
+            (e.style.backgroundColor = 'gray'),
+              t === n && (e.style.backgroundColor = 'green');
+          }
+        );
+      }),
+      u(this, 'removeItem', function (e, t) {
+        M(e.querySelectorAll(t), function (e) {
+          e.children.length || e.parentElement.removeChild(e);
+        });
+      }),
+      u(this, 'reRender', function () {
+        i.currentitems--,
+          i.removeItem(i.$sliderContainer, '.slide_item'),
+          (i.$sliderContainer.style.width =
+            i.currentitems * i.slotContainerWidth + 'px');
+        var e = i.$paginationContainer.querySelectorAll('.pagination_item');
+        M(e, function (e, t) {
+          0 === t && e.parentElement.removeChild(e);
+        }),
+          (i.currentId = 0),
+          i.next();
+      }),
+      u(this, 'next', function () {
+        i.currentId === i.currentitems && (i.currentId = 0);
+        var e = -i.currentId * i.slotContainerWidth + 'px';
+        (i.$sliderContainer.style.transform = 'translateX(' + e + ')'),
+          (i.$sliderContainer.style.transition = 'all .5s'),
+          i.changeItemStyle(i.currentId);
+      }),
+      u(this, 'previous', function () {}),
+      u(this, 'finish', function () {
+        clearInterval(i.timer),
+          (i.timer = setInterval(function () {
+            i.currentitems < 2 && clearInterval(i.timer),
+              i.currentId++,
+              i.next();
+          }, i.delay));
+      }),
+      (this.options = t),
+      (this.$slotContainer = document.querySelector(t.container)),
+      (this.currentitems = 0),
+      (this.id = 'mp_swiper_' + t.slotId + '_' + ++e.uuid),
+      (this.slotContainerWidth = this.$slotContainer.getBoundingClientRect().width),
+      (this.slotContainerHeight =
+        this.slotContainerWidth / (t.width / t.height) || 59),
+      (this.currentId = 0),
+      (this.delay = t.delay || 2e3),
+      this.init();
+  };
+  u(se, 'uuid', 0);
+  function le(e) {
+    var t = null;
+    3 === e.priorityPolicyPacingTarget
+      ? (t = 'click')
+      : 2 === e.priorityPolicyPacingTarget && (t = 'imp');
+    var n = e.priorityPolicy;
+    t &&
+      (1 === n
+        ? (e = (function (e, t) {
+            var n = k(t),
+              i = e.slotId,
+              r = e.slotBidding,
+              o = (k('loadedConsumer') || {})[i];
+            n[i] &&
+              (n[i].length >= r.length || n[i].length === o) &&
+              (L(i, [], t), (n = []));
+            for (var a = 0; a < r.length - 1; a++)
+              for (var s, l = 0; l < r.length - 1; l++) {
+                r[l].weight < r[l + 1].weight &&
+                  ((s = r[l]), (r[l] = r[l + 1]), (r[l + 1] = s));
+              }
+            return (
+              1 < r.length &&
+                M(r, function (e, t) {
+                  n[i] && n[i].includes(e.consumer.consumerSlotId)
+                    ? (e.weight = n[i].length - t)
+                    : (e.weight = 100 - r.length);
+                }),
+              e
+            );
+          })(e, t))
+        : 3 === n &&
+          (e = (function (e, t) {
+            var n = k(t),
+              i = e.slotId,
+              r = e.slotBidding,
+              o = (k('loadedConsumer') || {})[i];
+            n[i] &&
+              n[i].length &&
+              (n[i].length >= r.length || n[i].length === o) &&
+              (L(i, [], t), (n = []));
+            for (var a = 0; a < r.length - 1; a++)
+              for (var s, l = 0; l < r.length - 1; l++) {
+                r[l].weight > r[l + 1].weight &&
+                  ((s = r[l]), (r[l] = r[l + 1]), (r[l + 1] = s));
+              }
+            return (
+              1 < r.length &&
+                M(r, function (e, t) {
+                  (e.weight = t + 1),
+                    n[i] &&
+                      n[i].includes(e.consumer.consumerSlotId) &&
+                      (e.weight = r.length + e.weight);
+                }),
+              e
+            );
+          })(e, t)));
   }
-  var ae = function (e) {
-      var i = 10;
+  var ce = function (e) {
+      return e && e.apply(this, Array.prototype.slice.call(arguments, 1));
+    },
+    ue = function (e) {
+      var i = 100;
       return (
         M(e, function (e) {
           var t = e.weight,
-            n = void 0 === t ? 10 : t;
+            n = void 0 === t ? 100 : t;
           n && n < i && (i = n);
         }),
         i
       );
     },
-    se = function (e) {
+    de = function (e) {
+      var n = null,
+        i = 100;
+      return (
+        M(e, function (e, t) {
+          e.data.weight && e.data.weight < i && (i = (n = e).data.weight);
+        }),
+        n
+      );
+    },
+    he = function (e) {
       var i = [],
-        o = 0,
+        r = 0,
         t = null;
       M(e, function (e, t) {
         (e.data.weight = e.data.weight && Math.max(e.data.weight, 1)),
-          (o += e.data.weight);
+          (r += e.data.weight);
         var n = (i[t - 1] && i[t - 1].rang[1]) || 0;
         i.push({
           name: e.name,
@@ -3508,7 +4402,7 @@ window.M$P_M_C = {
           rang: [n, n + e.data.weight]
         });
       });
-      var n = A(0, o);
+      var n = b(0, r);
       return (
         M(i, function (e) {
           if (n >= e.rang[0] && n < e.rang[1]) return (t = e.union), !1;
@@ -3516,105 +4410,196 @@ window.M$P_M_C = {
         t
       );
     },
-    ce = (function () {
-      function r(e) {
-        var n = this,
+    ge = (function () {
+      e(l, X);
+      var s = a(l);
+      function l(e) {
+        var r,
           t =
             1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : {},
-          i =
+          n =
             2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {};
-        a(this, r),
-          s(this, 'pickConsumer', function (e) {
-            var t = n.slotConfig.priorityPolicy;
-            0 === t || (3 === t && e.data.weight === n.highestPriority)
-              ? n.race(e)
+        c(this, l),
+          u(h((r = s.call(this))), 'pickConsumer', function (e) {
+            var t = r.slotConfig.priorityPolicy;
+            0 === t || (3 === t && e.data.weight === r.highestPriority)
+              ? r.race(e)
               : 1 === t &&
-                n.loadedConsumers.length === n.consumerLength &&
-                n.race(se(n.loadedConsumers));
+                r.completeNumber === r.consumerLength &&
+                r.race(he(r.loadedConsumers));
           }),
-          (this.container = e),
-          (this.isConcurrent = t.isConcurrent),
-          (this.priorityPolicy = t.priorityPolicy),
-          (this.slotConfig = t),
-          (this.slotOptions = i),
-          (this.slotId = t.slotId),
-          (this.status = '0');
-        var o = document.querySelector(e);
-        (this.slotContainerSize = {
-          width: o.clientWidth || o.scrollWidth || o.offsetWidth,
-          height: o.clientHeight || o.scrollHeight || o.offsetHeight
-        }),
-          (this.templateConfig = t.templateConfig || {}),
-          (this.consumers = t.slotBidding),
-          (this.highestPriority = ae(this.consumers)),
-          (this.loadedConsumers = []),
-          (this.consumerLength = this.consumers && this.consumers.length),
-          (this.completeNumber = 0),
-          (this.loadedConsumerNumber = 0),
-          this.distribute();
+          (r.container = e),
+          window[f].trigger('recalculateWeightByFrequency', t),
+          (r.isConcurrent = t.isConcurrent),
+          (r.priorityPolicy = t.priorityPolicy),
+          (r.slotConfig = t),
+          (r.slotOptions = n),
+          (r.slotId = t.slotId),
+          (r.status = '0');
+        var i,
+          o = document.querySelector(e),
+          a =
+            Array.isArray(t.templateInfo) &&
+            t.templateInfo[0].widgets.root.wh_ratio;
+        return (
+          (r.slotContainerSize = {
+            width: o.clientWidth || o.scrollWidth || o.offsetWidth,
+            height:
+              o.clientHeight ||
+              o.scrollHeight ||
+              o.offsetHeight ||
+              (a && o.clientWidth / a)
+          }),
+          (r.templateConfig = t.templateConfig || {}),
+          (r.consumers = t.slotBidding),
+          (r.highestPriority = ue(r.consumers)),
+          (r.loadedConsumers = []),
+          (r.loadedConsumerWeight = []),
+          (r.consumerLength = r.consumers && r.consumers.length),
+          (r.completeNumber = 0),
+          (r.loadedConsumerNumber = 0),
+          r.slotConfig.decorators &&
+            'banner' === r.slotConfig.decorators.type &&
+            ((i = d(
+              { container: e, slotId: t.slotId },
+              r.slotConfig.decorators.options
+            )),
+            (r.swiperPlugin = new se(i)),
+            r
+              .on('race', function (e, t) {
+                (0, t.stopPropagation)(),
+                  clearTimeout(r.timeouter),
+                  e instanceof ae &&
+                    ('4' === r.status
+                      ? (ce(r.slotOptions.complete, !0),
+                        ((r.winner = e).$container._slot_ = h(r)),
+                        e.render(r.container))
+                      : '5' !== r.status && e.destroy());
+              })
+              .on('complete', function (e, t) {
+                var n = e.union,
+                  i = e.status;
+                (0, t.stopPropagation)(),
+                  i && '5' !== r.status && ((r.status = '4'), r.race(n));
+              })
+              .on('getContainer', function (e, t) {
+                !(function (e) {
+                  if (null == e)
+                    throw new TypeError('Cannot destructure undefined');
+                })(e),
+                  (0, t.stopPropagation)(),
+                  (r.$container = r.swiperPlugin.createItemContainer());
+              })),
+          r
+            .on('race', function (e) {
+              clearTimeout(r.timeouter),
+                e instanceof ae &&
+                  ('4' === r.status
+                    ? (ce(r.slotOptions.complete, !0),
+                      (r.status = '5'),
+                      ((r.winner = e).$container._slot_ = h(r)),
+                      e.render(r.container))
+                    : '5' !== r.status && e.destroy());
+            })
+            .on('complete', function (e) {
+              var t = e.union,
+                n = e.status;
+              if (
+                (r.handleComplete(),
+                r.completeNumber === r.consumerLength && '5' !== r.status)
+              )
+                return (
+                  (r.status = '4'),
+                  1 === r.slotConfig.priorityPolicy
+                    ? r.race(he(r.loadedConsumers))
+                    : 3 === r.slotConfig.priorityPolicy &&
+                      r.race(de(r.loadedConsumers)),
+                  null
+                );
+              n && '5' !== r.status && ((r.status = '4'), r.pickConsumer(t));
+            })
+            .on('getContainer', function () {
+              r.$container = document.querySelector(r.container);
+            }),
+          r.distribute(),
+          r
+        );
       }
       return (
-        t(r, [
+        t(l, [
           {
             key: 'distribute',
             value: function () {
               var n,
-                i,
-                o = this;
+                s = this;
               0 < this.consumerLength
-                ? ((n = document.querySelector(this.container)),
-                  (this.loadedConsumers = []),
-                  (i = ''
+                ? ((this.loadedConsumers = []),
+                  (n = ''
                     .concat(this.slotId, '-')
                     .concat(new Date().getTime(), '-')
-                    .concat(A(0, 100))),
+                    .concat(b(0, 100))),
                   (this.status = '1'),
                   M(this.consumers, function (e) {
-                    var t = oe.use(e.consumer.consumerType);
+                    var t = ae.use(e.consumer.consumerType);
                     t &&
-                      ((t.slotSize = o.slotContainerSize),
-                      (t.requestId = i),
+                      ((t.slotSize = s.slotContainerSize),
+                      (t.requestId = n),
                       (t.requestData = {
-                        category: o.isConcurrent,
-                        sdkVersion: '1.12.1',
-                        policyVersion: window[g].config.policyVersion,
-                        slotId: o.slotId,
+                        category: s.isConcurrent,
+                        sdkVersion: '1.18.0',
+                        policyVersion: window[f].config.policyVersion,
+                        slotId: s.slotId,
                         err: 0,
-                        mediaId: window[g].mediaId,
+                        slotType:
+                          s.slotConfig.decorators &&
+                          s.slotConfig.decorators.type,
+                        data: s.slotOptions.data,
+                        mediaId: window[f].mediaId,
                         consumerType: e.consumer.consumerType,
                         consumerSlotId: e.consumer.consumerSlotId
                       }),
                       t
                         .on('init', function () {})
                         .on('loaded', function () {
-                          o.loadedConsumers.push(t),
-                            '5' !== o.status &&
-                              ((o.status = '4'), o.pickConsumer(t));
+                          s.loadedConsumers.push(t);
                         })
-                        .on('complete', o.handleComplete.bind(o))
+                        .on('complete', function (e) {
+                          s.trigger('complete', { status: e, union: t });
+                        })
                         .on('close', function () {
-                          re(o.slotConfig.onClose);
+                          s.swiperPlugin && s.swiperPlugin.reRender(),
+                            ce(s.slotConfig.onClose);
+                        })
+                        .on('click,imp', function (e) {
+                          var t = e.slotId,
+                            n = e.consumerSlotId,
+                            i = e.type,
+                            r = k(i),
+                            o = [],
+                            a = null;
+                          3 === s.slotConfig.priorityPolicyPacingTarget
+                            ? (a = 'click')
+                            : 2 === s.slotConfig.priorityPolicyPacingTarget &&
+                              (a = 'imp'),
+                            r[t]
+                              ? ((o = r[t]), r[t].includes(n) || o.push(n))
+                              : (o = [n]),
+                            a === i && L(t, o, a);
+                        })
+                        .on('render', function () {
+                          s.swiperPlugin && s.swiperPlugin.push(),
+                            s.swiperPlugin && s.swiperPlugin.finish();
                         }),
-                      t.run(e, n));
+                      s.trigger('getContainer', {}),
+                      t.run(e, s.$container));
                   }),
                   (this.timeouter = setTimeout(function () {
-                    var e, n, i;
-                    1 === o.slotConfig.priorityPolicy
-                      ? o.race(se(o.loadedConsumers))
-                      : 3 === o.slotConfig.priorityPolicy &&
-                        o.race(
-                          ((e = o.loadedConsumers),
-                          (n = null),
-                          (i = 10),
-                          M(e, function (e, t) {
-                            e.data.weight &&
-                              e.data.weight < i &&
-                              (i = (n = e).data.weight);
-                          }),
-                          n)
-                        );
+                    1 === s.slotConfig.priorityPolicy
+                      ? s.race(he(s.loadedConsumers))
+                      : 3 === s.slotConfig.priorityPolicy &&
+                        s.race(de(s.loadedConsumers));
                   }, 3e3)))
-                : re(this.slotOptions.complete, !1);
+                : ce(this.slotOptions.complete, !1);
             }
           },
           {
@@ -3623,100 +4608,81 @@ window.M$P_M_C = {
               ++this.completeNumber === this.consumerLength &&
                 '5' !== this.status &&
                 '4' !== this.status &&
-                re(this.slotOptions.complete, !1);
+                ce(this.slotOptions.complete, !1);
             }
           },
           {
             key: 'race',
             value: function (e) {
-              clearTimeout(this.timeouter),
-                e instanceof oe &&
-                  ('4' === this.status
-                    ? (re(this.slotOptions.complete, !0),
-                      (this.status = '5'),
-                      ((this.winner = e).$container._slot_ = this),
-                      e.render(this.container))
-                    : '5' !== this.status && e.destroy());
+              L(this.slotId, this.loadedConsumers.length, 'loadedConsumer'),
+                this.trigger('race', e);
             }
           }
         ]),
-        r
+        l
       );
     })(),
-    le = (function () {
-      function n(e) {
-        var t = this;
-        a(this, n),
-          s(this, 'Ver', '1.12.1'),
-          s(this, 'push', function (e) {
+    fe = (function () {
+      e(i, X);
+      var n = a(i);
+      function i(e) {
+        var t;
+        return (
+          c(this, i),
+          u(h((t = n.call(this))), 'Ver', '1.18.0'),
+          u(h(t), 'push', function (e) {
             t.ready
               ? t.handler([e])
               : (t._originalList = t._originalList || []).push(e);
           }),
-          (this.slots = {}),
-          this.init(e);
+          (t.slots = {}),
+          t.init(e),
+          t
+        );
       }
       return (
-        t(n, [
+        t(i, [
           {
             key: 'init',
             value: function (e) {
               var t,
                 n = this;
               (this._originalList = e),
-                ((window[g] = this).MEDIA_CONFIG = {}),
-                (this.config = window[r].config || {}),
-                (this.mediaId = window[r].mediaId),
-                this.parseMediaConfig(window[r]),
+                ((window[f] = this).MEDIA_CONFIG = {}),
+                (this.config = window[o].config || {}),
+                (this.mediaId = window[o].mediaId),
+                this.parseMediaConfig(window[o]),
+                this.on('recalculateWeightByFrequency', function (e) {
+                  !x && e.iosClickFrequency && (e = le(e));
+                }),
                 (t = function () {
                   n.handler(n._originalList), (n.ready = !0);
                 }),
-                F
-                  ? t && t(F)
-                  : new w().get(function (e) {
+                H
+                  ? t && t(H)
+                  : new C().get(function (e) {
                       e &&
-                        ((F = e), window.localStorage.setItem(f, e), t && t(F));
+                        ((H = e), window.localStorage.setItem(p, e), t && t(H));
                     });
             }
           },
           {
             key: 'parseMediaConfig',
             value: function (e) {
-              var s = this,
+              var i = this,
                 t = 0 < arguments.length && void 0 !== e ? e : {};
               (this.MEDIA_CONFIG = {}),
                 t.slotBiddings &&
                   M(t.slotBiddings, function (e) {
-                    var t, n, i, o, r, a;
-                    (s.MEDIA_CONFIG[e.slotId] =
+                    var t, n;
+                    i.MEDIA_CONFIG[e.slotId] =
                       ((n = {}),
                       M((t = e).slotBidding, function (e) {
                         var t = e.consumer.consumerSlotId;
                         n[t] || (n[t] = e);
                       }),
                       (t.slotBidding = Object.values(n)),
-                      t)),
-                      s.config.isDynamicWeight &&
-                        (s.MEDIA_CONFIG[e.slotId] =
-                          ((i = s.MEDIA_CONFIG[e.slotId]),
-                          (o = R()),
-                          (r = i.slotId),
-                          (a = []),
-                          M(i.slotBidding, function (e) {
-                            'gdt' === e.consumer.consumerType && a.push(e);
-                          }),
-                          1 < a.length &&
-                            (o[r] && o[r].length && o[r].length !== a.length
-                              ? M(a, function (e) {
-                                  o[r].includes(e.consumer.consumerSlotId)
-                                    ? (e.weight = 1)
-                                    : (e.weight = 100 - o[r].length);
-                                })
-                              : M(a, function (e, t) {
-                                  e.weight = 0 === t ? 100 - a.length : 1;
-                                })),
-                          o[r] && o[r].length >= a.length && O(r, []),
-                          i));
+                      t);
                   });
             }
           },
@@ -3725,22 +4691,22 @@ window.M$P_M_C = {
             value: function (e) {
               var t = this;
               M(e, function (i) {
-                h(i)
+                g(i)
                   ? i.call(t, {
-                      union: { register: oe.register, use: oe.use },
+                      union: { register: ae.register, use: ae.use },
                       utils: {}
                     })
-                  : v(i) &&
-                    (d(i.id)
-                      ? d(i.mediaid) ||
-                        d(i.secret) ||
-                        (d(t.mediaid) &&
+                  : y(i) &&
+                    (l(i.id)
+                      ? l(i.mediaid) ||
+                        l(i.secret) ||
+                        (l(t.mediaid) &&
                           ((t.mediaid = i.mediaid), (t.secret = i.secret)))
-                      : (d(t.slots[i.id]) || i.force) &&
+                      : (l(t.slots[i.id]) || i.force) &&
                         t.MEDIA_CONFIG[i.id] &&
                         t.fillAd(
                           i.container,
-                          c(c({}, t.MEDIA_CONFIG[i.id]), {}, { id: i.id }),
+                          d(d({}, t.MEDIA_CONFIG[i.id]), {}, { id: i.id }),
                           i.force,
                           {
                             complete: function () {
@@ -3759,7 +4725,8 @@ window.M$P_M_C = {
                                 try {
                                   return void (i.fallback && i.fallback());
                                 } catch (e) {}
-                            }
+                            },
+                            data: JSON.stringify(i.data)
                           }
                         ));
               });
@@ -3768,13 +4735,13 @@ window.M$P_M_C = {
           {
             key: 'fillAd',
             value: function (e, t, n, i) {
-              this.slots[t.id] = new ce(e, t, i);
+              this.slots[t.id] = new ge(e, t, i);
             }
           }
         ]),
-        n
+        i
       );
     })(),
-    ue = window[g];
-  (Array.isArray(ue) || d(ue)) && new le(ue);
+    pe = window[f];
+  (Array.isArray(pe) || l(pe)) && new fe(pe);
 })();
