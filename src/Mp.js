@@ -21,7 +21,7 @@ const reCalcConsumerWeight = (_slotConfig, type) => {
   const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
 
   const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
-    (data, index, ref) => ref[data] >= slotConfig.policyFrequency
+    data => fcData[slotId][data] >= slotConfig.policyFrequency
   );
 
   if (frequencyStorageData.length >= loadedConsumerLength) {
@@ -68,8 +68,6 @@ const reCalcConsumerPriority = (_slotConfig, type) => {
   const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
     data => fcData[slotId][data] >= slotConfig.policyFrequency
   );
-
-  console.log(frequencyStorageData);
 
   if (frequencyStorageData.length >= loadedConsumerLength) {
     setFreqControl(slotId, {}, type);
