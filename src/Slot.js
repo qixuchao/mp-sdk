@@ -298,7 +298,9 @@ export default class Slot extends Event {
             })
             .on('click,imp', ({ slotId, consumerSlotId, type }) => {
               let fcData = getFreqControl(type);
-              let fcSlots = [];
+              let fcSlots = {
+                [consumerSlotId]: 1
+              };
 
               let freqType = null;
 
@@ -308,13 +310,13 @@ export default class Slot extends Event {
                 freqType = 'imp';
               }
 
-              if (fcData[slotId]) {
+              if (fcData[slotId] && !Array.isArray(fcData[slotId])) {
                 fcSlots = fcData[slotId];
-                if (!fcData[slotId].includes(consumerSlotId)) {
-                  fcSlots.push(consumerSlotId);
+                if (fcSlots[consumerSlotId]) {
+                  fcSlots[consumerSlotId] += 1;
+                } else {
+                  fcSlots[consumerSlotId] = 1;
                 }
-              } else {
-                fcSlots = [consumerSlotId];
               }
 
               freqType === type && setFreqControl(slotId, fcSlots, freqType);

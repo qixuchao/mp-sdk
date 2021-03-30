@@ -1,7 +1,6 @@
 /* gloabl window */
 import { MODEL_NAME, MEDIA_CONFIG_NAME } from './config';
 import { each, getImei } from './utils/index';
-import env from './utils/browser.js';
 import { isUndefined, isFunction, isPlainObject } from './utils/type';
 import { getFreqControl, setFreqControl } from './utils/storage';
 import Union from './union/index';
@@ -13,20 +12,21 @@ const eventType = {
   recalculateWeightByFrequency: '根据频次重新计算weight的值'
 };
 
-const reCalcConsumerWeight = (slotConfig, type) => {
+const reCalcConsumerWeight = (_slotConfig, type) => {
   let fcData = getFreqControl(type);
+  const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
   const slotBidding = slotConfig.slotBidding;
 
   const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
 
-  if (
-    fcData[slotId] &&
-    (fcData[slotId].length >= slotBidding.length ||
-      fcData[slotId].length === loadedConsumerLength)
-  ) {
+  const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
+    (data, index, ref) => ref[data] >= slotConfig.policyFrequency
+  );
+
+  if (frequencyStorageData.length >= loadedConsumerLength) {
     setFreqControl(slotId, [], type);
-    fcData = [];
+    fcData = {};
   }
 
   // 对广告位下的消耗按照优先级进行排序
@@ -42,13 +42,13 @@ const reCalcConsumerWeight = (slotConfig, type) => {
 
   if (slotBidding.length > 1) {
     each(slotBidding, (consumer, i) => {
+      let consumerSlotId = consumer.consumer.consumerSlotId;
       if (
         fcData[slotId] &&
-        fcData[slotId].includes(consumer.consumer.consumerSlotId)
+        fcData[slotId][consumerSlotId] &&
+        fcData[slotId][consumerSlotId] === slotConfig.policyFrequency
       ) {
         consumer.weight = fcData[slotId].length - i;
-      } else {
-        consumer.weight = 100 - slotBidding.length;
       }
     });
   }
@@ -56,21 +56,24 @@ const reCalcConsumerWeight = (slotConfig, type) => {
   return slotConfig;
 };
 
-const reCalcConsumerPriority = (slotConfig, type) => {
+const reCalcConsumerPriority = (_slotConfig, type) => {
   let fcData = getFreqControl(type);
+  //
+  const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
   const slotBidding = slotConfig.slotBidding;
 
   const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
 
-  if (
-    fcData[slotId] &&
-    fcData[slotId].length &&
-    (fcData[slotId].length >= slotBidding.length ||
-      fcData[slotId].length === loadedConsumerLength)
-  ) {
-    setFreqControl(slotId, [], type);
-    fcData = [];
+  const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
+    data => fcData[slotId][data] >= slotConfig.policyFrequency
+  );
+
+  console.log(frequencyStorageData);
+
+  if (frequencyStorageData.length >= loadedConsumerLength) {
+    setFreqControl(slotId, {}, type);
+    fcData = {};
   }
 
   // 对广告位下的消耗按照优先级进行排序
@@ -87,9 +90,11 @@ const reCalcConsumerPriority = (slotConfig, type) => {
   if (slotBidding.length > 1) {
     each(slotBidding, (consumer, i) => {
       consumer.weight = i + 1;
+      let consumerSlotId = consumer.consumer.consumerSlotId;
       if (
         fcData[slotId] &&
-        fcData[slotId].includes(consumer.consumer.consumerSlotId)
+        fcData[slotId][consumerSlotId] &&
+        fcData[slotId][consumerSlotId] === slotConfig.policyFrequency
       ) {
         consumer.weight = slotBidding.length + consumer.weight;
       }
@@ -108,7 +113,7 @@ const preParseConsumer = slotConfig => {
   }
 
   const priorityPolicy = slotConfig.priorityPolicy;
-  if (freqType) {
+  if (freqType && slotConfig.policyFrequency) {
     if (priorityPolicy === 1) {
       slotConfig = reCalcConsumerWeight(slotConfig, freqType);
     } else if (priorityPolicy === 3) {
