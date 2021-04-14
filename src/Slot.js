@@ -76,22 +76,35 @@ const getConsumerByWeightForRandom = loadedConsumers => {
   let weightAmount = 0;
   let union = null;
 
+  // 存贮满足频次要求的消耗方
+  let frequencyConsumer = [];
+  each(loadedConsumers, con => {
+    if (con.data.originWeight) {
+      frequencyConsumer.push(con);
+    }
+  });
+
+  let weightName = 'weight';
+  if (frequencyConsumer.length === loadedConsumers.length) {
+    weightName = 'originWeight';
+  }
+
   each(loadedConsumers, (con, index) => {
-    con.data.weight = con.data.weight && Math.max(con.data.weight, 1);
-    weightAmount += con.data.weight;
+    let currentWeight = con.data[weightName];
+    weightAmount += currentWeight;
     let last = (weight[index - 1] && weight[index - 1].rang[1]) || 0;
     weight.push({
       name: con.name,
-      weight: con.data.weight,
+      weight: currentWeight,
       union: con,
-      rang: [last, last + con.data.weight]
+      rang: [last, last + currentWeight]
     });
   });
 
   const random = getRandom(0, weightAmount);
 
   each(weight, wei => {
-    if (random >= wei.rang[0] && random < wei.rang[1]) {
+    if (random > wei.rang[0] && random <= wei.rang[1]) {
       union = wei.union;
       return false;
     }
@@ -380,8 +393,6 @@ export default class Slot extends Event {
    * @param {Union} union
    */
   race(union) {
-    setFreqControl(this.slotId, this.loadedConsumers.length, 'loadedConsumer');
-
     this.trigger('race', union);
   }
 }

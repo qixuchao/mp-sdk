@@ -12,43 +12,39 @@ const eventType = {
   recalculateWeightByFrequency: '根据频次重新计算weight的值'
 };
 
+// 权重模式下重新计算消耗方广告位的权重
 const reCalcConsumerWeight = (_slotConfig, type) => {
   let fcData = getFreqControl(type);
   const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
-  const slotBidding = slotConfig.slotBidding;
+  let slotBidding = slotConfig.slotBidding;
 
-  const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
-
+  // 获取满足频次要求的消耗方广告位的个数
   const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
     data => fcData[slotId][data] >= slotConfig.policyFrequency
   );
 
-  if (frequencyStorageData.length >= loadedConsumerLength) {
+  if (frequencyStorageData.length >= slotBidding.length) {
     setFreqControl(slotId, [], type);
     fcData = {};
   }
 
-  // 对广告位下的消耗按照优先级进行排序
-  for (let j = 0; j < slotBidding.length - 1; j++) {
-    for (let i = 0; i < slotBidding.length - 1; i++) {
-      if (slotBidding[i].weight < slotBidding[i + 1].weight) {
-        let temp = slotBidding[i];
-        slotBidding[i] = slotBidding[i + 1];
-        slotBidding[i + 1] = temp;
-      }
-    }
-  }
-
   if (slotBidding.length > 1) {
+    slotBidding.sort((a, b) => {
+      return b.weight - a.weight;
+    });
+
+    console.log('frequency', slotBidding);
+
     each(slotBidding, (consumer, i) => {
       let consumerSlotId = consumer.consumer.consumerSlotId;
       if (
         fcData[slotId] &&
         fcData[slotId][consumerSlotId] &&
-        fcData[slotId][consumerSlotId] === slotConfig.policyFrequency
+        fcData[slotId][consumerSlotId] >= slotConfig.policyFrequency
       ) {
-        consumer.weight = fcData[slotId].length - i;
+        consumer.originWeight = consumer.weight; // 频次满足，将权重存到originWeight中供下个周期使用
+        consumer.weight = 0;
       }
     });
   }
@@ -56,36 +52,31 @@ const reCalcConsumerWeight = (_slotConfig, type) => {
   return slotConfig;
 };
 
+// 优先级模式下重新计算消耗方广告位的优先级
 const reCalcConsumerPriority = (_slotConfig, type) => {
   let fcData = getFreqControl(type);
-  //
+
   const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
-  const slotBidding = slotConfig.slotBidding;
+  let slotBidding = slotConfig.slotBidding;
 
-  const loadedConsumerLength = (getFreqControl('loadedConsumer') || {})[slotId];
-
+  // 获取满足频次要求的消耗方广告位的个数
   const frequencyStorageData = Object.keys(fcData[slotId] || {}).filter(
     data => fcData[slotId][data] >= slotConfig.policyFrequency
   );
 
-  if (frequencyStorageData.length >= loadedConsumerLength) {
+  if (frequencyStorageData.length >= slotBidding.length) {
     setFreqControl(slotId, {}, type);
     fcData = {};
   }
 
-  // 对广告位下的消耗按照优先级进行排序
-  for (let j = 0; j < slotBidding.length - 1; j++) {
-    for (let i = 0; i < slotBidding.length - 1; i++) {
-      if (slotBidding[i].weight > slotBidding[i + 1].weight) {
-        let temp = slotBidding[i];
-        slotBidding[i] = slotBidding[i + 1];
-        slotBidding[i + 1] = temp;
-      }
-    }
-  }
-
   if (slotBidding.length > 1) {
+    slotBidding = slotBidding.sort((a, b) => {
+      return b.weight - a.weight;
+    });
+
+    console.log('frequency', slotBidding);
+
     each(slotBidding, (consumer, i) => {
       consumer.weight = i + 1;
       let consumerSlotId = consumer.consumer.consumerSlotId;
