@@ -127,7 +127,11 @@ export default class Slot extends Event {
     super();
     this.container = container;
 
-    let slotConfig = JSON.parse(JSON.stringify(_slotConfig));
+    let slotConfig = {};
+
+    try {
+      JSON.parse(JSON.stringify(_slotConfig));
+    } catch (e) {}
 
     window[MODEL_NAME].trigger('recalculateWeightByFrequency', slotConfig);
 
