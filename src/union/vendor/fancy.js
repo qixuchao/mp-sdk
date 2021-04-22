@@ -42,10 +42,13 @@ export default Union => {
       };
 
       const trackingClickUrls = [
-        macroReplace(this.data.trackingV2Data.clickTracking[0], {
-          DATA: this.requestData,
-          REQUESTID: this.requestId
-        })
+        macroReplace(
+          (this.trackingV2Data || this.data.trackingV2Data).clickTracking[0],
+          {
+            DATA: this.requestData,
+            REQUESTID: this.requestId
+          }
+        )
       ];
       // each(this.data.trackingV2Data.clickTracking, trackingUrl => {
       //   const url = macroReplace(trackingUrl, {

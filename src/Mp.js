@@ -13,9 +13,8 @@ const eventType = {
 };
 
 // 权重模式下重新计算消耗方广告位的权重
-const reCalcConsumerWeight = (_slotConfig, type) => {
+const reCalcConsumerWeight = (slotConfig, type) => {
   let fcData = getFreqControl(type);
-  const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
   let slotBidding = slotConfig.slotBidding;
 
@@ -34,8 +33,6 @@ const reCalcConsumerWeight = (_slotConfig, type) => {
       return b.weight - a.weight;
     });
 
-    console.log('frequency', slotBidding);
-
     each(slotBidding, (consumer, i) => {
       let consumerSlotId = consumer.consumer.consumerSlotId;
       if (
@@ -53,10 +50,9 @@ const reCalcConsumerWeight = (_slotConfig, type) => {
 };
 
 // 优先级模式下重新计算消耗方广告位的优先级
-const reCalcConsumerPriority = (_slotConfig, type) => {
+const reCalcConsumerPriority = (slotConfig, type) => {
   let fcData = getFreqControl(type);
 
-  const slotConfig = JSON.parse(JSON.stringify(_slotConfig));
   const slotId = slotConfig.slotId;
   let slotBidding = slotConfig.slotBidding;
 
@@ -72,10 +68,8 @@ const reCalcConsumerPriority = (_slotConfig, type) => {
 
   if (slotBidding.length > 1) {
     slotBidding = slotBidding.sort((a, b) => {
-      return b.weight - a.weight;
+      return a.weight - b.weight;
     });
-
-    console.log('frequency', slotBidding);
 
     each(slotBidding, (consumer, i) => {
       consumer.weight = i + 1;
@@ -83,25 +77,31 @@ const reCalcConsumerPriority = (_slotConfig, type) => {
       if (
         fcData[slotId] &&
         fcData[slotId][consumerSlotId] &&
-        fcData[slotId][consumerSlotId] === slotConfig.policyFrequency
+        fcData[slotId][consumerSlotId] >= slotConfig.policyFrequency
       ) {
         consumer.weight = slotBidding.length + consumer.weight;
       }
     });
   }
+
   return slotConfig;
 };
 
 // 根据频次干预消耗方对应的权重和优先级
 const preParseConsumer = slotConfig => {
+  const _priorityPolicyPacingTarget =
+    slotConfig.priorityPolicyPacingTargetV2 ||
+    slotConfig.priorityPolicyPacingTarget;
   let freqType = null;
-  if (slotConfig.priorityPolicyPacingTarget === 3) {
+
+  if (_priorityPolicyPacingTarget === 3) {
     freqType = 'click';
-  } else if (slotConfig.priorityPolicyPacingTarget === 2) {
+  } else if (_priorityPolicyPacingTarget === 2) {
     freqType = 'imp';
   }
 
   const priorityPolicy = slotConfig.priorityPolicy;
+
   if (freqType && slotConfig.policyFrequency) {
     if (priorityPolicy === 1) {
       slotConfig = reCalcConsumerWeight(slotConfig, freqType);
@@ -109,6 +109,8 @@ const preParseConsumer = slotConfig => {
       slotConfig = reCalcConsumerPriority(slotConfig, freqType);
     }
   }
+
+  return slotConfig;
 };
 
 // 去除同一广告位下相同的消耗方id

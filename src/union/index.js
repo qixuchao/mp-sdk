@@ -242,7 +242,7 @@ export default class Union extends Event {
       }
     };
 
-    const trackingData = this.data.trackingV2Data || this.data.trackingData;
+    const trackingData = this.trackingV2Data || this.data.trackingV2Data;
     const trackingUrl = trackingData[LOGGER_TYPE[type]];
 
     logger.send(trackingUrl, data);

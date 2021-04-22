@@ -104,7 +104,7 @@ const getConsumerByWeightForRandom = loadedConsumers => {
   const random = getRandom(0, weightAmount);
 
   each(weight, wei => {
-    if (random > wei.rang[0] && random <= wei.rang[1]) {
+    if (random >= wei.rang[0] && random < wei.rang[1]) {
       union = wei.union;
       return false;
     }
@@ -123,9 +123,11 @@ export default class Slot extends Event {
    *                    slotOptions.fallback // 当广告位无渲染或渲染失败回调
    *                    slotOptions.onClose // 当广告位被关闭回调
    */
-  constructor(container, slotConfig = {}, slotOptions = {}) {
+  constructor(container, _slotConfig = {}, slotOptions = {}) {
     super();
     this.container = container;
+
+    let slotConfig = JSON.parse(JSON.stringify(_slotConfig));
 
     window[MODEL_NAME].trigger('recalculateWeightByFrequency', slotConfig);
 
@@ -276,6 +278,10 @@ export default class Slot extends Event {
         const union = Union.use(con.consumer.consumerType);
         if (union) {
           union.slotSize = this.slotContainerSize;
+
+          // 广告位配置调整，将trackingV2Data从consumer层级提到slot级别
+          union.trackingV2Data = this.slotConfig.trackingV2Data;
+
           // 存放一个广告位请求不同消耗方请求id，标记为同一次请求
           union.requestId = requestId;
 
@@ -317,9 +323,17 @@ export default class Slot extends Event {
 
               let freqType = null;
 
-              if (this.slotConfig.priorityPolicyPacingTarget === 3) {
+              const {
+                priorityPolicyPacingTargetV2,
+                priorityPolicyPacingTarget
+              } = this.slotConfig;
+
+              const _priorityPolicyPacingTarget =
+                priorityPolicyPacingTargetV2 || priorityPolicyPacingTarget;
+
+              if (_priorityPolicyPacingTarget === 3) {
                 freqType = 'click';
-              } else if (this.slotConfig.priorityPolicyPacingTarget === 2) {
+              } else if (_priorityPolicyPacingTarget === 2) {
                 freqType = 'imp';
               }
 
@@ -393,6 +407,7 @@ export default class Slot extends Event {
    * @param {Union} union
    */
   race(union) {
+    console.log('race union', union);
     this.trigger('race', union);
   }
 }
