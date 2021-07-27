@@ -2,7 +2,7 @@ meida-prime
 ====
 
 ## 开发
-```js
+```shell
  npm run dev
 ```
 开发调试支持两种模式：示例模式和仿真模式
@@ -11,7 +11,7 @@ meida-prime
 localhost:10001/media/xxx.js 通过服务访问，会自动将配置信息和sdk打包输出，固media目录下只需要存放媒体消耗方配置信息
 
 ## 发布
-```js
+```shell
  npm run build
 ```
 
